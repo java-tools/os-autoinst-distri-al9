@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "gedit_line_word"
+  ],
+  "area": [
+    {
+      "xpos": 35,
+      "ypos": 167,
+      "width": 66,
+      "height": 14,
+      "type": "match"
+    }
+  ]
+}

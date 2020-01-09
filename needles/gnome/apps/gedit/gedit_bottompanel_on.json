@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "xpos": 461,
+      "ypos": 604,
+      "width": 84,
+      "height": 146,
+      "type": "match",
+      "match": 99
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "gedit_bottompanel_on"
+  ]
+}

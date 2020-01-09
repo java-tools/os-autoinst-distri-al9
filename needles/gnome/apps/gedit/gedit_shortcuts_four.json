@@ -1,0 +1,22 @@
+{
+  "area": [
+    {
+      "xpos": 27,
+      "ypos": 135,
+      "width": 49,
+      "height": 18,
+      "type": "match"
+    },
+    {
+      "xpos": 538,
+      "ypos": 135,
+      "width": 63,
+      "height": 17,
+      "type": "match"
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "gedit_shortcuts_four"
+  ]
+}

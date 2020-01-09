@@ -7,27 +7,6 @@ use utils;
 # and set a milestone as a starting point for the other Evince tests.
 #
 
-sub check_and_install_git {
-    # Let's see if Git is installed and install it, if it isn't.
-    unless (get_var("CANNED")) {
-        if (script_run("rpm -q git")) {
-            assert_script_run("dnf -y install git", 180);
-        }
-    }
-}
-
-
-sub download_testdata {
-    # Navigate to the test's home directory
-    assert_script_run("cd /home/test/");
-    # Clone the test repository
-    assert_script_run("git clone https://pagure.io/fedora-qa/openqa_testdata.git");
-    # Change ownership and attributes
-    assert_script_run("chown -R test:test openqa_testdata");
-    # Move the test file into a correct location.
-    assert_script_run("cp openqa_testdata/evince/evince.pdf Documents")
-}
-
 sub run {
     my $self = shift;
     # Switch to console
@@ -35,7 +14,7 @@ sub run {
     # Perform git test
     check_and_install_git();
     # Download the test data
-    download_testdata();
+    download_testdata("evince", "Documents");
     # Exit the terminal
     desktop_vt;
 

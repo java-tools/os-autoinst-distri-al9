@@ -1,0 +1,15 @@
+{
+  "area": [
+    {
+      "type": "match",
+      "ypos": 643,
+      "height": 18,
+      "width": 89,
+      "xpos": 777
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "gedit_display_margin"
+  ]
+}
