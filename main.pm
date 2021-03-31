@@ -251,6 +251,12 @@ sub _load_early_postinstall_tests {
     if (get_var("SWITCHED_LAYOUT") || get_var("INPUT_METHOD")) {
         _load_instance("tests/_graphical_input", $instance);
     }
+
+    if (get_var("LANGUAGE") eq "japanese" || get_var("LANGUAGE") eq "arabic") {
+        _load_instance("tests/check_default_fonts", $instance);
+    }
+
+
     # We do not want to run this on Desktop installations or when
     # the installation is interrupted on purpose.
     unless (get_var("DESKTOP") || get_var("CRASH_REPORT")) {
