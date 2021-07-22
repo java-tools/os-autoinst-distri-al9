@@ -62,41 +62,6 @@ sub get_release_number {
     return $version
 }
 
-# Figure out what tty the desktop is on, switch to it. Assumes we're
-# at a root console
-sub desktop_vt {
-    # use loginctl or ps to find the tty of test's session (loginctl)
-    # or gnome-session, Xwayland or Xorg (ps); as of 2019-09 we often
-    # get tty? for Xwayland and Xorg processes, so using loginctl can
-    # help
-    my $xout;
-    # don't fail test if we don't find any process, just guess tty1.
-    # os-autoinst calls the script with 'bash -e' which causes it to
-    # stop as soon as any command fails, so we use ||: to make the
-    # first grep return 0 even if it matches nothing
-    eval { $xout = script_output ' loginctl | grep test ||:; ps -e | egrep "(gnome-session|Xwayland|Xorg)" | grep -o tty[0-9]' };
-    my $tty = 1; # default
-    while ($xout =~ /tty(\d)/g) {
-        $tty = $1; # most recent match is probably best
-    }
-    send_key "ctrl-alt-f${tty}";
-    # work around https://gitlab.gnome.org/GNOME/gnome-software/issues/582
-    # if it happens. As of 2019-05, seeing something similar on KDE too
-    my $desktop = get_var('DESKTOP');
-    if (check_screen "auth_required", 10) {
-        record_soft_failure "spurious 'auth required' - https://gitlab.gnome.org/GNOME/gnome-software/issues/582";
-        assert_and_click "auth_required" if ($desktop eq 'kde');
-        # bit sloppy but correct for both...
-        type_very_safely "weakpassword\n";
-        # as of 2019-04 when we hit this bug it seems to ask for
-        # auth *twice*, so handle that
-        sleep 3;
-        if (check_screen "auth_required", 1) {
-            type_very_safely "weakpassword\n";
-        }
-    }
-}
-
 # Wait for login screen to appear. Handle the annoying GPU buffer
 # problem where we see a stale copy of the login screen from the
 # previous boot. Will suffer a ~30 second delay if there's a chance
@@ -288,6 +253,53 @@ sub console_login {
         type_string $clearstr;
     }
     _console_login_finish();
+}
+
+# Figure out what tty the desktop is on, switch to it. Assumes we're
+# at a root console
+sub desktop_vt {
+    # use loginctl or ps to find the tty of test's session (loginctl)
+    # or gnome-session, Xwayland or Xorg (ps); as of 2019-09 we often
+    # get tty? for Xwayland and Xorg processes, so using loginctl can
+    # help
+    my $xout;
+    # don't fail test if we don't find any process, just guess tty1.
+    # os-autoinst calls the script with 'bash -e' which causes it to
+    # stop as soon as any command fails, so we use ||: to make the
+    # first grep return 0 even if it matches nothing
+    eval { $xout = script_output ' loginctl | grep test ||:; ps -e | egrep "(gnome-session|Xwayland|Xorg)" | grep -o tty[0-9]' };
+    my $tty = 1; # default
+    while ($xout =~ /tty(\d)/g) {
+        $tty = $1; # most recent match is probably best
+    }
+    send_key "ctrl-alt-f${tty}";
+    # work around https://gitlab.gnome.org/GNOME/gnome-software/issues/582
+    # if it happens. As of 2019-05, seeing something similar on KDE too
+    my $desktop = get_var('DESKTOP');
+    my $sfr = 0;
+    my $timeout = 10;
+    my $count = 6;
+    while (check_screen("auth_required", $timeout) && $count > 0) {
+        $count -= 1;
+        unless ($sfr) {
+            record_soft_failure "spurious 'auth required' - https://gitlab.gnome.org/GNOME/gnome-software/issues/582";
+            $sfr = 1;
+            $timeout = 3;
+        }
+        click_lastmatch if ($desktop eq 'kde');
+        if (match_has_tag "auth_required_fprint") {
+            my $user = get_var("USER_LOGIN", "test");
+            send_key "ctrl-alt-f6";
+            console_login;
+            assert_script_run "echo SCAN ${user}-finger-1 | socat STDIN UNIX-CONNECT:/run/fprintd-virt";
+            send_key "ctrl-alt-f${tty}";
+        }
+        else {
+            # bit sloppy but in all cases where this is used, this is the
+            # correct password
+            type_very_safely "weakpassword\n";
+        }
+    }
 }
 
 # load US layout (from a root console)

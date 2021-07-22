@@ -882,6 +882,18 @@
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
+        "desktop_fprint": {
+            "profiles": {
+                "fedora-Workstation-live-iso-x86_64-*-64bit": 50,
+                "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 50
+            },
+            "settings": {
+                "BOOTFROM": "c",
+                "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
+                "POSTINSTALL": "desktop_fprint",
+                "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
+            }
+        },
         "desktop_browser": {
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 22,

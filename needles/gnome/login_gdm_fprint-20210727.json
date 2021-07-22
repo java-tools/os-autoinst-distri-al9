@@ -1,16 +1,16 @@
 {
   "area": [
     {
-      "xpos": 299,
-      "height": 32,
-      "ypos": 259,
-      "width": 46,
+      "xpos": 475,
+      "ypos": 497,
+      "width": 38,
+      "height": 15,
       "type": "match"
     }
   ],
   "properties": [],
   "tags": [
     "DESKTOP-gnome",
-    "auth_required"
+    "graphical_login_fprint"
   ]
 }

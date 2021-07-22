@@ -1,7 +1,8 @@
 {
   "properties": [],
   "tags": [
-    "auth_required"
+    "auth_required",
+    "auth_required_password"
   ],
   "area": [
     {
