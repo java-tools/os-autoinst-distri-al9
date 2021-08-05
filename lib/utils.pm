@@ -878,6 +878,7 @@ sub check_desktop {
     # GNOME 40 starts on the overview by default; for consistency with
     # older GNOME and KDE, let's just close it
     if (match_has_tag "apps_menu_button_active") {
+        wait_still_screen 3;
         send_key "alt-f1";
         assert_screen "apps_menu_button_inactive";
     }
