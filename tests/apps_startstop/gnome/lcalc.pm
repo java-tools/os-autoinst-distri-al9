@@ -10,8 +10,6 @@ sub run {
     
     # Start the application
     start_with_launcher('apps_menu_lcalc');
-    # Dismiss 'tip of the day' if necessary
-    lo_dismiss_tip;
     # Check that is started
     assert_screen 'apps_run_lcalc';
     # Register application

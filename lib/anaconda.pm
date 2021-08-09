@@ -247,9 +247,9 @@ sub custom_change_fs {
     # Pass filesystem name and name of partition. Needles
     # `anaconda_part_select_$part` and `anaconda_part_fs_$fs` should
     # exist. Example usage:
-    # `custom_change_fs("ext3", "root");` uses
-    # `anaconda_part_select_root` and `anaconda_part_fs_ext3` needles
-    # to set ext3 file system for root partition.
+    # `custom_change_fs("ext4", "root");` uses
+    # `anaconda_part_select_root` and `anaconda_part_fs_ext4` needles
+    # to set ext4 file system for root partition.
     my ($fs, $part) = @_;
     $part ||= "root";
     assert_and_click "anaconda_part_select_$part";

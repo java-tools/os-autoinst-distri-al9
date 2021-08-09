@@ -56,10 +56,6 @@ sub run {
     assert_and_click "printing_print";
     # Exit the application
     send_key "alt-f4";
-    # Wait out confirmation on GNOME
-    if (check_screen "printing_print_completed", 1) {
-        sleep 30;
-    }
 
     # Open the pdf file and check the print
     send_key "alt-f2";

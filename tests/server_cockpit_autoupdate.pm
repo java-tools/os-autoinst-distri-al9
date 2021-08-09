@@ -15,6 +15,7 @@ sub run {
     select_cockpit_update();
 
     # FIXME Workaround for RHBZ #1765685 - remove when it's fixed
+    # not fixed as of 2021-05-25
     sleep 30;
 
     # Switch on automatic updates
@@ -22,11 +23,8 @@ sub run {
     assert_and_click 'cockpit_updates_dnf_install', '', 120;
     # from 234 onwards, we get a config screen here: "no updates",
     # "security updates only", "all updates"
-    assert_screen ['cockpit_updates_auto_on', 'cockpit_updates_auto_all'];
-    if (match_has_tag 'cockpit_updates_auto_all') {
-        click_lastmatch;
-        assert_and_click 'cockpit_save_changes';
-    }
+    assert_and_click 'cockpit_updates_auto_all';
+    assert_and_click 'cockpit_save_changes';
 
     # Check the default automatic settings Everyday at 6 o'clock.
     assert_screen 'autoupdate_planned_day';

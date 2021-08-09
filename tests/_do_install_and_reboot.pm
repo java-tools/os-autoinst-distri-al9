@@ -73,12 +73,7 @@ sub run {
     # From F31 onwards (after Fedora-Rawhide-20190722.n.1), user and
     # root password spokes are moved to main hub, so we must do those
     # before we run the install.
-    my $rootuserdone = 0;
-    assert_screen ["anaconda_main_hub_begin_installation", "anaconda_install_root_password"], 300;
-    if (match_has_tag "anaconda_install_root_password") {
-        _do_root_and_user();
-        $rootuserdone = 1;
-    }
+    _do_root_and_user();
     # Begin installation
     # Sometimes, the 'slide in from the top' animation messes with
     # this - by the time we click the button isn't where it was any
@@ -97,16 +92,6 @@ sub run {
         check_left_bar();
         check_prerelease();
         check_version();
-    }
-
-    unless ($rootuserdone) {
-        _do_root_and_user();
-        # With the slow typing - especially with SWITCHED_LAYOUT - we
-        # may not complete user creation until anaconda reaches post-install,
-        # which causes a 'Finish configuration' button
-        if (check_screen "anaconda_install_finish_configuration", 5) {
-            assert_and_click "anaconda_install_finish_configuration";
-        }
     }
 
     # Wait for install to end. Give Rawhide a bit longer, in case

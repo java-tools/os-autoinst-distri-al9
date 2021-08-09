@@ -26,7 +26,6 @@ sub run {
     # optional as it's not really part of the test
     script_run "dnf -y install sssd-tools", 220;
     script_run "sss_debuglevel 9";
-    my $cockpitver = script_output 'rpm -q cockpit --queryformat "%{VERSION}\n"';
     # run firefox and login to cockpit
     # note: we can't use wait_screen_change, wait_still_screen or
     # check_type_string in cockpit because of that fucking constantly
@@ -45,13 +44,7 @@ sub run {
         assert_and_click "cockpit_join_domain_button", 5;
     }
     assert_screen "cockpit_join_domain";
-    my $tabs = "\t";
-    # we need to hit tab three times to reach 'Domain address' in
-    # cockpit 232-244: https://github.com/cockpit-project/cockpit/issues/14895
-    $tabs = "\t\t\t" if ($cockpitver > 231);
-    # ...in 245+ it's down to two times, for some reason
-    $tabs = "\t\t" if ($cockpitver >= 245);
-    type_string($tabs, 4);
+    type_string("\t\t", 4);
     type_string("ipa001.test.openqa.fedoraproject.org", 4);
     type_string("\t\t", 4);
     type_string("admin", 4);

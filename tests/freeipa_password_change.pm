@@ -24,10 +24,7 @@ sub run {
     assert_and_click "freeipa_webui_reset_password_link";
     wait_still_screen 3;
     type_safely "batterystaple";
-    # The next box we need to type into was moved in FreeIPA 4.8.9,
-    # which is in F32+ but not F31
-    my $relnum = get_release_number;
-    $relnum < 32 ? type_safely "\t\t" : type_safely "\t";
+    send_key "tab";
     type_safely "loremipsum";
     wait_screen_change { send_key "tab"; };
     type_safely "loremipsum";

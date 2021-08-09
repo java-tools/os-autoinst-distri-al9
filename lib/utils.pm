@@ -7,7 +7,7 @@ use Exporter;
 
 use lockapi;
 use testapi;
-our @EXPORT = qw/run_with_error_check type_safely type_very_safely desktop_vt boot_to_login_screen console_login console_switch_layout desktop_switch_layout console_loadkeys_us do_bootloader boot_decrypt check_release menu_launch_type repo_setup setup_workaround_repo cleanup_workaround_repo console_initial_setup handle_welcome_screen gnome_initial_setup anaconda_create_user check_desktop download_modularity_tests quit_firefox advisory_get_installed_packages advisory_check_nonmatching_packages start_with_launcher quit_with_shortcut lo_dismiss_tip disable_firefox_studies select_rescue_mode copy_devcdrom_as_isofile get_release_number check_left_bar check_top_bar check_prerelease check_version spell_version_number _assert_and_click is_branched rec_log click_unwanted_notifications repos_mirrorlist register_application get_registered_applications solidify_wallpaper/;
+our @EXPORT = qw/run_with_error_check type_safely type_very_safely desktop_vt boot_to_login_screen console_login console_switch_layout desktop_switch_layout console_loadkeys_us do_bootloader boot_decrypt check_release menu_launch_type repo_setup setup_workaround_repo cleanup_workaround_repo console_initial_setup handle_welcome_screen gnome_initial_setup anaconda_create_user check_desktop download_modularity_tests quit_firefox advisory_get_installed_packages advisory_check_nonmatching_packages start_with_launcher quit_with_shortcut disable_firefox_studies select_rescue_mode copy_devcdrom_as_isofile get_release_number check_left_bar check_top_bar check_prerelease check_version spell_version_number _assert_and_click is_branched rec_log click_unwanted_notifications repos_mirrorlist register_application get_registered_applications solidify_wallpaper/;
 
 # We introduce this global variable to hold the list of applications that have
 # registered during the apps_startstop_test when they have sucessfully run.
@@ -455,7 +455,6 @@ sub setup_workaround_repo {
     assert_script_run "mkdir -p /opt/workarounds_repo";
     assert_script_run "pushd /opt/workarounds_repo";
     my %workarounds = (
-        "32" => [],
         "33" => [],
         "34" => ["FEDORA-2021-d7b1dc57fe"]
     );
@@ -600,13 +599,6 @@ sub _repo_setup_updates {
     unless (get_var("TEST") eq "support_server" && $version ne get_var("CURRREL")) {
         assert_script_run 'printf "[advisory]\nname=Advisory repo\nbaseurl=file:///opt/update_repo\nenabled=1\nmetadata_expire=3600\ngpgcheck=0" > /etc/yum.repos.d/advisory.repo';
         # run an update now (except for upgrade tests)
-        my $relnum = get_release_number;
-        if ($relnum > 33) {
-            # FIXME workaround https://bugzilla.redhat.com/show_bug.cgi?id=1931034
-            # drop after https://github.com/systemd/systemd/pull/18915 is merged
-            # and stable
-            script_run "systemctl stop systemd-oomd";
-        }
         script_run "dnf -y update", 900 unless (get_var("UPGRADE"));
     }
     # mark via a variable that we've set up the update/task repo and done
@@ -948,16 +940,9 @@ sub start_with_launcher {
         if (!check_screen($launcher)) {
             # On F33+, this subwindow thingy scrolls horizontally,
             # but only after we hit 'down' twice to get into it.
-            # On F32 and earlier, it just scrolls vertically
-            my $relnum = get_release_number;
-            if ($relnum > 32) {
-                send_key 'down';
-                send_key 'down';
-                send_key_until_needlematch($launcher, 'right', 5, 6);
-            }
-            else {
-                send_key_until_needlematch($launcher, 'down', 5, 6);
-            }
+            send_key 'down';
+            send_key 'down';
+            send_key_until_needlematch($launcher, 'right', 5, 6);
         }
         assert_and_click $launcher;
         wait_still_screen 5;
@@ -994,15 +979,6 @@ sub quit_with_shortcut {
     wait_still_screen 5;
     assert_screen 'workspace';
 
-}
-
-sub lo_dismiss_tip {
-    # identify and close a 'tip of the day' window that shows on start
-    # of all LibreOffice apps. For the 'app startup' tests.
-    assert_screen ["libreoffice_tip", "libreoffice_any"];
-    # we use check_screen here just in case both needles match and
-    # libreoffice_any 'won'
-    send_key 'esc' if (check_screen "libreoffice_tip", 2);
 }
 
 sub advisory_get_installed_packages {

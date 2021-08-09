@@ -155,21 +155,8 @@ sub reboot_system {
         # enter some kind of power option submenu
         assert_screen ["power_entry", "reboot_entry"];
         click_lastmatch;
-        if (match_has_tag("power_entry")) {
-            my $relnum = get_release_number;
-            if ($desktop eq "gnome" && $relnum < 33) {
-                # In GNOME before F33, some of the entries are brought together, while
-                # in KDE and GNOME from F33 onwards they are split and it does not seem
-                # correct to me to assign restarting tags to needles powering off the
-                # machine. So I split this for KDE and GNOME < F33:
-                assert_and_click "power_off_entry";
-            }
-            else {
-                # And for KDE and GNOME >= F33:
-                assert_and_click "reboot_entry";
-            }
+        assert_and_click "reboot_entry" if (match_has_tag("power_entry"));
         assert_and_click "restart_confirm";
-        }
     }
     # When we are outside KDE (not logged in), the only way to reboot is to click
     # the reboot icon.

@@ -90,14 +90,14 @@ for scheme in ("standard", "lvmthin", "btrfs", "lvm"):
 # custom_blivet_add_partition
 for dtype in ("lvmvg", "lvmlv", "lvmthin", "raid"):
     testliterals.append(f"anaconda_blivet_part_devicetype_{dtype}")
-for fsys in ("ext3", "ext4", "xfs", "btrfs", "ppc_prep_boot", "swap", "efi_filesystem"):
+for fsys in ("ext4", "xfs", "btrfs", "ppc_prep_boot", "swap", "efi_filesystem"):
     testliterals.append(f"anaconda_blivet_part_fs_{fsys}")
     testliterals.append(f"anaconda_blivet_part_fs_{fsys}_selected")
 # this is variable-y in custom_change_type but we only actually have
 # one value
 testliterals.append("anaconda_part_device_type_raid")
 # custom_change_fs
-for fsys in ("ext3", "xfs", "ext4"):
+for fsys in ("xfs", "ext4"):
     testliterals.append(f"anaconda_part_fs_{fsys}")
     testliterals.append(f"anaconda_part_fs_{fsys}_selected")
 # variable-y in custom_change_device but we only have one value

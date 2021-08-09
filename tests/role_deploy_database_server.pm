@@ -16,13 +16,7 @@ sub run {
     assert_script_run "firewall-cmd --permanent --add-service postgresql";
     assert_script_run "systemctl restart firewalld.service";
     # init the db
-    if (script_run "/usr/bin/postgresql-setup --initdb") {
-        # see if this is RHBZ #1872511...
-        script_run "rm -rf /var/lib/pgsql/data/*";
-        script_run "dnf -y install glibc-langpack-en", 180;
-        assert_script_run "/usr/bin/postgresql-setup --initdb";
-        record_soft_failure "postgresql-setup initially failed due to missing langpack - RHBZ #1872511";
-    }
+    assert_script_run "/usr/bin/postgresql-setup --initdb";
     # enable and start the systemd service
     assert_script_run "systemctl enable postgresql.service";
     assert_script_run "systemctl start postgresql.service";
