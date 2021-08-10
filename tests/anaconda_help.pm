@@ -60,7 +60,7 @@ sub run {
     # Begin installation after waiting out animation
     assert_screen "anaconda_main_hub_begin_installation", 90;
     wait_still_screen 5;
-    click_lastmatch;
+    assert_and_click "anaconda_main_hub_begin_installation";
 
     # Check the last Help screen
     check_help_on_pane("installation_progress");

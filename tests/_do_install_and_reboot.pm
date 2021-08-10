@@ -83,7 +83,8 @@ sub run {
     # Sometimes, the 'slide in from the top' animation messes with
     # this - by the time we click the button isn't where it was any
     # more. So wait for screen to stop moving before we click.
-    wait_still_screen 8;
+    assert_screen "anaconda_main_hub_begin_installation", 90;
+    wait_still_screen 5;
     assert_and_click "anaconda_main_hub_begin_installation";
 
     # If we want to test identification we will do it
