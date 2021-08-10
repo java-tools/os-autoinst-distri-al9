@@ -55,11 +55,12 @@ sub run {
         type_safely "weakrootpassword";
         send_key "tab";
         type_safely "weakrootpassword";
-        wait_screen_change { assert_and_click "anaconda_spoke_done"; };
+        assert_and_click "anaconda_spoke_done";
     }
     # Begin installation after waiting out animation
+    assert_screen "anaconda_main_hub_begin_installation", 90;
     wait_still_screen 5;
-    wait_screen_change { assert_and_click("anaconda_main_hub_begin_installation", timeout => 90); };
+    click_lastmatch;
 
     # Check the last Help screen
     check_help_on_pane("installation_progress");
