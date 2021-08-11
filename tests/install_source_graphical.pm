@@ -5,14 +5,7 @@ use utils;
 use anaconda;
 use Time::HiRes qw( usleep );
 
-sub run {
-    my $self = shift;
-    # Anaconda hub
-    assert_screen "anaconda_main_hub", 300; #
-
-    # Go into the Install Source spoke
-    assert_and_click "anaconda_main_hub_installation_source";
-
+sub main_repo {
     # select appropriate protocol on the network
     assert_and_click "anaconda_install_source_on_the_network";
     send_key "tab";
@@ -56,11 +49,56 @@ sub run {
         $repourl =~ s/^nfsvers=.://;
         type_safely $repourl;
     }
+}
+
+sub add_repo {
+    my $repourl = get_var("ADD_REPOSITORY_GRAPHICAL");
+    my $metalink;
+    if ($repourl =~ m/^ml:/) {
+        $metalink = 1;
+        $repourl =~ s/^ml://;
+    }
+    # configure an additional repository
+    assert_and_click "anaconda_add";
+    # shift-tab seven times gets us to the scheme box
+    for (my $i=0; $i<7; $i++) {
+        send_key "shift-tab";
+        usleep 100;
+    }
+    # select appropriate repo type for the URL by pressing 'down' a given
+    # number of times. default - 1 - is https
+    my $num = 1;
+    for (my $i=0; $i<$num; $i++) {
+        send_key "down";
+        usleep 100;
+    }
+    send_key "tab";
+    type_string $repourl;
+    if ($metalink) {
+        # select metalink in URL type dropdown
+        send_key "tab";
+        send_key "down";
+        send_key "down";
+    }
+}
+
+sub run {
+    my $self = shift;
+    # Anaconda hub
+    assert_screen "anaconda_main_hub", 300;
+
+    # Go into the Install Source spoke
+    assert_and_click "anaconda_main_hub_installation_source";
+
+    main_repo() if (get_var("REPOSITORY_GRAPHICAL") || get_var("MIRRORLIST_GRAPHICAL"));
+    add_repo() if (get_var("ADD_REPOSITORY_GRAPHICAL"));
 
     assert_and_click "anaconda_spoke_done";
 
     # Anaconda hub
     assert_screen "anaconda_main_hub", 300;
+
+
 }
 
 sub test_flags {

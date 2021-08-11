@@ -66,7 +66,7 @@ sub run {
     assert_screen "device_root_resized_thirteen";
 
     # Add new /home partition into the emptied space.
-    assert_and_click "anaconda_part_add";
+    assert_and_click "anaconda_add";
 
     # The previous step brings us into a mountpoint field
     # of the pop-up window, so we only need to fill the value in.

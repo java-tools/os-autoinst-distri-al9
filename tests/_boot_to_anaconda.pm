@@ -33,7 +33,7 @@ sub run {
     # Construct inst.addrepo arg for ADD_REPOSITORY_VARIATION
     my $repourl = get_var("ADD_REPOSITORY_VARIATION");
     if ($repourl) {
-        $params .= "inst.addrepo=addrepo," . get_full_repo($repourl) . " ";
+        $params .= "inst.addrepo=addrepo,$repourl ";
     }
     if (get_var("ANACONDA_TEXT")) {
         $params .= "inst.text ";

@@ -21,7 +21,7 @@ sub run {
     assert_and_click "anaconda_part_update_settings";
     wait_still_screen 5;
     # Add swap
-    assert_and_click "anaconda_part_add";
+    assert_and_click "anaconda_add";
     type_very_safely "swap";
     send_key "tab";
     assert_and_click "anaconda_part_add_mountpoint";

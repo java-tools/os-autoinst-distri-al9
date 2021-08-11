@@ -91,7 +91,7 @@ sub run {
     }
 
     # Add new root partition
-    assert_and_click "anaconda_blivet_part_add";
+    assert_and_click "anaconda_add";
     # Select the name textfield
     send_key_until_needlematch("anaconda_blivet_part_name_selected", "tab", 3, 5);
     # type the new name

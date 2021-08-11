@@ -173,7 +173,7 @@ sub load_install_tests() {
     }
 
     ## Installation source
-    if (get_var('MIRRORLIST_GRAPHICAL') || get_var("REPOSITORY_GRAPHICAL")) {
+    if (get_var('MIRRORLIST_GRAPHICAL') || get_var("REPOSITORY_GRAPHICAL") || get_var("ADD_REPOSITORY_GRAPHICAL")) {
         autotest::loadtest "tests/install_source_graphical.pm";
         autotest::loadtest "tests/_check_install_source.pm";
     }
