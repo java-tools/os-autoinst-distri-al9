@@ -41,8 +41,8 @@ sub run {
     wait_still_screen(stilltime=>5, similarity_level=>45);
     sleep 3;
     # check FAS, typing slowly to avoid errors
-    type_very_safely "https://admin.fedoraproject.org/accounts/\n";
-    assert_screen "browser_fas_home";
+    type_very_safely "https://accounts.fedoraproject.org/\n";
+    assert_screen 'browser_fas_home';
     _open_new_tab;
     wait_still_screen(stilltime=>2, similarity_level=>45);
     sleep 2;
