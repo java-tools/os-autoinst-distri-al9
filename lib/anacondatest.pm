@@ -49,6 +49,10 @@ sub post_fail_hook {
         script_run "ip route > /dev/${serialdev} 2>&1";
         script_run 'printf "\n** NETWORKMANAGER.SERVICE STATUS **\n" > /dev/' . $serialdev;
         script_run "systemctl --no-pager -l status NetworkManager.service > /dev/${serialdev} 2>&1";
+        script_run 'printf "\n** FREE **\n" > /dev/' . $serialdev;
+        script_run "free -h > /dev/${serialdev} 2>&1";
+        script_run 'printf "\n** DF **\n" > /dev/' . $serialdev;
+        script_run "df -h > /dev/${serialdev} 2>&1";
         script_run 'printf "\n** X.LOG **\n" > /dev/' . $serialdev;
         script_run "cat /tmp/X.log > /dev/${serialdev}";
         script_run 'printf "\n** ANACONDA.LOG **\n" > /dev/' . $serialdev;
@@ -78,6 +82,12 @@ sub post_fail_hook {
         return;
     }
 
+    unless (script_run "df -h > /tmp/df.log") {
+        upload_logs "/tmp/df.log", failok=>1;
+    }
+    unless (script_run "free -h > /tmp/free.log") {
+        upload_logs "/tmp/free.log", failok=>1;
+    }
     upload_logs "/tmp/X.log", failok=>1;
     upload_logs "/tmp/anaconda.log", failok=>1;
     upload_logs "/tmp/packaging.log", failok=>1;
