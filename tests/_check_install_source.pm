@@ -28,8 +28,12 @@ sub run {
             assert_script_run 'grep "repo addrepo.*' . ${addrepourl} . '" /tmp/packaging.log';
             # ...this line tells us it added the repo called 'addrepo'...
             assert_script_run 'grep "\(added\|enabled\) repo: .addrepo." /tmp/packaging.log';
-            # ...and this line tells us it worked (I hope)
-            assert_script_run 'grep "enabled repo.*nfs" /tmp/packaging.log';
+            # ...and one of these tells us it worked (I hope). This one is <F35...
+            if (script_run 'grep "enabled repo.*nfs" /tmp/packaging.log') {
+                # ...these are F35+
+                assert_script_run 'grep "Load metadata for the ' . "'addrepo'" . '" /tmp/anaconda.log';
+                assert_script_run 'grep "Loaded metadata from.*file:///run/install/addrepo.nfs" /tmp/anaconda.log';
+            }
         }
     }
     if ($repourl =~ /^hd:/) {
