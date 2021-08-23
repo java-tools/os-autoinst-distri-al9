@@ -694,7 +694,7 @@ sub gnome_initial_setup {
         timeout => 120,
         @_
     );
-    my $version = lc(get_var("VERSION"));
+    my $relnum = get_release_number;
     # the pages we *may* need to click 'next' on. *NOTE*: 'language'
     # is the 'welcome' page, and is in fact never truly skipped; if
     # it's configured to be skipped, it just shows without the language
@@ -713,6 +713,9 @@ sub gnome_initial_setup {
         # except 'language' is never *really* skipped (see above)
         @nexts = grep {$_ ne 'keyboard'} @nexts;
         @nexts = grep {$_ ne 'timezone'} @nexts;
+        # 'additional software sources' screen did not display on F28-F34:
+        # https://gitlab.gnome.org/GNOME/gnome-initial-setup/-/issues/59
+        @nexts = grep {$_ ne 'software'} @nexts if ($relnum < 35);
     }
     else {
         # 'timezone' and 'software' are suppressed for the 'existing user'
@@ -720,9 +723,6 @@ sub gnome_initial_setup {
         @nexts = grep {$_ ne 'software'} @nexts;
         @nexts = grep {$_ ne 'timezone'} @nexts;
     }
-    # 'additional software sources' screen does not display on F28+:
-    # https://bugzilla.gnome.org/show_bug.cgi?id=794825
-    @nexts = grep {$_ ne 'software'} @nexts;
 
     # note: in g-i-s 3.37.91 and later, the first screen in systemwide
     # mode has a "Start Setup" button, not a "Next" button
