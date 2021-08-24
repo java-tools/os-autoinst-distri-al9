@@ -768,10 +768,18 @@ sub gnome_initial_setup {
         }
     }
     unless (get_var("VNC_CLIENT")) {
-        # click 'Skip' one time (this is the 'goa' screen). We don't
-        # get it on VNC_CLIENT case as network isn't working (yet)
+        # We should be at the GOA screen, except on VNC_CLIENT case
+        # where network isn't working yet. click 'Skip' one time. If
+        # it's not visible we may have hit
+        # https://bugzilla.redhat.com/show_bug.cgi?id=1997310 , which
+        # we'll handle as a soft failure
         mouse_set(100,100);
-        wait_screen_change { assert_and_click "skip_button"; };
+        if (check_screen "skip_button", 60) {
+            wait_screen_change { click_lastmatch; };
+        }
+        else {
+            record_soft_failure "GOA screen not seen! Likely RHBZ #1997310";
+        }
     }
     send_key "ret";
     if ($args{prelogin}) {
