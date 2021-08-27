@@ -31,7 +31,7 @@ sub run {
     
     # Disable some other module.
     my $name_alt = "postgresql";
-    my $stream_alt = "13";
+    my $stream_alt = "12";
     assert_script_run("dnf module disable -y $name_alt:$stream_alt");
 
     # Check that it is listed in the disabled list.
