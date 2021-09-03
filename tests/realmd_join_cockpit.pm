@@ -31,17 +31,18 @@ sub run {
     # check_type_string in cockpit because of that fucking constantly
     # scrolling graph
     start_cockpit(1);
-    # we may have to scroll down before the button is visible
-    if (check_screen "cockpit_join_domain_button", 5) {
-        click_lastmatch;
-    }
-    else {
-        # to activate the right pane
-        assert_and_click "cockpit_main";
-        send_key "pgdn";
-        # wait out scroll...
-        wait_still_screen 2;
+    # to activate the right pane
+    assert_and_click "cockpit_main";
+    send_key "pgdn";
+    # wait out scroll...
+    wait_still_screen 2;
+    # sometimes this click fails because CPU usage goes from one line
+    # to two at just the wrong moment and the link moves, so if it
+    # didn't work, try again a few times
+    my $count = 4;
+    while ($count > 0) {
         assert_and_click "cockpit_join_domain_button", 5;
+        last if (check_screen "cockpit_join_domain", 30);
     }
     assert_screen "cockpit_join_domain";
     type_string("\t\t", 4);
