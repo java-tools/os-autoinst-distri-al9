@@ -20,7 +20,7 @@ sub run {
     }
     # do this from the overview because the desktop uses the stupid
     # transparent top bar which messes with our needles
-    send_key "alt-f1";
+    send_key "super";
     assert_screen "overview_app_grid";
     # check both layouts are available at the desktop; here,
     # we can expect input method switching to work too
@@ -33,7 +33,7 @@ sub run {
         # wait a bit for input switch to complete
         sleep 3;
 
-        # assume we can test input from whatever 'alt-f1' opened
+        # assume we can test input from whatever 'super' opened
         type_safely "yama";
         assert_screen "desktop_yama_hiragana";
         send_key "spc";

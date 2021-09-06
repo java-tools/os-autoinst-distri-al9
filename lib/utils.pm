@@ -875,13 +875,27 @@ sub check_desktop {
         timeout => 30,
         @_
     );
-    assert_screen "apps_menu_button", $args{timeout};
-    # GNOME 40 starts on the overview by default; for consistency with
-    # older GNOME and KDE, let's just close it
-    if (match_has_tag "apps_menu_button_active") {
-        wait_still_screen 3;
-        send_key "alt-f1";
-        assert_screen "apps_menu_button_inactive";
+    my $count = 5;
+    my $activematched = 0;
+    while ($count > 0) {
+        $count -= 1;
+        assert_screen "apps_menu_button", $args{timeout};
+        # GNOME 40 starts on the overview by default; for consistency with
+        # older GNOME and KDE, let's just close it
+        if (match_has_tag "apps_menu_button_active") {
+            $activematched = 1;
+            wait_still_screen 5;
+            send_key "super";
+            wait_still_screen 5;
+        }
+        else {
+            # this means we saw 'inactive', which is what we want
+            last;
+        }
+    }
+    if ($activematched) {
+        # make sure we got to inactive after active
+        die "never reached apps_menu_button_inactive!" unless (match_has_tag "apps_menu_button_inactive");
     }
 }
 
@@ -928,7 +942,7 @@ sub start_with_launcher {
     # The following varies for different desktops.
     if ($desktop eq 'gnome') {
         # Start the Activities page
-        send_key 'alt-f1';
+        send_key 'super';
         wait_still_screen 5;
 
         # Click on the menu icon to come into the menus
@@ -1128,8 +1142,7 @@ sub menu_launch_type {
     # launcher, typing the specified string and hitting enter. Pass
     # the string to be typed to launch whatever it is you want.
     my $app = shift;
-    # super does not work on KDE, because fml
-    send_key 'alt-f1';
+    send_key 'super';
     # srsly KDE y u so slo
     wait_still_screen 3;
     type_very_safely $app;

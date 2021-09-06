@@ -3,17 +3,12 @@ use strict;
 use testapi;
 use utils;
 
-# This test tests if Terminal starts and uses it to change desktop settings for all the following tests.
-# Therefore, if you want to use all the tests from the APPS family, this should be the very first to do.
+# This test tests if Terminal starts.
 
 sub run {
     my $self = shift;
     # open the application
-    send_key 'alt-f1';
-    wait_still_screen 2;
-    type_very_safely 'terminal';
-    send_key 'ret';  
-    wait_still_screen 5;
+    menu_launch_type "terminal";
     assert_screen "apps_run_terminal";
 
     # Register application

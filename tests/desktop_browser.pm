@@ -28,7 +28,7 @@ sub _open_new_tab {
 sub run {
     my $self = shift;
     check_desktop;
-    send_key 'alt-f1';
+    send_key 'super';
     # wait out animations
     wait_still_screen(stilltime=>4, similarity_level=>45);
     assert_and_click 'browser_launcher';

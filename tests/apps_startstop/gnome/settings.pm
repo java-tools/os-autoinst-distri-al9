@@ -8,10 +8,8 @@ use utils;
 sub run {
     my $self = shift;
     # start the settings application
-    send_key 'alt-f1';
-    type_very_safely 'settings';
-    send_key 'ret';
-    
+    menu_launch_type 'settings';
+
     # select Background menu item
     assert_and_click 'apps_settings_menu_background';
     wait_still_screen 5;

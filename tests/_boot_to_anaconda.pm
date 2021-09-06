@@ -113,8 +113,22 @@ sub run {
         else {
             # on lives, we have to explicitly launch anaconda
             if (get_var('LIVE')) {
-                assert_screen ["live_start_anaconda_icon", "apps_menu_button_active"], 300;
-                send_key "alt-f1" if match_has_tag "apps_menu_button_active";
+                my $count = 5;
+                while ($count > 0) {
+                    $count -= 1;
+                    assert_screen ["live_start_anaconda_icon", "apps_menu_button_active"], 300;
+                    if (match_has_tag "apps_menu_button_active") {
+                        # give GNOME some time to be sure it's done starting up
+                        # and ready for input
+                        wait_still_screen 5;
+                        send_key "super";
+                        wait_still_screen 5;
+                    }
+                    else {
+                        # this means we saw the launcher, which is what we want
+                        last;
+                    }
+                }
                 # for KDE we need to double-click after kde-settings-34.6-1,
                 # which is stable now.
                 # FIXME: when F33 goes EOL, make the condition just "if kde"
