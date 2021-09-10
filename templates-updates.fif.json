@@ -324,7 +324,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%VERSION%_minimal_3_%ARCH%.img",
+                "HDD_1": "disk_f%VERSION%_minimal_3_%ARCH%.qcow2",
                 "NUMDISKS": "2",
                 "POSTINSTALL": "_installer_build",
                 "ROOT_PASSWORD": "weakpassword",
@@ -341,7 +341,7 @@
                 "+LIVE": "",
                 "BOOTFROM": "c",
                 "GRUB_POSTINSTALL": "selinux=0",
-                "HDD_1": "disk_f%VERSION%_minimal_3_%ARCH%.img",
+                "HDD_1": "disk_f%VERSION%_minimal_3_%ARCH%.qcow2",
                 "HDDSIZEGB_3": "25",
                 "NUMDISKS": "3",
                 "POSTINSTALL": "_live_build",

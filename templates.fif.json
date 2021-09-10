@@ -1126,7 +1126,7 @@
             },
             "settings": {
                 "PARTITIONING": "custom_blivet_btrfs_preserve_home",
-                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.qcow2",
                 "POSTINSTALL": "btrfs_preserve_home_check_content",
                 "ROOT_PASSWORD": "weakpassword"
             }
@@ -1138,7 +1138,7 @@
             },
             "settings": {
                 "PARTITIONING": "custom_blivet_btrfs_preserve_home",
-                "HDD_1": "disk_f%CURRREL%_minimal-uefi_3_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_minimal-uefi_3_%ARCH%.qcow2",
                 "POSTINSTALL": "btrfs_preserve_home_check_content",
                 "ROOT_PASSWORD": "weakpassword"
             }
@@ -1231,7 +1231,7 @@
                 "INSTALL": 1,
                 "ROOT_PASSWORD": "weakpassword",
                 "POSTINSTALL": "btrfs_preserve_home_check_content",
-                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.img"
+                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.qcow2"
             }
         },
         "install_btrfs_preserve_home_uefi": {
@@ -1241,7 +1241,7 @@
             },
             "settings": {
                 "PARTITIONING": "custom_btrfs_preserve_home",
-                "HDD_1": "disk_f%CURRREL%_minimal-uefi_3_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_minimal-uefi_3_%ARCH%.qcow2",
                 "POSTINSTALL": "btrfs_preserve_home_check_content",
                 "ROOT_PASSWORD": "weakpassword"
             }
@@ -1805,7 +1805,7 @@
             "settings": {
                 "BOOTFROM": "c",
                 "DESKTOP": "gnome",
-                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.qcow2",
                 "INSTALL": "1",
                 "NICTYPE": "tap",
                 "PARALLEL_WITH": "install_vnc_server",
@@ -1836,7 +1836,7 @@
             "settings": {
                 "BOOTFROM": "c",
                 "DESKTOP": "gnome",
-                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_desktop_4_%ARCH%.qcow2",
                 "INSTALL": "1",
                 "NICTYPE": "tap",
                 "PREINSTALL": "_vncconnect_client_setup_pre _graphical_wait_login _vncconnect_client_setup",
@@ -1950,7 +1950,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.qcow2",
                 "NICTYPE": "tap",
                 "PARALLEL_CANCEL_WHOLE_CLUSTER": "0",
                 "POSTINSTALL": "_iot_zezere_server _setup_browser _iot_zezere_remote",
@@ -1971,7 +1971,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.qcow2",
                 "POSTINSTALL": "mediakit_fileconflicts",
                 "ROOT_PASSWORD": "weakpassword",
                 "USER_LOGIN": "false"
@@ -1985,7 +1985,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.qcow2",
                 "POSTINSTALL": "mediakit_repoclosure",
                 "ROOT_PASSWORD": "weakpassword",
                 "USER_LOGIN": "false"
@@ -2388,7 +2388,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.img",
+                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.qcow2",
                 "NICTYPE": "tap",
                 "NUMDISKS": "2",
                 "PARALLEL_CANCEL_WHOLE_CLUSTER": "0",
@@ -2421,7 +2421,7 @@
             "settings": {
                 "BOOTFROM": "c",
                 "DESKTOP": "gnome",
-                "HDD_1": "disk_f%UP2REL%_desktop_4_%ARCH%.img",
+                "HDD_1": "disk_f%UP2REL%_desktop_4_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2438,7 +2438,7 @@
                 "BOOTFROM": "c",
                 "DESKTOP": "gnome",
                 "ENCRYPT_PASSWORD": "weakpassword",
-                "HDD_1": "disk_f%UP2REL%_desktopencrypt_%ARCH%.img",
+                "HDD_1": "disk_f%UP2REL%_desktopencrypt_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2453,7 +2453,7 @@
             "settings": {
                 "BOOTFROM": "c",
                 "DESKTOP": "kde",
-                "HDD_1": "disk_f%UP2REL%_kde_4_x86_64.img",
+                "HDD_1": "disk_f%UP2REL%_kde_4_x86_64.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2469,7 +2469,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%UP2REL%_minimal_3_%ARCH%.img",
+                "HDD_1": "disk_f%UP2REL%_minimal_3_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2482,7 +2482,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%UP2REL%_minimal-uefi_3_%ARCH%.img",
+                "HDD_1": "disk_f%UP2REL%_minimal-uefi_3_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2495,7 +2495,7 @@
                 "fedora-universal-x86_64-*-64bit": 30
             },
             "settings": {
-                "+HDD_1": "disk_f%UP2REL%_server_3_%ARCH%.img",
+                "+HDD_1": "disk_f%UP2REL%_server_3_%ARCH%.qcow2",
                 "BOOTFROM": "c",
                 "NICTYPE": "tap",
                 "PARALLEL_WITH": "upgrade_2_server_domain_controller",
@@ -2517,7 +2517,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%UP2REL%_server_3_%ARCH%.img",
+                "HDD_1": "disk_f%UP2REL%_server_3_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2531,7 +2531,7 @@
                 "fedora-universal-x86_64-*-64bit": 30
             },
             "settings": {
-                "+HDD_1": "disk_f%UP2REL%_server_3_%ARCH%.img",
+                "+HDD_1": "disk_f%UP2REL%_server_3_%ARCH%.qcow2",
                 "BOOTFROM": "c",
                 "NICTYPE": "tap",
                 "PARALLEL_CANCEL_WHOLE_CLUSTER": "0",
@@ -2553,7 +2553,7 @@
             "settings": {
                 "BOOTFROM": "c",
                 "DESKTOP": "gnome",
-                "HDD_1": "disk_f%UP1REL%_desktop_4_%ARCH%.img",
+                "HDD_1": "disk_f%UP1REL%_desktop_4_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2570,7 +2570,7 @@
                 "BOOTFROM": "c",
                 "DESKTOP": "gnome",
                 "ENCRYPT_PASSWORD": "weakpassword",
-                "HDD_1": "disk_f%UP1REL%_desktopencrypt_%ARCH%.img",
+                "HDD_1": "disk_f%UP1REL%_desktopencrypt_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2583,7 +2583,7 @@
                 "fedora-universal-x86_64-*-64bit": 30
             },
             "settings": {
-                "+HDD_1": "disk_f%UP1REL%_kde_4_x86_64.img",
+                "+HDD_1": "disk_f%UP1REL%_kde_4_x86_64.qcow2",
                 "BOOTFROM": "c",
                 "DESKTOP": "kde",
                 "ROOT_PASSWORD": "weakpassword",
@@ -2601,7 +2601,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%UP1REL%_minimal_3_%ARCH%.img",
+                "HDD_1": "disk_f%UP1REL%_minimal_3_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2614,7 +2614,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%UP1REL%_minimal-uefi_3_%ARCH%.img",
+                "HDD_1": "disk_f%UP1REL%_minimal-uefi_3_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2628,7 +2628,7 @@
                 "fedora-universal-x86_64-*-64bit": 30
             },
             "settings": {
-                "+HDD_1": "disk_f%UP1REL%_server_3_%ARCH%.img",
+                "+HDD_1": "disk_f%UP1REL%_server_3_%ARCH%.qcow2",
                 "BOOTFROM": "c",
                 "NICTYPE": "tap",
                 "PARALLEL_WITH": "upgrade_server_domain_controller",
@@ -2650,7 +2650,7 @@
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%UP1REL%_server_3_%ARCH%.img",
+                "HDD_1": "disk_f%UP1REL%_server_3_%ARCH%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
@@ -2665,7 +2665,7 @@
                 "fedora-universal-x86_64-*-64bit": 30
             },
             "settings": {
-                "+HDD_1": "disk_f%UP1REL%_server_3_%ARCH%.img",
+                "+HDD_1": "disk_f%UP1REL%_server_3_%ARCH%.qcow2",
                 "BOOTFROM": "c",
                 "NICTYPE": "tap",
                 "PARALLEL_CANCEL_WHOLE_CLUSTER": "0",
