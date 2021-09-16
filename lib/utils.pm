@@ -726,7 +726,10 @@ sub gnome_initial_setup {
 
     # note: in g-i-s 3.37.91 and later, the first screen in systemwide
     # mode has a "Start Setup" button, not a "Next" button
-    assert_screen ["next_button", "start_setup", "auth_required"], $args{timeout};
+    unless (check_screen ["next_button", "start_setup", "auth_required"], $args{timeout}) {
+        record_soft_failure "g-i-s taking longer than expected to start up!";
+        assert_screen ["next_button", "start_setup", "auth_required"], $args{timeout};
+    }
     # workaround auth dialog appearing to change timezone even
     # though timezone screen is disabled
     if (match_has_tag("auth_required")) {
