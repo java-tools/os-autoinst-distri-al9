@@ -14,14 +14,9 @@ sub run {
     # test (in which case we're on the 'old' release at this point;
     # one of the upgrade test modules does repo_setup later)
     repo_setup() unless get_var("UPGRADE");
-    # use --enablerepo=fedora for Modular compose testing (we need to
-    # create and use a non-Modular repo to get some packages which
-    # aren't in Modular Server composes)
-    my $extraparams = '';
-    $extraparams = '--enablerepo=fedora' if (get_var("MODULAR"));
     # we need a lot of entropy for this, and we don't care how good
     # it is, so let's use haveged
-    assert_script_run "dnf ${extraparams} -y install haveged", 300;
+    assert_script_run "dnf -y install haveged", 300;
     assert_script_run 'systemctl start haveged.service';
     # per ab, this should get us extra debug logging from the web UI
     # in error_log
@@ -39,6 +34,10 @@ sub run {
     assert_script_run "systemctl restart firewalld.service";
     # deploy the server
     my $args = "-U --auto-forwarders --realm=TEST.OPENQA.FEDORAPROJECT.ORG --domain=test.openqa.fedoraproject.org --ds-password=monkeys123 --admin-password=monkeys123 --setup-dns --reverse-zone=2.16.172.in-addr.arpa --allow-zone-overlap";
+    # FIXME: this is a workaround for #1999321 - we just have to turn
+    # off dnssec on the server end to avoid hitting it
+    my $relnum = get_release_number;
+    $args .= ' --no-dnssec-validation' if (get_var("UPGRADE") && $relnum > 34);
     assert_script_run "ipa-server-install $args", 1200;
     # enable and start the systemd service
     assert_script_run "systemctl enable ipa.service";
