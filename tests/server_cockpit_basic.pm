@@ -21,15 +21,6 @@ sub run {
     type_string "info\n";
     wait_still_screen 5;
     # now click an entry
-    unless (check_screen "cockpit_logs_entry") {
-        # in cockpit 251, just hitting enter doesn't apply the change,
-        # we have to click a button. FIXME: in future this will be
-        # fixed and we will be able to remove this workaround:
-        # https://github.com/cockpit-project/cockpit/issues/16243
-        assert_and_click "cockpit_logs_apply";
-        record_soft_failure "needed to click to apply filter change - https://github.com/cockpit-project/cockpit/issues/16243";
-        wait_still_screen 5;
-    }
     assert_and_click "cockpit_logs_entry";
     # check we get to the appropriate detail screen
     assert_screen "cockpit_logs_detail";
