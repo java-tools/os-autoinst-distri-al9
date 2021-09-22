@@ -21,7 +21,13 @@ sub run {
     type_string "info\n";
     wait_still_screen 5;
     # now click an entry
-    assert_and_click "cockpit_logs_entry";
+    if (check_screen "cockpit_logs_entry", 30) {
+        click_lastmatch;
+    }
+    else {
+        assert_and_click "cockpit_logs_entry";
+        record_soft_failure "Log refresh took a long time";
+    }
     # check we get to the appropriate detail screen
     assert_screen "cockpit_logs_detail";
     # go to the services screen
