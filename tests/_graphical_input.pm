@@ -6,6 +6,8 @@ use utils;
 sub run {
     my $relnum = get_release_number;
     if (get_var("LANGUAGE") eq 'japanese' && $relnum > 33) {
+        # give GNOME a minute to settle
+        wait_still_screen 5;
         # since g-i-s new user mode was dropped and the replacement
         # doesn't do input method selection, and anaconda never has,
         # we have to set up the input method manually:
