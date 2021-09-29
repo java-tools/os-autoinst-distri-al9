@@ -1398,6 +1398,8 @@ sub solidify_wallpaper {
         send_key 'd';
         send_key 's';
         release_key 'alt';
+        # give the window a few seconds to stabilize
+        wait_still_screen 3;
         # Select type of background
         assert_and_click "deskset_select_type";
         wait_still_screen 2;
