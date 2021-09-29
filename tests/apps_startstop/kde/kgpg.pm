@@ -11,16 +11,16 @@ sub run {
     # Start the application
     menu_launch_type 'kgpg';
     # Deal with the first wizard screen
-    assert_and_click 'kgpg_next';
+    assert_and_click 'kde_next';
     wait_still_screen 2;
     # Deal with the second wizard screen
-    assert_and_click 'kgpg_next_blue';
+    assert_and_click 'kde_next';
     wait_still_screen 2;
     # Create configuration file
     assert_and_click 'kgpg_create_config';
     wait_still_screen 2;
     # Click Next
-    assert_and_click 'kgpg_next_blue';
+    assert_and_click 'kde_next';
     wait_still_screen 2;
     # Click Finish
     assert_and_click 'kgpg_done';
