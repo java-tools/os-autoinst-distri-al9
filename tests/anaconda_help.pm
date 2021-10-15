@@ -66,7 +66,8 @@ sub run {
     wait_still_screen 5;
     assert_and_click "anaconda_main_hub_begin_installation";
 
-    # Check the last Help screen
+    # Check the last Help screen but wait for some time for the test to settle down.
+    sleep 10;
     check_help_on_pane("installation_progress");
 
     # As there is no need to proceed with the installation,
