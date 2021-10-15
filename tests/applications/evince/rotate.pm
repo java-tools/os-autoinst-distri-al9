@@ -7,11 +7,8 @@ use utils;
 
 sub rotate_content {
 
-# Open the application menu
-assert_and_click("gnome_burger_menu", button => "left", timeout => 30);
-
-# Click with the *left* button (needle click area might need some correction)
-assert_and_click("evince_menu_rotate", button => "left", timeout => 30);
+# Send the key combo to rotate the content
+send_key("ctrl-right");
 }
 
 sub run {
