@@ -110,6 +110,13 @@ sub run {
     push (@actions, 'consoletty0') if (get_var("ARCH") eq "aarch64");
     push (@actions, 'abrt') if (get_var("ABRT", '') eq "system");
     push (@actions, 'rootpw') if (get_var("INSTALLER_NO_ROOT"));
+    # FIXME: remove plymouth from Server install_default_upload on
+    # non-aarch64 to work around RHBZ #1933378
+    unless (get_var("ARCH") eq "aarch64") {
+        if (get_var("FLAVOR") eq "Server-dvd-iso" && get_var("TEST") eq "install_default_upload") {
+            push (@actions, 'noplymouth');
+        }
+    }
     # memcheck test doesn't need to reboot at all. Rebooting from GUI
     # for lives is unreliable. And if we're already doing something
     # else at a console, we may as well reboot from there too
@@ -156,6 +163,9 @@ sub run {
     if (grep {$_ eq 'rootpw'} @actions) {
         my $root_password = get_var("ROOT_PASSWORD") || "weakpassword";
         assert_script_run "echo 'root:$root_password' | chpasswd -R $mount";
+    }
+    if (grep {$_ eq 'noplymouth'} @actions) {
+        assert_script_run "chroot $mount dnf -y remove plymouth";
     }
     type_string "reboot\n" if (grep {$_ eq 'reboot'} @actions);
 }
