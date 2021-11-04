@@ -22,6 +22,9 @@ sub run {
     type_safely "allow-test3";
     type_safely "\t\t\t";
     send_key "ret";
+    # if firefox shows a stupid infobar or something this is juuust
+    # offscreen
+    send_key_until_needlematch("freeipa_webui_policy_add_user", "down", 3, 3);
     assert_and_click "freeipa_webui_policy_add_user";
     wait_still_screen 2;
     # filter users
