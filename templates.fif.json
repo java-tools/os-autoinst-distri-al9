@@ -8,7 +8,7 @@
                 "QEMUCPU": "Nehalem",
                 "QEMUCPUS": "2",
                 "QEMURAM": "2048",
-                "QEMUVGA": "virtio",
+                "QEMUVGA": "qxl",
                 "QEMU_VIRTIO_RNG": "1",
                 "WORKER_CLASS": "qemu_x86_64"
             }
@@ -38,6 +38,7 @@
                 "QEMUCPUS": "2",
                 "QEMUMACHINE": "virt,gic-version=max",
                 "QEMURAM": 3072,
+                "QEMU_OVERRIDE_VIDEO_DEVICE_AARCH64": 1,
                 "QEMU_VIRTIO_RNG": "1",
                 "SERIALDEV": "ttyAMA0",
                 "TIMEOUT_SCALE": "1.5",
@@ -56,7 +57,7 @@
                 "QEMU": "ppc64",
                 "QEMUCPU": "host",
                 "QEMURAM": 4096,
-                "QEMUVGA": "virtio",
+                "QEMUVGA": "std",
                 "QEMU_VIRTIO_RNG": "1",
                 "WORKER_CLASS": "qemu_ppc64le"
             }
@@ -69,7 +70,7 @@
                 "QEMUCPU": "Nehalem",
                 "QEMUCPUS": "2",
                 "QEMURAM": "2048",
-                "QEMUVGA": "virtio",
+                "QEMUVGA": "qxl",
                 "QEMU_VIRTIO_RNG": "1",
                 "UEFI": "1",
                 "UEFI_PFLASH_CODE": "/usr/share/edk2/ovmf/OVMF_CODE.fd",
