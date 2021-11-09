@@ -2161,6 +2161,7 @@
                 "+START_AFTER_TEST": "server_cockpit_default",
                 "BOOTFROM": "c",
                 "POSTINSTALL": "server_cockpit_updates server_cockpit_autoupdate",
+                "QEMUVGA": "virtio",
                 "ROOT_PASSWORD": "weakpassword",
                 "USER_LOGIN": "false"
             }
