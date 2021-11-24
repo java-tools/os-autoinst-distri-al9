@@ -17,7 +17,12 @@ sub run {
     # Close the application
     send_key 'alt-f4';
     wait_still_screen 2;
-    assert_and_click 'firefox_close_tabs';
+    # deal with warning screen
+    if (check_screen("firefox_close_tabs", 1)) {
+        click_lastmatch;
+    }
+    wait_still_screen 2;
+    assert_screen 'workspace';
 }
 
 sub test_flags {
