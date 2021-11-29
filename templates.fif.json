@@ -346,6 +346,18 @@
             },
             "version": "*"
         },
+        "fedora-Workstation-upgrade-live-iso-x86_64-*": {
+            "arch": "x86_64",
+            "distri": "fedora",
+            "flavor": "Workstation-upgrade-live-iso",
+            "settings": {
+                "DESKTOP": "gnome",
+                "HDDSIZEGB": "20",
+                "PACKAGE_SET": "default",
+                "TEST_TARGET": "ISO"
+            },
+            "version": "*"
+        },
         "fedora-Workstation-raw_xz-raw.xz-aarch64-*": {
             "arch": "aarch64",
             "distri": "fedora",
@@ -532,6 +544,10 @@
         "fedora-Workstation-live-iso-x86_64-*-64bit": {
             "machine": "64bit",
             "product": "fedora-Workstation-live-iso-x86_64-*"
+        },
+        "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": {
+            "machine": "64bit",
+            "product": "fedora-Workstation-upgrade-live-iso-x86_64-*"
         },
         "fedora-Workstation-live-iso-x86_64-*-uefi": {
             "machine": "uefi",
@@ -2561,6 +2577,22 @@
                 "BOOTFROM": "c",
                 "DESKTOP": "gnome",
                 "HDD_1": "disk_f%UP1REL%_desktop_4_%ARCH%.qcow2",
+                "ROOT_PASSWORD": "weakpassword",
+                "TEST_TARGET": "COMPOSE",
+                "UPGRADE": "1",
+                "USER_LOGIN": "test",
+                "USER_PASSWORD": "weakpassword"
+            }
+        },
+        "upgrade_workstation_64bit": {
+            "profiles": {
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 30
+            },
+            "settings": {
+                "BOOTFROM": "c",
+                "DESKTOP": "gnome",
+                "HDD_1": "disk_f%UP1REL%_desktop_4_%ARCH%.qcow2",
+                "STORE_HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
