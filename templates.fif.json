@@ -352,6 +352,7 @@
             "flavor": "Workstation-upgrade-live-iso",
             "settings": {
                 "DESKTOP": "gnome",
+                "DEPLOY_UPLOAD_TEST": "upgrade_workstation_64bit" ,
                 "HDDSIZEGB": "20",
                 "PACKAGE_SET": "default",
                 "TEST_TARGET": "ISO"
@@ -595,6 +596,7 @@
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40
             },
             "settings": {
@@ -641,6 +643,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -672,6 +675,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -698,6 +702,7 @@
                 "fedora-Server-raw_xz-raw.xz-aarch64-*-aarch64": 22,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -724,6 +729,7 @@
                 "fedora-Server-raw_xz-raw.xz-aarch64-*-aarch64": 42,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -756,6 +762,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -787,6 +794,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -818,6 +826,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -876,6 +885,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -889,6 +899,7 @@
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 30,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 30,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 30
             },
             "settings": {
@@ -901,6 +912,7 @@
         "desktop_fprint": {
             "profiles": {
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 50,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 50
             },
             "settings": {
@@ -917,6 +929,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -930,6 +943,7 @@
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 32,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 30,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 30
             },
             "settings": {
@@ -940,6 +954,7 @@
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 32,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 30,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 30
             },
             "settings": {
@@ -954,6 +969,7 @@
                 "fedora-KDE-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -970,6 +986,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -985,6 +1002,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -1000,6 +1018,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -1029,6 +1048,7 @@
                 "fedora-KDE-live-iso-x86_64-*-64bit": 32,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 30,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 30,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 32
             },
             "settings": {
@@ -2141,6 +2161,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -2427,6 +2448,7 @@
             "profiles": {
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 50,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 50,
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 52
             },
             "settings": {
