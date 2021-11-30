@@ -5,6 +5,7 @@
       "xpos": 590,
       "ypos": 397,
       "type": "match",
+      "match": 92,
       "width": 127
     },
     {
@@ -12,6 +13,7 @@
       "xpos": 973,
       "ypos": 396,
       "type": "match",
+      "match": 92,
       "width": 39
     }
   ],
