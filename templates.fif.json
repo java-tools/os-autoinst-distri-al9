@@ -352,7 +352,7 @@
             "flavor": "Workstation-upgrade-live-iso",
             "settings": {
                 "DESKTOP": "gnome",
-                "DEPLOY_UPLOAD_TEST": "upgrade_workstation_64bit" ,
+                "DEPLOY_UPLOAD_TEST": "upgrade_desktop_64bit" ,
                 "HDDSIZEGB": "20",
                 "PACKAGE_SET": "default",
                 "TEST_TARGET": "ISO"
@@ -365,6 +365,17 @@
             "flavor": "Workstation-raw_xz-raw.xz",
             "settings": {
                 "DEPLOY_UPLOAD_TEST": "install_arm_image_deployment_upload",
+                "DESKTOP": "gnome",
+                "TEST_TARGET": "HDD_2"
+            },
+            "version": "*"
+        },
+        "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*": {
+            "arch": "aarch64",
+            "distri": "fedora",
+            "flavor": "Workstation-upgrade-raw_xz-raw.xz",
+            "settings": {
+                "DEPLOY_UPLOAD_TEST": "upgrade_desktop_64bit",
                 "DESKTOP": "gnome",
                 "TEST_TARGET": "HDD_2"
             },
@@ -558,6 +569,10 @@
             "machine": "aarch64",
             "product": "fedora-Workstation-raw_xz-raw.xz-aarch64-*"
         },
+        "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": {
+            "machine": "aarch64",
+            "product": "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*"
+        },
         "fedora-universal-aarch64-*-aarch64": {
             "machine": "aarch64",
             "product": "fedora-universal-aarch64-*"
@@ -644,7 +659,8 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
-                "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
+                "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40
             },
             "settings": {
                 "BOOTFROM": "c",
@@ -676,6 +692,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -703,6 +720,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -730,6 +748,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -763,6 +782,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -795,6 +815,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -827,6 +848,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -886,6 +908,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -930,6 +953,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -970,6 +994,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -987,6 +1012,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -1003,6 +1029,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -1019,6 +1046,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -1034,6 +1062,7 @@
                 "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
             },
             "settings": {
@@ -1049,6 +1078,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 30,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 30,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 32
             },
             "settings": {
@@ -2162,6 +2192,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 40,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 40,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 42
             },
             "settings": {
@@ -2449,6 +2480,7 @@
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 50,
                 "fedora-Workstation-live-iso-x86_64-*-64bit": 50,
                 "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40,
                 "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 52
             },
             "settings": {
@@ -2592,23 +2624,8 @@
         },
         "upgrade_desktop_64bit": {
             "profiles": {
-                "fedora-universal-x86_64-*-64bit": 30,
-                "fedora-universal-aarch64-*-aarch64": 40
-            },
-            "settings": {
-                "BOOTFROM": "c",
-                "DESKTOP": "gnome",
-                "HDD_1": "disk_f%UP1REL%_desktop_4_%ARCH%.qcow2",
-                "ROOT_PASSWORD": "weakpassword",
-                "TEST_TARGET": "COMPOSE",
-                "UPGRADE": "1",
-                "USER_LOGIN": "test",
-                "USER_PASSWORD": "weakpassword"
-            }
-        },
-        "upgrade_workstation_64bit": {
-            "profiles": {
-                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 30
+                "fedora-Workstation-upgrade-live-iso-x86_64-*-64bit": 30,
+                "fedora-Workstation-upgrade-raw_xz-raw.xz-aarch64-*-aarch64": 40
             },
             "settings": {
                 "BOOTFROM": "c",
@@ -2618,6 +2635,7 @@
                 "ROOT_PASSWORD": "weakpassword",
                 "TEST_TARGET": "COMPOSE",
                 "UPGRADE": "1",
+                "GUI_UPGRADE": "1",
                 "USER_LOGIN": "test",
                 "USER_PASSWORD": "weakpassword"
             }
