@@ -7,7 +7,7 @@ use Exporter;
 
 use lockapi;
 use testapi;
-our @EXPORT = qw/run_with_error_check type_safely type_very_safely desktop_vt boot_to_login_screen console_login console_switch_layout desktop_switch_layout console_loadkeys_us do_bootloader boot_decrypt check_release menu_launch_type repo_setup setup_workaround_repo cleanup_workaround_repo console_initial_setup handle_welcome_screen gnome_initial_setup anaconda_create_user check_desktop download_modularity_tests quit_firefox advisory_get_installed_packages advisory_check_nonmatching_packages start_with_launcher quit_with_shortcut disable_firefox_studies select_rescue_mode copy_devcdrom_as_isofile get_release_number check_left_bar check_top_bar check_prerelease check_version spell_version_number _assert_and_click is_branched rec_log click_unwanted_notifications repos_mirrorlist register_application get_registered_applications solidify_wallpaper check_and_install_git download_testdata/;
+our @EXPORT = qw/run_with_error_check type_safely type_very_safely desktop_vt boot_to_login_screen console_login console_switch_layout desktop_switch_layout console_loadkeys_us do_bootloader boot_decrypt check_release menu_launch_type repo_setup setup_workaround_repo cleanup_workaround_repo console_initial_setup handle_welcome_screen gnome_initial_setup anaconda_create_user check_desktop download_modularity_tests quit_firefox advisory_get_installed_packages advisory_check_nonmatching_packages start_with_launcher quit_with_shortcut disable_firefox_studies select_rescue_mode copy_devcdrom_as_isofile get_release_number check_left_bar check_top_bar check_prerelease check_version spell_version_number _assert_and_click is_branched rec_log click_unwanted_notifications repos_mirrorlist register_application get_registered_applications solidify_wallpaper check_and_install_git download_testdata make_serial_writable/;
 
 # We introduce this global variable to hold the list of applications that have
 # registered during the apps_startstop_test when they have sucessfully run.
@@ -1463,5 +1463,25 @@ sub download_testdata {
     # Change ownership
     assert_script_run("chown -R test:test $location");
 }
+
+# On Fedora, the serial console is not writable for regular users which lames
+# some of the openQA commands that send messages to the serial console to check
+# that a command has finished, for example assert_script_run, etc.
+# This routine changes the rights on the serial console file and makes it 
+# writable for everyone, so that those commands work. This is actually very useful 
+# for testing commands from users' perspective. The routine also handles becoming the root.
+# We agree that this is not the "correct" way, to enable users to type onto serial console
+# and that it correctly should be done via groups (dialout) but that would require rebooting
+# the virtual machine. Therefore we do it this way, which has immediate effect.
+sub make_serial_writable{
+    become_root();
+    sleep 2;
+    # Make serial console writable for everyone.
+    enter_cmd("chmod 666 /dev/${serialdev}");
+    sleep 2;
+    # Exit the root account
+    enter_cmd("exit");
+    sleep 2;
+} 
 
 1;
