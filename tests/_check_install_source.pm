@@ -26,8 +26,11 @@ sub run {
         if ($addrepourl =~ m,^nfs://,,) {
             # this line tells us it set up a repo for our URL...
             assert_script_run 'grep "repo addrepo.*' . ${addrepourl} . '" /tmp/packaging.log';
-            # ...this line tells us it added the repo called 'addrepo'...
-            assert_script_run 'grep "\(added\|enabled\) repo: .addrepo." /tmp/packaging.log';
+            # ...this line tells us it added the repo called 'addrepo' (<F36)...
+            if (script_run 'grep "\(added\|enabled\) repo: .addrepo." /tmp/packaging.log') {
+                # this is F36+
+                assert_script_run 'grep "Added the ' . "'addrepo'" . '" /tmp/anaconda.log';
+            }
             # ...and one of these tells us it worked (I hope). This one is <F35...
             if (script_run 'grep "enabled repo.*nfs" /tmp/packaging.log') {
                 # ...these are F35+
@@ -65,8 +68,14 @@ sub run {
             # in F35+, the "enabled repo" log line is gone, instead
             # we'll check some log messages from the dnf manager module
             # that show up in anaconda.log. Can drop the above branch
-            # and only go with the below branch after F34 EOL
-            assert_script_run 'grep "added repo: ' . "'anaconda'.*${repourl}" . '" /tmp/packaging.log';
+            # and only go with this branch after F34 EOL.
+            #
+            # in F36+, the "added repo: " line in packaging.log is
+            # gone too, instead we get "Added the 'XXX' repository"
+            # in anaconda.log
+            if (script_run 'grep "added repo: ' . "'anaconda'.*${repourl}" . '" /tmp/packaging.log') {
+                assert_script_run 'grep "Added the ' . "'anaconda'" . '" /tmp/anaconda.log';
+            }
             assert_script_run 'grep "Load metadata for the ' . "'anaconda'" . '" /tmp/anaconda.log';
             assert_script_run 'grep "Loaded metadata from ' . ".*${repourl}" . '" /tmp/anaconda.log';
         }
