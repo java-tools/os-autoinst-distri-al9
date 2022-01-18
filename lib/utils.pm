@@ -852,7 +852,11 @@ sub anaconda_create_user {
         wait_still_screen 2;
         _type_user_password();
     }
-    assert_and_click "anaconda_install_user_creation_make_admin";
+    # FIXME: this is selected by default from F36 (20210118.n.0) on.
+    # we can drop this block and associated needles entirely on F35 EOL
+    unless (check_screen "anaconda_install_user_creation_admin_selected") {
+        assert_and_click "anaconda_install_user_creation_make_admin";
+    }
     assert_and_click "anaconda_spoke_done";
     # since 20170105, we will get a warning here when the password
     # contains non-ASCII characters. Assume only switched layouts
