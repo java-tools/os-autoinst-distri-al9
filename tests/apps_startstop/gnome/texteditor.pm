@@ -13,7 +13,7 @@ sub run {
     # Check that is started
     assert_screen 'apps_run_texteditor';
     # Register application
-    register_application("gedit");
+    register_application("gnome-text-editor");
     # Close the application
     quit_with_shortcut();
 }
