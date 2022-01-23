@@ -26,7 +26,7 @@ sub run {
     script_run("rm /home/test/Desktop/*");
     # Verification commands need serial console to be writable and readable for
     # normal users, let's make it writable then.
-    script_run("chmod 666 /dev/ttyS0");
+    script_run("chmod 666 /dev/${serialdev}");
     # Leave the root terminal and switch back to desktop for the rest of the test.
     desktop_vt();
 
