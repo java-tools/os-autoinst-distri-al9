@@ -10,7 +10,7 @@ sub run {
     sleep 2;
 
     # Go to the menu
-    send_key("f10");
+    assert_and_click("gnome_burger_menu");
     # Set as background
     assert_and_click("eog_set_wallpaper");
     # Confirm
