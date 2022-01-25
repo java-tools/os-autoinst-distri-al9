@@ -11,9 +11,11 @@ sub run {
     
     # Open the shortcuts
     send_key("f1");
+    wait_still_screen(3);
     assert_screen("eog_help_shown");
     # Try another screen
     assert_and_click("eog_help_image_zoom");
+    wait_still_screen(2);
     assert_screen("eog_help_zoom_shown");
 }
 

@@ -10,11 +10,14 @@ sub run {
     
     # Open the menu
     assert_and_click("gnome_burger_menu");
+    wait_still_screen(3);
     # Click on the About item
     assert_and_click("eog_menu_about");
+    wait_still_screen(3);
     assert_screen("eog_about_shown");
     # Click on Credits
     assert_and_click("eog_about_credits");
+    wait_still_screen(2);
     assert_screen("eog_credits_shown");
 }
 

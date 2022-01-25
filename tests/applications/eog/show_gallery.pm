@@ -15,11 +15,13 @@ sub run {
         record_soft_failure("Key combo does not work, issue https://gitlab.gnome.org/GNOME/gtk/-/issues/4171");
         # Open the menu
         assert_and_click("gnome_burger_menu");
-        wait_still_screen(3);
+        wait_still_screen(2);
         # Open Submenu Show
         assert_and_click("eog_submenu_show");
+        wait_still_screen(2);
         # Toggle gallery
         assert_and_click("eog_gallery_show");
+        wait_still_screen(2);
         
     }
     assert_screen("eog_gallery_shown");

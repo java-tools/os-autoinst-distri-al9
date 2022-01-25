@@ -14,6 +14,7 @@ sub run {
     # Check that the Side panel is visible, try to make it visible if it is not.
     if (!check_screen("eog_side_panel")) {
         send_key("f9");
+        wait_still_screen(2);
     }
     assert_screen("eog_side_panel");
 

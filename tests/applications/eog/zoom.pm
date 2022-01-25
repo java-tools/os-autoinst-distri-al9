@@ -11,6 +11,7 @@ sub run {
     
     # Make the image size 1:1
     send_key("1");
+    wait_still_screen(2);
     assert_screen("eog_image_shown_increased");
     # Return to the best fit
     send_key("f");

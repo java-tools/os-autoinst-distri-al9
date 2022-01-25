@@ -11,10 +11,12 @@ sub run {
     
     # Open the shortcuts
     send_key("ctrl-?");
+    wait_still_screen(3);
     assert_screen("eog_shortcuts_shown");
     # Try another screen
     send_key("right");
     send_key("ret");
+    wait_still_screen(3);
     assert_screen("eog_shortcuts_alt_shown");
 }
 

@@ -10,9 +10,11 @@ sub run {
     
     # Go to next picture.
     send_key("right");
+    wait_still_screen(2);
     assert_screen("eog_image_next");
     # Go to previous picture
     send_key("left");
+    wait_still_screen;
     assert_and_click("eog_image_default");
 }
 

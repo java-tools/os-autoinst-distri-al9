@@ -10,9 +10,11 @@ sub run {
     
     # Rotate left
     send_key("shift-ctrl-r");
+    wait_still_screen(2);
     assert_screen("eog_image_rotated_left");
     # Rotate right
     send_key("ctrl-r");
+    wait_still_screen(2);
     assert_and_click("eog_image_default");
 }
 
