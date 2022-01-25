@@ -12,6 +12,7 @@ sub run {
     
     # Shift-ctrl-S to save a file as a new file.
     send_key("shift-ctrl-s");
+    wait_still_screen(3);
 
     # Type the new name, this should be possible without any intervention.
     type_very_safely("new_image");

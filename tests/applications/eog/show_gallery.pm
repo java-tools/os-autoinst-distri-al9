@@ -14,7 +14,7 @@ sub run {
     unless (check_screen("eog_gallery_shown")) {
         record_soft_failure("Key combo does not work, issue https://gitlab.gnome.org/GNOME/gtk/-/issues/4171");
         # Open the menu
-        send_key("f10");
+        send_key("gnome_burger_menu");
         # Open Submenu Show
         assert_and_click("eog_submenu_show");
         # Toggle gallery
