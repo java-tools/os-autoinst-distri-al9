@@ -457,7 +457,7 @@ sub setup_workaround_repo {
     my %workarounds = (
         "33" => [],
         "34" => [],
-        "35" => ["82030355"]
+        "35" => ["FEDORA-2022-5aee32fbab"]
     );
     # then we'll download each update for our release:
     my $advortasks = $workarounds{$version};
