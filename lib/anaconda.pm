@@ -337,7 +337,7 @@ sub check_help_on_pane {
         # Click on Installation Progress link
         assert_and_click "anaconda_help_progress_link";
         # Check the Installation Progress screen
-        assert_screen "anaconda_help_progress";
+        assert_screen "anaconda_help_installation_progress";
     }
     # Otherwise, only check the relevant screen.
     else {
