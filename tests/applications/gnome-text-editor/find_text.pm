@@ -19,6 +19,8 @@ sub run {
     type_safely "sweetest";
     # Confirm
     send_key "ret";
+    sleep 2;
+    send_key "esc";
     # Check that correct word is highlighted.
     assert_screen "gte_found_text";
     

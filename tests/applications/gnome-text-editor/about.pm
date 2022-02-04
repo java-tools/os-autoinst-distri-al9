@@ -24,6 +24,10 @@ sub run {
 
     # Check that Credits were shown.
     assert_screen "gte_credits_shown";
+
+    # Check the System tab
+    assert_and_click "gte_system_tab";
+    assert_screen "gte_system_shown";
 }
 
 sub test_flags {

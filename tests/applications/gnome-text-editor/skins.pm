@@ -21,29 +21,18 @@ sub run {
     assert_and_click("gnome_burger_menu");
     assert_and_click("gte_preferences_submenu");
     wait_still_screen(2);
-    # Click on Adwaita;
-    assert_and_click("gte_select_adwaita");
-    assert_screen("gte_adwaita_used");
-    # Switch to dark Adwaita
-    send_key("tab");
-    sleep 1;
-    send_key("ret");
-    assert_screen("gte_darkadwaita_used");
-    # Switch to Classic
-    send_key("tab");
-    sleep 1;
-    send_key("ret");
-    assert_screen("gte_classic_used");
-    # Switch to DarkClassic
-    send_key("tab");
-    sleep 1;
-    send_key("ret");
-    assert_screen("gte_darkclassic_used");
-    # Switch to Cobalt
-    send_key("tab");
-    sleep 1;
-    send_key("ret");
-    assert_screen("gte_cobalt_used");
+
+    # Use A3 pattern
+    assert_and_click("gte-a3-select");
+    assert_screen("gte-a3-selected");
+
+    # Use B2 pattern
+    assert_and_click("gte-b2-select");
+    assert_screen("gte-b2-selected");
+    
+    # Use A3 pattern
+    assert_and_click("gte-b4-select");
+    assert_screen("gte-b4-selected");
 }
 
 
