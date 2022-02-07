@@ -414,8 +414,15 @@ sub disable_firefox_studies {
     # and also disables the password manager stuff so that doesn't
     # break password entry:
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1635833
+    # and *also* disables the "quick suggest onboarding dialog"
+    # (god I am starting to hate this crap):
+    # https://bugzilla.mozilla.org/show_bug.cgi?id=1703903
     assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/distribution';
     assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false}}\' > $(rpm --eval %_libdir)/firefox/distribution/policies.json';
+    assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/browser/defaults/preferences';
+    # it's not at all clear from the code which of these actually gets
+    # used, so we set them all just in case
+    assert_script_run 'printf "pref(\'browser.urlbar.quicksuggest.shouldShowOnboardingDialog\', false);\npref(\'quickSuggestShouldShowOnboardingDialog\', false);\npref(\'browser.urlbar.quickSuggestShouldShowOnboardingDialog\', false);" > $(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
 }
 
 sub repos_mirrorlist {
