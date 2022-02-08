@@ -86,6 +86,7 @@ it also means that `B` conflicts `A` even if not shown in the table).
 | `BUGZILLA_LOGIN` | string | not set | used with `_SECRET_BUGZILLA_PASSWORD` | This is used to store a login string which does not get exposed in log files. |
 | `_SECRET_BUGZILLA_PASSWORD` | string | not set | used with `BUGZILLA_LOGIN` | This is used to store a password string which does not get exposed in log files. |
 | `_SECRET_BUGZILLA_APIKEY` | string | not set | used with other secrets | This is used to store an API key which does not get exposed in log files. |
+| `USE_CUPS` | boolean | `false`/not set | if set, the desktop printing test will use cups-pdf instead of the generic method |
 
 Run variables
 -------------

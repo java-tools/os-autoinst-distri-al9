@@ -987,7 +987,24 @@
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
-        "desktop_printing": {
+        "desktop_printing_cups": {
+            "profiles": {
+                "fedora-KDE-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
+                "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-x86_64-*-64bit": 40,
+                "fedora-Workstation-upgrade-aarch64-*-aarch64": 40,
+                "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
+            },
+            "settings": {
+                "BOOTFROM": "c",
+                "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
+                "USE_CUPS":"1",
+                "POSTINSTALL": "desktop_printing",
+                "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
+            }
+        },
+        "desktop_printing_built": {
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,

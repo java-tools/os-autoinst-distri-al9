@@ -5,6 +5,7 @@ use utils;
 
 sub run {
     my $self = shift;
+    my $usecups = get_var("USE_CUPS");
     # Prepare the environment for the test.
     #
     # Some actions need a root account, so become root.
@@ -15,8 +16,12 @@ sub run {
     assert_script_run  "echo 'A quick brown fox jumps over a lazy dog.' > testfile.txt";
     # Make the file readable and for everybody.
     script_run "chmod 666 testfile.txt";
-    # Install the Cups-PDF package to use the Cups-PDF printer
-    assert_script_run "dnf -y install cups-pdf", 180;
+
+    # If the test should be running with CUPS-PDF, we need to install it first.
+    if ($usecups) {
+        # Install the Cups-PDF package to use the Cups-PDF printer
+        assert_script_run "dnf -y install cups-pdf", 180;
+    }
 
     # Here, we were doing a version logic. This is no longer needed, because
     # we now use a different approach to getting the resulting file name:
@@ -55,21 +60,30 @@ sub run {
     menu_launch_type($term);
     wait_still_screen(2);
 
-    # Open the text editor and print the file.
+    # Open the text editor and maximize it.
     type_very_safely "$editor /home/test/testfile.txt &\n";
     wait_still_screen(stilltime=>3, similarity_level=>45);
-    # Print the file using the Cups-PDF printer
+    send_key($maximize);
+
+    # Print the file using one of the available methods
     send_key "ctrl-p";
     wait_still_screen(stilltime=>3, similarity_level=>45);
-    # In Gnome, we need to select the Cups-PDF printer first
-    if ($desktop eq 'gnome') {
-        assert_and_click "printing_select_pdfprinter";
+    # We will select the printing method
+    # In case of KDE, we will need to select the printer first.
+    if ($desktop eq "kde") {
+        assert_and_click "printing_kde_select_printer";
+    }
+    if ($usecups) {
+        assert_and_click "printing_use_cups_printer";
     }
     else {
-        # It seems that on newly installed KDE systems with no
-        # printer,  the Cups-PDF printer is already pre-selected.
-        # We only check that it is correct.
-        assert_screen "printing_pdfprinter_ready";
+        assert_and_click "printing_use_saveas_pdf";
+        # For KDE, we need to set the output location.
+        if ($desktop eq "kde") {
+            assert_and_click "printing_kde_location_line";
+            send_key("ctrl-a");
+            type_safely("/home/test/Documents/output.pdf");
+        }
     }
     assert_and_click "printing_print";
     # Exit the application
@@ -79,14 +93,21 @@ sub run {
     # Enter key will dismiss them and return the CLI to the ready status.
     send_key("ret");
 
-    # Get the name of the printed file. Both Gnome and KDE place 
-    # that file in the /home/$user/Desktop directory.
-    my $filename = script_output("ls /home/test/Desktop/");
+    # Get the name of the printed file. The path location depends
+    # on the selected method.
+    # For the built-in printing method.
+    my $filepath = "/home/test/Documents/output.pdf";
+    # If we use cups-pdf, the file will be placed elsewhere.
+    if ($usecups) {
+        my $filename = script_output("ls /home/test/Desktop/");
+        $filepath = "/home/test/Desktop/$filename";
+    }
+    
     # Echo that filename to the terminal for troubleshooting purposes
-    diag("The filename of the printed out file is: $filename");
+    diag("The file of the printed out file is located in $filepath");
 
-    # Open the pdf file in a Document readier and check that it is correctly printed.
-    type_safely("$viewer /home/test/Desktop/$filename &\n");
+    # Open the pdf file in a Document reader and check that it is correctly printed.
+    type_safely("$viewer $filepath &\n");
     wait_still_screen(stilltime=>3, similarity_level=>45);
     # Resize the window, so that the size of the document fits the bigger space
     # and gets more readable.

@@ -1,15 +1,15 @@
 {
   "area": [
     {
-      "width": 99,
-      "height": 19,
-      "ypos": 209,
       "xpos": 48,
+      "ypos": 206,
+      "width": 103,
+      "height": 23,
       "type": "match"
     }
   ],
   "properties": [],
   "tags": [
-    "printing_select_pdfprinter"
+    "printing_use_cups_printer"
   ]
 }

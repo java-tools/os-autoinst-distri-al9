@@ -2,14 +2,14 @@
   "area": [
     {
       "type": "match",
+      "xpos": 161,
+      "width": 328,
       "height": 19,
-      "width": 99,
-      "ypos": 270,
-      "xpos": 184
+      "ypos": 141
     }
   ],
   "properties": [],
   "tags": [
-    "printing_select_pdfprinter"
+    "printing_check_sentence"
   ]
 }
