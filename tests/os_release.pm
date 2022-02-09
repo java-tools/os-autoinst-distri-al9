@@ -67,7 +67,9 @@ sub run {
         # IoT has a branch that acts more or less like Rawhide, but has
         # its version as the Rawhide release number, not 'Rawhide'. This
         # handles that
-        $version_id = 'Rawhide' if ($version_id eq $rawrel);
+	    if (get_var("SUBVARIANT") eq "IoT") {
+	        $version_id = 'Rawhide' if ($version_id eq $rawrel);
+	    }
         my $varstr = spell_version_number($version_id);
         my $target = lc($version_id);
         $version_id = $rawrel if ($version_id eq "Rawhide");
