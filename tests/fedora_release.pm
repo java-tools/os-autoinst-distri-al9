@@ -19,9 +19,7 @@ sub run {
     # IoT has a branch that acts more or less like Rawhide, but has
     # its version as the Rawhide release number, not 'Rawhide'. This
     # handles that
-    if (get_var("SUBVARIANT") eq "IoT") {
-        $tospell = 'Rawhide' if ($tospell eq $rawrel);
-    }
+    $tospell = 'Rawhide' if ($tospell eq $rawrel);
     # this is the Rawhide release number, which we expect to see.
     $expectver = $rawrel if ($expectver eq "Rawhide");
     # Create a spelt form of the version number.
@@ -29,8 +27,7 @@ sub run {
     # Create the expected content of the release file
     # and compare it with its real counterpart.
     my $expected = "Fedora release $expectver ($speltnum)";
-    diag("The fedora-release content to validate: $expected");
-    validate_script_output("cat /etc/fedora-release", qr/$expected/);
+    validate_script_output 'cat /etc/fedora-release', sub { $_ eq $expected };
 }
 
 sub test_flags {
