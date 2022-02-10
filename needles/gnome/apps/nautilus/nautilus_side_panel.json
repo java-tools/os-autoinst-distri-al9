@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "nautilus_side_panel"
+  ],
+  "area": [
+    {
+      "xpos": 5,
+      "ypos": 127,
+      "width": 117,
+      "height": 294,
+      "type": "match"
+    }
+  ]
+}

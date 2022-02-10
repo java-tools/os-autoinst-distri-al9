@@ -1,0 +1,15 @@
+{
+  "properties": [],
+  "tags": [
+    "nautilus_restore_content"
+  ],
+  "area": [
+    {
+      "xpos": 837,
+      "ypos": 129,
+      "width": 55,
+      "height": 21,
+      "type": "match"
+    }
+  ]
+}
