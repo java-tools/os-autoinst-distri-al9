@@ -987,7 +987,7 @@
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
-        "desktop_printing_cups": {
+        "desktop_printing": {
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
@@ -1004,7 +1004,7 @@
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
-        "desktop_printing_built": {
+        "desktop_printing_builtin": {
             "profiles": {
                 "fedora-KDE-live-iso-x86_64-*-64bit": 20,
                 "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
