@@ -95,14 +95,10 @@ sub run {
 
     # Get the name of the printed file. The path location depends
     # on the selected method.
-    # For the built-in printing method.
-    my $filepath = "/home/test/Documents/output.pdf";
-    # If we use cups-pdf, the file will be placed elsewhere.
-    if ($usecups) {
-        my $filename = script_output("ls /home/test/Desktop/");
-        $filepath = "/home/test/Desktop/$filename";
-    }
-    
+    my $directory = $usecups ? "/home/test/Desktop" : "/home/test/Documents";
+    my $filename = script_output("ls $directory");
+    my $filepath = "$directory/$filename";
+
     # Echo that filename to the terminal for troubleshooting purposes
     diag("The file of the printed out file is located in $filepath");
 
