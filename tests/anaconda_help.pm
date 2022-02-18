@@ -26,7 +26,7 @@ sub run {
     my @testplan;
     # For LIVE KDE:
     if ((get_var('LIVE')) && (get_var('DESKTOP') eq "kde")) {
-        @testplan = qw/keyboard_layout time_date install_destination network_host_name root_password create_user/;
+        @testplan = qw/keyboard_layout time_date install_destination network_host_name root_password user_creation/;
     }
     # For LIVE Workstation
     elsif ((get_var('LIVE')) && (get_var('DESKTOP') eq "gnome")) {
@@ -38,7 +38,7 @@ sub run {
     }
     # For ServerDVD
     else {
-        @testplan = qw/keyboard_layout language_support time_date installation_source select_packages install_destination network_host_name root_password create_user/;
+        @testplan = qw/keyboard_layout language_support time_date installation_source select_packages install_destination network_host_name root_password user_creation/;
     }
 
     # Iterate over test plan and do the tests.

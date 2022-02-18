@@ -11,6 +11,7 @@
   "properties": [],
   "tags": [
     "ENV-DISTRI-fedora",
-    "anaconda_install_user_creation"
+    "anaconda_install_user_creation",
+    "anaconda_main_hub_user_creation",
   ]
 }
