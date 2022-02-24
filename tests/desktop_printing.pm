@@ -88,13 +88,12 @@ sub run {
     assert_and_click "printing_print";
     # Exit the application
     send_key "alt-f4";
-    wait_still_screen(stilltime=>3, similarity_level=>45);
-    # The CLI might be blocked by some application output. Pressing the
-    # Enter key will dismiss them and return the CLI to the ready status.
-    send_key("ret");
 
     # Get the name of the printed file. The path location depends
-    # on the selected method.
+    # on the selected method. We do this on a VT because there's
+    # no argument to script_output to make it type slowly, and
+    # it often fails typing fast in a desktop terminal
+    $self->root_console(tty=>3);
     my $directory = $usecups ? "/home/test/Desktop" : "/home/test/Documents";
     my $filename = script_output("ls $directory");
     my $filepath = "$directory/$filename";
@@ -102,6 +101,12 @@ sub run {
     # Echo that filename to the terminal for troubleshooting purposes
     diag("The file of the printed out file is located in $filepath");
 
+    # back to the desktop
+    desktop_vt();
+    wait_still_screen(stilltime=>3, similarity_level=>45);
+    # The CLI might be blocked by some application output. Pressing the
+    # Enter key will dismiss them and return the CLI to the ready status.
+    send_key("ret");
     # Open the pdf file in a Document reader and check that it is correctly printed.
     type_safely("$viewer $filepath &\n");
     wait_still_screen(stilltime=>3, similarity_level=>45);
