@@ -1056,12 +1056,15 @@ sub advisory_check_nonmatching_packages {
     script_run 'touch /tmp/installedupdatepkgs.txt';
     # this creates /tmp/installedupdatepkgs.txt as a sorted list of installed
     # packages with the same name as packages from the update, in the same form
-    # as /var/log/updatepkgs.txt. The 'tail -1' tries to handle the problem of
-    # installonly packages like the kernel, where we wind up with *multiple*
-    # versions installed after the update; I'm hoping the last line of output
-    # for any given package is the most recent version, i.e. the one in the
-    # update.
-    script_run 'for pkg in $(cat /var/log/updatepkgnames.txt); do rpm -q $pkg && rpm -q $pkg --last | head -1 | cut -d" " -f1 | xargs rpm -q --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" >> /tmp/installedupdatepkgs.txt; done';
+    # as /var/log/updatepkgs.txt. The '--last | head -1' tries to handle the
+    # problem of installonly packages like the kernel, where we wind up with
+    # *multiple* versions installed after the update; the first line of output
+    # for any given package with --last is the most recent version, i.e. the
+    # one in the update. The sed replaces the caret - "^" - with "\^" (literal
+    # slash then a caret) in the package NVRA; this is necessary to workaround
+    # a bug in RPM - https://bugzilla.redhat.com/show_bug.cgi?id=2002038 . It
+    # can be removed when that bug is fixed
+    script_run 'for pkg in $(cat /var/log/updatepkgnames.txt); do rpm -q $pkg && rpm -q $pkg --last | head -1 | cut -d" " -f1 | sed -e "s,\^,\\\\^,g" | xargs rpm -q --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" >> /tmp/installedupdatepkgs.txt; done';
     script_run 'sort -u -o /tmp/installedupdatepkgs.txt /tmp/installedupdatepkgs.txt';
     # for debugging, may as well always upload these, can't hurt anything
     upload_logs "/tmp/installedupdatepkgs.txt", failok=>1;
