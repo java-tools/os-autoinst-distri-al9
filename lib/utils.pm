@@ -1063,8 +1063,11 @@ sub advisory_check_nonmatching_packages {
     # one in the update. The sed replaces the caret - "^" - with "\^" (literal
     # slash then a caret) in the package NVRA; this is necessary to workaround
     # a bug in RPM - https://bugzilla.redhat.com/show_bug.cgi?id=2002038 . It
-    # can be removed when that bug is fixed
-    script_run 'for pkg in $(cat /var/log/updatepkgnames.txt); do rpm -q $pkg && rpm -q $pkg --last | head -1 | cut -d" " -f1 | sed -e "s,\^,\\\\^,g" | xargs rpm -q --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" >> /tmp/installedupdatepkgs.txt; done';
+    # can be removed when that bug is fixed. Yes, it really needs eight slashes
+    # (we need four to reach bash, and half of them get eaten by perl or
+    # something along the way). Yes, it only works with *single* quotes. Yes,
+    # I hate escaping
+    script_run 'for pkg in $(cat /var/log/updatepkgnames.txt); do rpm -q $pkg && rpm -q $pkg --last | head -1 | cut -d" " -f1 | sed -e \'s,\^,\\\\\\\\^,g\' | xargs rpm -q --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" >> /tmp/installedupdatepkgs.txt; done';
     script_run 'sort -u -o /tmp/installedupdatepkgs.txt /tmp/installedupdatepkgs.txt';
     # for debugging, may as well always upload these, can't hurt anything
     upload_logs "/tmp/installedupdatepkgs.txt", failok=>1;
