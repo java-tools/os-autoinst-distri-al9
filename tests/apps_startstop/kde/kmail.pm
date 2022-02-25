@@ -11,9 +11,9 @@ sub run {
     # Start the application
     menu_launch_type 'kmail';
     # Cancel Kmail data wizard
-    assert_and_click 'kmail_cancel_data';
-    if (check_screen("kmail_cancel_data", 1)) {
-        assert_and_click "kmail_cancel_data";
+    assert_and_click 'kde_cancel_button';
+    if (check_screen("kde_cancel_button", 1)) {
+        click_lastmatch;
     }
     # Check that it is started
     assert_screen 'kmail_runs';

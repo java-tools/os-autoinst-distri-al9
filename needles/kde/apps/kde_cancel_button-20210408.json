@@ -1,15 +1,15 @@
 {
   "area": [
     {
-      "ypos": 694,
       "type": "match",
       "height": 16,
-      "xpos": 938,
-      "width": 66
+      "width": 65,
+      "xpos": 805,
+      "ypos": 690
     }
   ],
   "properties": [],
   "tags": [
-    "kontact_provide_data"
+    "kde_cancel_button"
   ]
 }

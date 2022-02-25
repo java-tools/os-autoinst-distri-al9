@@ -26,7 +26,7 @@ sub run {
     assert_and_click 'kgpg_done';
     wait_still_screen 2;
     # Cancel the keypair creation
-    assert_and_click 'kgpg_keypair_cancel';
+    assert_and_click 'kde_cancel_button';
     wait_still_screen 2;
     # Check that it is started
     assert_screen 'kgpg_runs';
