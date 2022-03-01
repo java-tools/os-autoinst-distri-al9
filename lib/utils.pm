@@ -877,14 +877,12 @@ sub anaconda_create_user {
 sub check_desktop {
     # Check we're at a desktop. We do this by looking for the "apps"
     # menu button ("Activities" button on GNOME, kicker button on
-    # KDE). This is set up as a helper function because, for a while,
-    # GNOME made the top bar translucent by default *and* we had an
-    # animated background by default, which made doing this solely
-    # with needle matches hard, so we had a workaround of trying to
-    # open the overview with the super key and match on the app grid
-    # icon. But GNOME has gone back to the top bar being a solid color
-    # by default, so we don't have this problem any more and this is
-    # back to just being a simple needle match.
+    # KDE). This is set up as a helper function so we can handle
+    # GNOME's behaviour of opening the overview on first login; all
+    # our tests were written when GNOME *didn't* do that, so it
+    # would be awkward to find all the places in them where we need
+    # to close the overview. Instead, we just have this function
+    # close it if it's open.
     my %args = (
         timeout => 30,
         @_
@@ -894,8 +892,14 @@ sub check_desktop {
     while ($count > 0) {
         $count -= 1;
         assert_screen "apps_menu_button", $args{timeout};
-        # GNOME 40 starts on the overview by default; for consistency with
-        # older GNOME and KDE, let's just close it
+        if ($count == 4) {
+            # GNOME 42 shows the inactive menu button briefly before
+            # opening the overview. So we need to wait a bit on first
+            # cycle in case GNOME is about to open the overview.
+            wait_still_screen 5;
+            assert_screen "apps_menu_button";
+        }
+        # Here's where we detect if the overview is open and close it
         if (match_has_tag "apps_menu_button_active") {
             $activematched = 1;
             wait_still_screen 5;
