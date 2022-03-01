@@ -13,11 +13,8 @@ sub run {
     
     
     # check if a welcome screen appears, if so, click on it
-    if (check_screen('apps_run_software_welcome', 1)) {
-        assert_and_click 'apps_run_software_welcome';
-        wait_still_screen 2;
-    }
-    assert_screen 'apps_run_software';
+    send_key 'ret' if (check_screen('gnome_software_welcome', 10));
+    assert_screen 'desktop_package_tool_update';
     # Register application
     register_application("gnome-software");
     # Close the application
