@@ -1443,14 +1443,14 @@ sub solidify_wallpaper {
         # Start the terminal to set up backgrounds.
         menu_launch_type "gnome-terminal";
         # wait to be sure it's fully open
-        wait_still_screen 5;
+        wait_still_screen(stilltime=>5, similarity_level=>42);
         # When the application opens, run command in it to set the background to black
         type_very_safely "gsettings set org.gnome.desktop.background picture-uri ''";
         send_key 'ret';
-        wait_still_screen 2;
+        wait_still_screen(stilltime=>2, similarity_level=>42);
         type_very_safely "gsettings set org.gnome.desktop.background primary-color '#000000'";
         send_key 'ret';
-        wait_still_screen 2;
+        wait_still_screen(stilltime=>2, similarity_level=>42);
         quit_with_shortcut();
         # check that is has changed color
         assert_screen 'apps_settings_screen_black';
