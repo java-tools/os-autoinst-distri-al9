@@ -75,12 +75,12 @@ sub login_user {
         # but rather a "screensaver" screen for the DM. If this is the
         # case, hit Escape to bring back the user list.
         send_key "esc";
-        wait_still_screen 5;
+        wait_still_screen(stilltime=>5, similarity_level=>45);
     }
     if ($method ne "unlock") {
         # When we do not just want to unlock the screen, we need to select a user.
         assert_and_click "login_$user";
-        wait_still_screen 5;
+        wait_still_screen(stilltime=>5, similarity_level=>45);
     }
     if ($method eq "create") {
         # With users that do not have passwords, we need to make an extra round
@@ -89,7 +89,7 @@ sub login_user {
     }
     type_very_safely "$password\n";
     check_desktop(timeout=>60) if ($args{checklogin});
-    wait_still_screen 5;
+    wait_still_screen(stilltime=>5, similarity_level=>45);
 }
 
 sub check_user_logged_in {
