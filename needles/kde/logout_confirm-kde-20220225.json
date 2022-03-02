@@ -10,6 +10,8 @@
   ],
   "properties": [],
   "tags": [
-    "log_out_confirm"
+    "log_out_confirm",
+    "power_off_confirm",
+    "restart_confirm"
   ]
 }
