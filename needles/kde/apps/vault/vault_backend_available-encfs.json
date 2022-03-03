@@ -1,7 +1,7 @@
 {
   "properties": [],
   "tags": [
-    "vault_encfs_backend_available"
+    "vault_backend_available"
   ],
   "area": [
     {

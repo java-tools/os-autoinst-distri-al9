@@ -26,7 +26,7 @@ sub run {
     assert_screen "vault_dialog_runs";
 
     # Check that a correct backend is available
-    assert_screen "vault_encfs_backend_available";
+    assert_screen "vault_backend_available";
 
     # Enter the name of the newly created testvault
     assert_and_click "vault_enter_name";
