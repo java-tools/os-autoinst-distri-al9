@@ -18,7 +18,7 @@ sub run {
     desktop_vt();
 
     # Start the application
-    menu_launch_type("gnome-text-editor");
+    menu_launch_type("text-editor");
     # Check that it started
     assert_screen("apps_run_texteditor");
 
