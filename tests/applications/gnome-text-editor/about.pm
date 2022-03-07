@@ -26,8 +26,11 @@ sub run {
     assert_screen "gte_credits_shown";
 
     # Check the System tab
-    assert_and_click "gte_system_tab";
-    assert_screen "gte_system_shown";
+    # This doesn't show up on Silverblue yet, it's on an older version
+    unless (get_var("CANNED")) {
+        assert_and_click "gte_system_tab";
+        assert_screen "gte_system_shown";
+    }
 }
 
 sub test_flags {
