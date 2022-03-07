@@ -1,15 +1,19 @@
 {
-  "area": [
-    {
-      "xpos": 796,
-      "height": 24,
-      "ypos": 61,
-      "width": 27,
-      "type": "match"
-    }
-  ],
-  "properties": [],
-  "tags": [
-    "gte_preferences_off"
-  ]
+    "area": [
+        {
+            "height": 24,
+            "type": "match",
+            "width": 349,
+            "xpos": 471,
+            "ypos": 61,
+            "click_point": {
+                "xpos": 329,
+                "ypos": 12
+            }
+        }
+    ],
+    "properties": [],
+    "tags": [
+        "gte_preferences_off"
+    ]
 }
