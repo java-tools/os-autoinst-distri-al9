@@ -16,7 +16,9 @@ sub run {
     my $ret = script_run "curl http://172.16.2.114";
     mutex_create "podman_connect_done";
     # sleep a bit to give server time to pick up the mutex
-    sleep 5;
+    # server tries every 5 seconds, but an attempt can fail,
+    # and wait 10 seconds before retry
+    sleep 30;
     # die if connection failed
     die "connection failed!" if ($ret);
 }
