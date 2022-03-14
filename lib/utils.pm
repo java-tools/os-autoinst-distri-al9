@@ -47,9 +47,9 @@ sub type_safely {
 sub type_very_safely {
     my $string = shift;
     type_string($string, wait_screen_change => 1, max_interval => 1);
-    # similarity level 45 as there will commonly be a flashing
-    # cursor and the default level (47) is slightly too tight
-    wait_still_screen(stilltime=>5, similarity_level=>45);
+    # similarity level 38 as there will commonly be a flashing
+    # cursor and the default level (47) is too tight
+    wait_still_screen(stilltime=>5, similarity_level=>38);
 }
 
 sub get_release_number {
@@ -1443,14 +1443,14 @@ sub solidify_wallpaper {
         # Start the terminal to set up backgrounds.
         menu_launch_type "gnome-terminal";
         # wait to be sure it's fully open
-        wait_still_screen(stilltime=>5, similarity_level=>42);
+        wait_still_screen(stilltime=>5, similarity_level=>38);
         # When the application opens, run command in it to set the background to black
         type_very_safely "gsettings set org.gnome.desktop.background picture-uri ''";
         send_key 'ret';
-        wait_still_screen(stilltime=>2, similarity_level=>42);
+        wait_still_screen(stilltime=>2, similarity_level=>38);
         type_very_safely "gsettings set org.gnome.desktop.background primary-color '#000000'";
         send_key 'ret';
-        wait_still_screen(stilltime=>2, similarity_level=>42);
+        wait_still_screen(stilltime=>2, similarity_level=>38);
         quit_with_shortcut();
         # check that is has changed color
         assert_screen 'apps_settings_screen_black';
