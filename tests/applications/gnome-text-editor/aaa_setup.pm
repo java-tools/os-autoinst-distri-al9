@@ -14,6 +14,8 @@ sub run {
     # Get the test data from the test data repository.
     check_and_install_git();
     download_testdata("gnome-text-editor", "Documents");
+    # Remove gedit on upgraded systems so we don't launch it by accident
+    script_run("dnf -y remove gedit") if (get_var("IMAGETYPE") eq "upgrade");
     # Return to Desktop
     desktop_vt();
 
