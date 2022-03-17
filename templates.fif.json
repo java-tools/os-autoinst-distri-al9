@@ -477,6 +477,10 @@
             "machine": "aarch64",
             "product": "fedora-IoT-dvd_ostree-iso-aarch64-*"
         },
+        "fedora-IoT-dvd_ostree-iso-x86_64-*-64bit": {
+            "machine": "64bit",
+            "product": "fedora-IoT-dvd_ostree-iso-x86_64-*"
+        },
         "fedora-IoT-dvd_ostree-iso-x86_64-*-uefi": {
             "machine": "uefi",
             "product": "fedora-IoT-dvd_ostree-iso-x86_64-*"
