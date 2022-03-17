@@ -477,10 +477,6 @@
             "machine": "aarch64",
             "product": "fedora-IoT-dvd_ostree-iso-aarch64-*"
         },
-        "fedora-IoT-dvd_ostree-iso-x86_64-*-64bit": {
-            "machine": "64bit",
-            "product": "fedora-IoT-dvd_ostree-iso-x86_64-*"
-        },
         "fedora-IoT-dvd_ostree-iso-x86_64-*-uefi": {
             "machine": "uefi",
             "product": "fedora-IoT-dvd_ostree-iso-x86_64-*"
@@ -2042,11 +2038,11 @@
         "iot_zezere_server": {
             "profiles": {
                 "fedora-IoT-dvd_ostree-iso-aarch64-*-aarch64": 20,
-                "fedora-IoT-dvd_ostree-iso-x86_64-*-64bit": 40
+                "fedora-IoT-dvd_ostree-iso-x86_64-*-uefi": 40
             },
             "settings": {
                 "BOOTFROM": "c",
-                "HDD_1": "disk_f%CURRREL%_support_5_%ARCH%.qcow2",
+                "HDD_1": "disk_f%CURRREL%_minimal-uefi_3_%ARCH%.qcow2",
                 "NICTYPE": "tap",
                 "PARALLEL_CANCEL_WHOLE_CLUSTER": "0",
                 "POSTINSTALL": "_iot_zezere_server _setup_browser _iot_zezere_remote",
