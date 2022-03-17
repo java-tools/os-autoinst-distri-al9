@@ -2038,7 +2038,7 @@
         "iot_zezere_server": {
             "profiles": {
                 "fedora-IoT-dvd_ostree-iso-aarch64-*-aarch64": 20,
-                "fedora-IoT-dvd_ostree-iso-x86_64-*-uefi": 40
+                "fedora-IoT-dvd_ostree-iso-x86_64-*-64bit": 40
             },
             "settings": {
                 "BOOTFROM": "c",
