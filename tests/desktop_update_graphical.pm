@@ -59,8 +59,8 @@ sub run {
     wait_still_screen 5, 90;
     # we always want to refresh to make sure we get the prepared update
     assert_and_click 'desktop_package_tool_update_refresh', timeout=>120;
-    # wait a bit to make sure the UI clears to a 'refreshing' state
-    sleep 5;
+    # wait a while to make sure the UI clears to a 'refreshing' state
+    sleep 20;
     my $tags = ['desktop_package_tool_update_download', 'desktop_package_tool_update_apply'];
     # Apply updates, moving the mouse every two minutes to avoid the
     # idle screen blank kicking in. Depending on whether this is KDE
