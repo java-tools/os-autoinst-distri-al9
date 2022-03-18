@@ -57,15 +57,15 @@ sub run {
     assert_and_click 'desktop_package_tool_update';
     # wait for things to settle if e.g. GNOME is refreshing
     wait_still_screen 5, 90;
-    # depending on automatic update checks, 'apply' or 'download' may
-    # already be visible at this point, we may not need to refresh
-    assert_screen ['desktop_package_tool_update_apply', 'desktop_package_tool_update_download', 'desktop_package_tool_update_refresh'], 120;
+    # we always want to refresh to make sure we get the prepared update
+    assert_and_click 'desktop_package_tool_update_refresh', timeout=>120;
+    # wait a bit to make sure the UI clears to a 'refreshing' state
+    sleep 5;
     my $tags = ['desktop_package_tool_update_download', 'desktop_package_tool_update_apply'];
     # Apply updates, moving the mouse every two minutes to avoid the
     # idle screen blank kicking in. Depending on whether this is KDE
     # or GNOME and what Fedora release, we may see 'apply' right away,
-    # or 'download' then 'apply', or we may only see 'refresh' and
-    # need to click it first
+    # or 'download' then 'apply'
     for (my $n = 1; $n < 6; $n++) {
         if (check_screen $tags, 120) {
             # if we see 'apply', we're done here, quit out of the loop
@@ -73,16 +73,9 @@ sub run {
             # if we see 'download', let's hit it, and continue waiting
             # for apply (only)
             wait_screen_change { click_lastmatch; };
-            $n -= 1 if ($n > 2);
+            $n -= 1 if ($n > 1);
             $tags = ['desktop_package_tool_update_apply'];
             next;
-        }
-        elsif ($n == 1) {
-            # if we're in the first iteration of this loop and we can't
-            # see apply or download, that means we can only see refresh
-            # and should click it
-            click_lastmatch;
-            sleep 2;
         }
         # move the mouse to stop the screen blanking on idle
         mouse_set 10, 10;
