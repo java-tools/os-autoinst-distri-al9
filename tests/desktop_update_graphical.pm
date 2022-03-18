@@ -59,8 +59,26 @@ sub run {
     wait_still_screen 5, 90;
     # we always want to refresh to make sure we get the prepared update
     assert_and_click 'desktop_package_tool_update_refresh', timeout=>120;
-    # wait a while to make sure the UI clears to a 'refreshing' state
-    sleep 20;
+    # for GNOME, the apply/download buttons remain visible for a long
+    # time, annoyingly. So let's actually watch the 'refreshing' state
+    # till it goes away
+    if ($desktop eq 'gnome') {
+        assert_screen 'desktop_package_tool_update_refreshing';
+        # now wait for it to go away
+        for my $n (1..30) {
+            last unless (check_screen 'desktop_package_tool_update_refreshing', 6);
+            # if we matched, we likely matched *immediately*, so sleep
+            # the other five seconds
+            sleep 5;
+        }
+        sleep 3;
+    }
+    else {
+        # just wait a bit to make sure the UI clears to a 'refreshing'
+        # state
+        sleep 5;
+    }
+
     my $tags = ['desktop_package_tool_update_download', 'desktop_package_tool_update_apply'];
     # Apply updates, moving the mouse every two minutes to avoid the
     # idle screen blank kicking in. Depending on whether this is KDE
