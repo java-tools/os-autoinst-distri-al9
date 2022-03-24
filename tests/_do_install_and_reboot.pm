@@ -36,7 +36,7 @@ sub _set_root_password {
         }
         assert_and_click "anaconda_spoke_done";
         # exiting this screen can take a while, so check for the hub
-        assert_screen "anaconda_main_hub";
+        assert_screen "anaconda_main_hub", 60;
     }
 }
 
