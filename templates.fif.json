@@ -56,7 +56,7 @@
                 "QEMU": "ppc64",
                 "QEMUCPU": "host",
                 "QEMURAM": 4096,
-                "QEMUVGA": "virtio",
+                "QEMUVGA": "std",
                 "QEMU_VIRTIO_RNG": "1",
                 "WORKER_CLASS": "qemu_ppc64le"
             }
