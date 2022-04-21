@@ -61,9 +61,10 @@ sub run {
     wait_still_screen(2);
 
     # Open the text editor and maximize it.
-    type_very_safely "$editor /home/test/testfile.txt &\n";
-    wait_still_screen(stilltime=>3, similarity_level=>45);
-    send_key($maximize);
+    wait_screen_change { type_very_safely "$editor /home/test/testfile.txt &\n"; };
+    wait_still_screen(stilltime=>2, similarity_level=>45);
+    wait_screen_change { send_key($maximize); };
+    wait_still_screen(stilltime=>2, similarity_level=>45);
 
     # Print the file using one of the available methods
     send_key "ctrl-p";
