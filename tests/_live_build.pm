@@ -6,6 +6,20 @@ use utils;
 sub run {
     my $self = shift;
     my $version = get_var("VERSION");
+    my $rawrel = get_var("RAWREL");
+    my $branch;
+    my $repoks;
+    my $releasever;
+    if ($version eq $rawrel) {
+        $branch = "main";
+        $repoks = "fedora-repo-rawhide.ks";
+        $releasever = "Rawhide";
+    }
+    else {
+        $branch = "f${version}";
+        $repoks = "fedora-repo-not-rawhide.ks";
+        $releasever = $version;
+    }
     my $advortask = get_var("ADVISORY_OR_TASK");
     my $arch = get_var("ARCH");
     my $subv = get_var("SUBVARIANT");
@@ -38,11 +52,11 @@ sub run {
     # now check out the kickstarts
     assert_script_run 'git clone https://pagure.io/fedora-kickstarts.git';
     assert_script_run 'cd fedora-kickstarts';
-    assert_script_run "git checkout f${version}";
-    # now add the side repo to fedora-repo-not-rawhide.ks
-    assert_script_run 'echo "repo --name=advisory --baseurl=file:///opt/update_repo" >> fedora-repo-not-rawhide.ks';
+    assert_script_run "git checkout ${branch}";
+    # now add the side repo to the appropriate repo ks
+    assert_script_run 'echo "repo --name=advisory --baseurl=file:///opt/update_repo" >> ' . $repoks;
     # and the workarounds repo
-    assert_script_run 'echo "repo --name=workarounds --baseurl=file:///opt/workarounds_repo" >> fedora-repo-not-rawhide.ks';
+    assert_script_run 'echo "repo --name=workarounds --baseurl=file:///opt/workarounds_repo" >> ' . $repoks;
     # now flatten the kickstart
     assert_script_run "ksflatten -c fedora-live-${lcsubv}.ks -o openqa.ks";
     # upload the kickstart so we can check it
@@ -53,7 +67,7 @@ sub run {
     assert_script_run 'mock -r openqa --isolation=simple --chroot "mkdir -p /chroot_tmpdir"';
     assert_script_run "mock -r openqa --isolation=simple --copyin openqa.ks /chroot_tmpdir";
     # PULL SOME LEVERS! PULL SOME LEVERS!
-    assert_script_run "mock -r openqa --enable-network --isolation=simple --chroot \"/sbin/livemedia-creator --ks /chroot_tmpdir/openqa.ks --logfile /chroot_tmpdir/lmc-logs/livemedia-out.log --no-virt --resultdir /chroot_tmpdir/lmc --project Fedora-${subv}-Live --make-iso --volid FWL-${advortask} --iso-only --iso-name Fedora-${subv}-Live-${arch}-${advortask}.iso --releasever ${version} --macboot\"", 3600;
+    assert_script_run "mock -r openqa --enable-network --isolation=simple --chroot \"/sbin/livemedia-creator --ks /chroot_tmpdir/openqa.ks --logfile /chroot_tmpdir/lmc-logs/livemedia-out.log --no-virt --resultdir /chroot_tmpdir/lmc --project Fedora-${subv}-Live --make-iso --volid FWL-${advortask} --iso-only --iso-name Fedora-${subv}-Live-${arch}-${advortask}.iso --releasever ${releasever} --macboot\"", 3600;
     unless (script_run "mock -r openqa --isolation=simple --copyout /chroot_tmpdir/lmc-logs/livemedia-out.log .") {
         upload_logs "livemedia-out.log";
     }
