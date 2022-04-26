@@ -10,7 +10,8 @@ sub run {
     # this for Rawhide as Rawhide doesn't have its own backgrounds and we
     # don't have any requirement for what background Rawhide uses.
     my $version = get_var('VERSION');
-    assert_screen "${version}_background" if ($version ne "Rawhide");
+    my $rawrel = get_var('RAWREL');
+    assert_screen "${version}_background" if ($version ne "Rawhide" && $version ne $rawrel);
 }
 
 sub test_flags {
