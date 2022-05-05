@@ -45,6 +45,7 @@ sub select_cockpit_update {
     click_lastmatch;
     if (match_has_tag "cockpit_search") {
         send_key "up";
+        wait_still_screen 2;
         assert_and_click "cockpit_software_updates";
     }
     # wait for the updates to download
