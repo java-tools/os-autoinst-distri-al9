@@ -59,7 +59,7 @@ sub run {
     assert_and_click "anaconda_part_confirm_delete";
 
     # Add the new root partition to the scheme
-    assert_and_click "anaconda_add";
+    assert_and_click("anaconda_add", timeout=>60);
     type_very_safely "/\n";
 
     # Confirm changes
