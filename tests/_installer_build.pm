@@ -24,7 +24,7 @@ sub run {
         $cmd .= " --isfinal --repo=/etc/yum.repos.d/fedora-updates.repo";
     }
     $cmd .= " --repo=/etc/yum.repos.d/advisory.repo --repo=/etc/yum.repos.d/workarounds.repo ./results";
-    assert_script_run $cmd, 1800;
+    assert_script_run $cmd, 2400;
     # good to have the log around for checks
     upload_logs "pylorax.log", failok=>1;
     assert_script_run "mv results/images/boot.iso ./${advortask}-netinst-${arch}.iso";
