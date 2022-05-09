@@ -24,8 +24,10 @@ sub run {
     $self->root_console;
     if ($addrepourl) {
         if ($addrepourl =~ m,^nfs://,,) {
-            # this line tells us it set up a repo for our URL...
-            assert_script_run 'grep "repo addrepo.*' . ${addrepourl} . '" /tmp/packaging.log';
+            # this line tells us it set up a repo for our URL.
+            # "repo addrepo" is older format from before Fedora 37,
+            # "Add the 'addrepo" is newer format from F37+
+            assert_script_run 'grep "\(repo \|Add the \'\)addrepo.*' . ${addrepourl} . '" /tmp/packaging.log';
             # ...this line tells us it added the repo called 'addrepo' (<F36)...
             if (script_run 'grep "\(added\|enabled\) repo: .addrepo." /tmp/packaging.log') {
                 # this is F36+
