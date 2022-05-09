@@ -58,7 +58,7 @@ sub run {
     # Let's open the terminal. We will use it to start the applications 
     # as well as to check for the name of the printed file.
     menu_launch_type($term);
-    wait_still_screen(2);
+    wait_still_screen(5);
 
     # Open the text editor and maximize it.
     wait_screen_change { type_very_safely "$editor /home/test/testfile.txt &\n"; };
