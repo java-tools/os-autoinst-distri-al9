@@ -83,7 +83,7 @@ sub post_fail_hook {
         script_run 'printf "\n** NETWORKMANAGER.SERVICE STATUS **\n" > /dev/' . $serialdev;
         script_run "systemctl --no-pager -l status NetworkManager.service > /dev/${serialdev} 2>&1";
         script_run 'printf "\n** JOURNAL **\n" > /dev/' . $serialdev;
-        script_run "journalctl -b --no-pager > /dev/${serialdev}";
+        script_run "journalctl --no-pager > /dev/${serialdev}";
         return;
     }
 
