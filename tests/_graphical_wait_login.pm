@@ -78,16 +78,7 @@ sub run {
         # as this test gets loaded twice on the ADVISORY_OR_TASK flow, and
         # we might be on the INSTALL_NO_USER flow, check whether
         # this happened already
-        my $relnum = get_release_number;
-        if ($relnum < 34) {
-            # before GNOME 40 (F34), we get a per-user version of
-            # gnome-initial-setup here...
-            gnome_initial_setup() unless (get_var("_setup_done"));
-        }
-        else {
-            # ...from GNOME 40 on, we just get a "Welcome" tour
-            handle_welcome_screen unless (get_var("_welcome_done"));
-        }
+        handle_welcome_screen unless (get_var("_welcome_done"));
     }
     if (get_var("DESKTOP") eq 'gnome' && get_var("INSTALL_NO_USER")) {
         # handle welcome screen if we didn't do it above (holy flow
