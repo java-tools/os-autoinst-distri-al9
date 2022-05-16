@@ -49,16 +49,6 @@ sub run {
     type_very_safely "https://kernel.org\n";
     assert_and_click "browser_kernelorg_patch";
     wait_still_screen(stilltime=>2, similarity_level=>45);
-    # FIXME: Firefox 97+ don't show the "choose what to do" popup
-    # by default, they just download the file. Once 97 is stable
-    # on all releases we can drop the browser_download_save handling
-    assert_screen ["browser_download_save", "browser_download_complete"];
-    if (match_has_tag("browser_download_save")) {
-        click_lastmatch;
-        sleep 2;
-        send_key 'ret';
-        wait_still_screen(stilltime=>3, similarity_level=>45);
-    }
     # browsers do...something...when the download completes, and we
     # expect there's a single click to make it go away and return
     # browser to a state where we can open a new tab
