@@ -13,7 +13,6 @@ use packagetest;
 sub run {
     my $self = shift;
     my $desktop = get_var("DESKTOP");
-    my $relnum = get_release_number;
     # for the live image case, handle bootloader here
     if (get_var("BOOTFROM")) {
         do_bootloader(postinstall=>1, params=>'3');
@@ -76,15 +75,12 @@ sub run {
         send_key 'ret';
     }
     check_desktop(timeout=>90);
-    # now, WE WAIT. Because KDE on F34+ shows a notification only
-    # briefly we will keep an eye out and record if we saw it (logic
-    # around this comes later). But we wait the whole ten minutes even
-    # if we see it  so we catch any unwanted notifications that appear
-    # shortly after boot
-    my $seen = 0;
+    # now, WE WAIT. this is just an unconditional wait - rather than
+    # breaking if we see an update notification appear - so we catch
+    # things that crash a few minutes after startup, etc.
     for my $n (1..16) {
-        $seen = 1 if (check_screen "desktop_update_notification", 30);
-        mouse_set 20, 20;
+        sleep 30;
+        mouse_set 10, 10;
         send_key "spc";
         mouse_hide;
     }
@@ -124,30 +120,12 @@ sub run {
         }
     }
     if (get_var("BOOTFROM")) {
-        if ($desktop eq 'kde' && $relnum > 33) {
-            # there is not always a permanent notification in F34+,
-            # if we don't see one, check we saw the transient one
-            # earlier. FIXME: maybe drop the 'transient' path here
-            # if the permanent notification seems to be reliably
-            # back after 2021-06-13 Rawhide?
-            assert_screen ["desktop_no_notifications", "desktop_update_notification_only"];
-            if (match_has_tag "desktop_no_notifications") {
-                die "No update notification was shown!" unless $seen;
-            }
-        }
-        else {
-            # we should see an update notification and no others
-            assert_screen "desktop_update_notification_only";
-        }
+        # we should see an update notification and no others
+        assert_screen "desktop_update_notification_only";
     }
     else {
         # for the live case there should be *no* notifications
         assert_screen "desktop_no_notifications";
-        if ($desktop eq 'kde' && $relnum > 33) {
-            # and no tray icon either
-            die "Systray update notification should not be present on live!" if (check_screen "desktop_update_notification_systray");
-            die "Transient notification should not be shown on live!" if $seen;
-        }
     }
 }
 
