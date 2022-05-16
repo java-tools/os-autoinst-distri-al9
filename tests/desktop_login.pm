@@ -39,15 +39,6 @@ sub adduser {
         assert_script_run "chage --lastday 0 $login";
     }
     assert_script_run "grep $login /etc/passwd";
-    # Disable Gnome initial setup on accounts when testing
-    # inside Gnome.
-    if ($desktop eq "gnome") {
-        assert_script_run "mkdir /home/$login/.config";
-        # gnome-initial-setup-done is obsolete from F34 onwards, can be removed after F33 EOL
-        assert_script_run "echo 'yes' >> /home/$login/.config/gnome-initial-setup-done";
-        assert_script_run "chown -R $login.$login /home/$login/.config";
-        assert_script_run "restorecon -vr /home/$login/.config";
-    }
 }
 
 sub lock_screen {
