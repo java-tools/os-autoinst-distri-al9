@@ -129,12 +129,10 @@ sub run {
                         last;
                     }
                 }
-                # for KDE we need to double-click after kde-settings-34.6-1,
-                # which is stable now.
-                # FIXME: when F33 goes EOL, make the condition just "if kde"
+                # for KDE we need to double-click
                 my $relnum = get_release_number;
                 my $dclick = 0;
-                $dclick = 1 if (get_var("DESKTOP") eq "kde" && $relnum > 33);
+                $dclick = 1 if (get_var("DESKTOP") eq "kde");
                 assert_and_click("live_start_anaconda_icon", dclick=>$dclick);
                 unless (check_screen "anaconda_select_install_lang", 180) {
                     # click it again - on KDE since 2019-10 or so it seems
