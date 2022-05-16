@@ -16,22 +16,8 @@ sub run {
     desktop_vt;
 
     # run the updater
-    # FIXME: when F33 goes EOL, remove all the KDE < F34 stuff below
-    # and drop 'desktop_package_tool_update' tag from
-    # desktop_update_notification_systray-kde-20200929.json
     if ($desktop eq 'kde') {
-        # KDE team tells me until F34 the 'preferred' update method
-        # was the systray applet...
-        if ($relnum < 34) {
-            # get rid of notifications which get in the way of the things
-            # we need to click
-            click_unwanted_notifications;
-            assert_and_click 'desktop_expand_systray';
-        }
-        else {
-            # ...from F34 onwards, it's Plasma Discover app
-            menu_launch_type('discover');
-        }
+        menu_launch_type('discover');
     }
     else {
         # this launches GNOME Software on GNOME, dunno for any other
@@ -44,15 +30,12 @@ sub run {
     if ($desktop eq 'gnome' && check_screen 'gnome_software_welcome', 10) {
         send_key 'ret';
     }
-    # go to the 'update' interface. For GNOME or KDE on F34+, we
-    # may be waiting some time at a 'Software catalog is being
-    # loaded' screen.
-    if ($desktop eq 'gnome' || ($desktop eq 'kde' && $relnum > 33)) {
-        for my $n (1..5) {
-            last if (check_screen 'desktop_package_tool_update', 120);
-            mouse_set 10, 10;
-            mouse_hide;
-        }
+    # go to the 'update' interface. We may be waiting some time at a
+    # 'Software catalog is being loaded' screen.
+    for my $n (1..5) {
+        last if (check_screen 'desktop_package_tool_update', 120);
+        mouse_set 10, 10;
+        mouse_hide;
     }
     assert_and_click 'desktop_package_tool_update';
     # wait for things to settle if e.g. GNOME is refreshing
