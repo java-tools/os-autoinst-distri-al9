@@ -5,7 +5,7 @@ use utils;
 
 sub run {
     my $relnum = get_release_number;
-    if (get_var("LANGUAGE") eq 'japanese' && $relnum > 33) {
+    if (get_var("LANGUAGE") eq 'japanese') {
         # give GNOME a minute to settle
         wait_still_screen 5;
         # since g-i-s new user mode was dropped and the replacement
