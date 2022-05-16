@@ -97,7 +97,7 @@ sub run {
         }
         boot_to_login_screen;
     }
-    elsif ($desktop eq 'kde' && $relnum > 33) {
+    elsif ($desktop eq 'kde') {
         # KDE does offline updates now, we have to trigger the reboot
         # FIXME: also sometimes the update apply button just doesn't
         # work, so keep clicking till it does:
