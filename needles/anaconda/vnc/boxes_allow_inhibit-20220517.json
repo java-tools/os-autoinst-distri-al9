@@ -1,0 +1,17 @@
+{
+  "area": [
+    {
+      "height": 14,
+      "width": 43,
+      "type": "match",
+      "ypos": 469,
+      "xpos": 613
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "boxes_allow_inhibit",
+    "connections_allow_inhibit",
+    "vinagre_allow_inhibit"
+  ]
+}
