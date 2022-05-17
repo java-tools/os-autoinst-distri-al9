@@ -14,8 +14,8 @@ sub run {
     # Navigate to the Update screen
     select_cockpit_update();
 
-    # FIXME Workaround for RHBZ #1765685 - remove when it's fixed
-    # not fixed as of 2021-05-25
+    # FIXME Workaround for RHBZ #1765685 - remove after F34 EOL (seems
+    # to be fixed in F35 and F36)
     sleep 30;
 
     # Switch on automatic updates
