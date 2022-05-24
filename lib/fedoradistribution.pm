@@ -23,6 +23,18 @@ use Cwd;
 use testapi qw(check_var get_var send_key type_string assert_screen check_screen assert_script_run validate_script_output enter_cmd type_password);
 use utils qw(console_login desktop_vt menu_launch_type);
 
+# Class constructor
+sub new {
+    my ($class) = @_;
+    my $self = $class->SUPER::new(@_);
+
+    # script_run requires this to be set distri-wide or specified on
+    # each invocation, it tells os-autoinst what to do if a script_run
+    # times out (rather than succeeding or failing)
+    $self->{script_run_die_on_timeout} = 1;
+    return $self;
+}
+
 sub init() {
     my ($self) = @_;
 
