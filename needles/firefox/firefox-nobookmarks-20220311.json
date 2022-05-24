@@ -15,12 +15,7 @@
       "height": 18
     }
   ],
-  "properties": [
-    {
-      "name": "workaround",
-      "value": "the expected bookmarks toolbar is missing - brc#2054953"
-    }
-  ],
+  "properties": [],
   "tags": [
     "firefox",
     "browser"
