@@ -418,7 +418,7 @@ sub disable_firefox_studies {
     # (god I am starting to hate this crap):
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1703903
     assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/distribution';
-    assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false, "OverrideFirstRunPage": "", "OverridePostUpdatePage: ""}}\' > $(rpm --eval %_libdir)/firefox/distribution/policies.json';
+    assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false, "OverrideFirstRunPage": "", "OverridePostUpdatePage": ""}}\' > $(rpm --eval %_libdir)/firefox/distribution/policies.json';
 }
 
 sub repos_mirrorlist {
