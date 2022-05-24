@@ -418,15 +418,7 @@ sub disable_firefox_studies {
     # (god I am starting to hate this crap):
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1703903
     assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/distribution';
-    assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false}}\' > $(rpm --eval %_libdir)/firefox/distribution/policies.json';
-    assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/browser/defaults/preferences';
-    # it's not at all clear from the code which of these actually gets
-    # used, so we set them all just in case
-    assert_script_run 'printf "pref(\'browser.urlbar.quicksuggest.shouldShowOnboardingDialog\', false);\npref(\'quickSuggestShouldShowOnboardingDialog\', false);\npref(\'browser.urlbar.quickSuggestShouldShowOnboardingDialog\', false);\n" > $(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
-    # and disable the "Automated Cookie Protection" thing that showed
-    # up in Firefox 100 (thanks Ed Lee):
-    # https://bugzilla.mozilla.org/show_bug.cgi?id=1703903#c9
-    assert_script_run 'echo "pref(\'privacy.restrict3rdpartystorage.rollout.enabledByDefault\', false);" >> $(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
+    assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false, "OverrideFirstRunPage": "", "OverridePostUpdatePage: ""}}\' > $(rpm --eval %_libdir)/firefox/distribution/policies.json';
 }
 
 sub repos_mirrorlist {
