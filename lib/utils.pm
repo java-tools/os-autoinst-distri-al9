@@ -414,21 +414,23 @@ sub disable_firefox_studies {
     # and also disables the password manager stuff so that doesn't
     # break password entry:
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1635833
-    # and *also* disables the "quick suggest onboarding dialog"
-    # (god I am starting to hate this crap):
+    # and *also* tries to disable "first run pages", though this
+    # doesn't seem to be working yet:
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1703903
     assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/distribution';
     assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false, "OverrideFirstRunPage": "", "OverridePostUpdatePage": ""}}\' > $(rpm --eval %_libdir)/firefox/distribution/policies.json';
+    # Now create a preferences override file that disables the
+    # quicksuggest and total cookie protection onboarding screens
+    # see https://support.mozilla.org/en-US/kb/customizing-firefox-using-autoconfig
+    # for why this wacky pair of files with required values is needed
+    # and https://bugzilla.mozilla.org/show_bug.cgi?id=1703903 again
+    # for the actual values
     assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/browser/defaults/preferences';
-    # it's not at all clear from the code which of these actually gets
-    # used, so we set them all just in case
-    assert_script_run 'printf "user_pref(\'browser.urlbar.quicksuggest.shouldShowOnboardingDialog\', false);\nuser_pref(\'quickSuggestShouldShowOnboardingDialog\', false);\nuser_pref(\'browser.urlbar.quickSuggestShouldShowOnboardingDialog\', false);\n" > $(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
-    # and disable the "Automated Cookie Protection" thing that showed
-    # up in Firefox 100 (thanks Ed Lee):
-    # https://bugzilla.mozilla.org/show_bug.cgi?id=1703903#c9
-    assert_script_run 'echo "pref(\'privacy.restrict3rdpartystorage.rollout.enabledByDefault\', false);" >> $(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
+    assert_script_run 'printf "// required comment\npref(\'general.config.filename\', \'openqa-overrides.cfg\');\npref(\'general.config.obscure_value\', 0);\n" > $(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
+    assert_script_run 'printf "// required comment\npref(\'browser.urlbar.quicksuggest.shouldShowOnboardingDialog\', false);\npref(\'privacy.restrict3rdpartystorage.rollout.enabledByDefault\', false);\n" > $(rpm --eval %_libdir)/firefox/openqa-overrides.cfg';
     # for debugging
     upload_logs "/usr/lib64/firefox/browser/defaults/preferences/openqa-overrides.js", failok=>1;
+    upload_logs "/usr/lib64/firefox/openqa-overrides.cfg", failok=>1;
     upload_logs "/usr/lib64/firefox/distribution/policies.json", failok=>1;
 }
 
