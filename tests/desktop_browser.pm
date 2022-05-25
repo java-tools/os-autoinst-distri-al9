@@ -28,6 +28,10 @@ sub _open_new_tab {
 sub run {
     my $self = shift;
     check_desktop;
+    # switch to a VT and disable things that can mess with the test
+    $self->root_console(tty=>3);
+    disable_firefox_studies;
+    desktop_vt;
     send_key 'super';
     # wait out animations
     wait_still_screen(stilltime=>4, similarity_level=>45);
