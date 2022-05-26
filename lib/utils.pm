@@ -408,6 +408,11 @@ sub check_release {
 }
 
 sub disable_firefox_studies {
+    # on canned (ostree) installs we need to get the prefix
+    my $prefix = '';
+    if (get_var("CANNED")) {
+        $prefix = script_output 'ls -d /ostree/deploy/fedora*/deploy/*.?';
+    }
     # create a config file that disables Firefox's dumb 'shield
     # studies' so they don't break tests:
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1529626
@@ -417,21 +422,21 @@ sub disable_firefox_studies {
     # and *also* tries to disable "first run pages", though this
     # doesn't seem to be working yet:
     # https://bugzilla.mozilla.org/show_bug.cgi?id=1703903
-    assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/distribution';
-    assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false, "OverrideFirstRunPage": "", "OverridePostUpdatePage": ""}}\' > $(rpm --eval %_libdir)/firefox/distribution/policies.json';
+    assert_script_run "mkdir -p $prefix" . '$(rpm --eval %_libdir)/firefox/distribution';
+    assert_script_run 'printf \'{"policies": {"DisableFirefoxStudies": true, "OfferToSaveLogins": false, "OverrideFirstRunPage": "", "OverridePostUpdatePage": ""}}\' > ' . $prefix . '$(rpm --eval %_libdir)/firefox/distribution/policies.json';
     # Now create a preferences override file that disables the
     # quicksuggest and total cookie protection onboarding screens
     # see https://support.mozilla.org/en-US/kb/customizing-firefox-using-autoconfig
     # for why this wacky pair of files with required values is needed
     # and https://bugzilla.mozilla.org/show_bug.cgi?id=1703903 again
     # for the actual values
-    assert_script_run 'mkdir -p $(rpm --eval %_libdir)/firefox/browser/defaults/preferences';
-    assert_script_run 'printf "// required comment\npref(\'general.config.filename\', \'openqa-overrides.cfg\');\npref(\'general.config.obscure_value\', 0);\n" > $(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
-    assert_script_run 'printf "// required comment\npref(\'browser.urlbar.quicksuggest.shouldShowOnboardingDialog\', false);\npref(\'privacy.restrict3rdpartystorage.rollout.enabledByDefault\', false);\n" > $(rpm --eval %_libdir)/firefox/openqa-overrides.cfg';
+    assert_script_run "mkdir -p $prefix" . '$(rpm --eval %_libdir)/firefox/browser/defaults/preferences';
+    assert_script_run 'printf "// required comment\npref(\'general.config.filename\', \'openqa-overrides.cfg\');\npref(\'general.config.obscure_value\', 0);\n" > ' . $prefix . '$(rpm --eval %_libdir)/firefox/browser/defaults/preferences/openqa-overrides.js';
+    assert_script_run 'printf "// required comment\npref(\'browser.urlbar.quicksuggest.shouldShowOnboardingDialog\', false);\npref(\'privacy.restrict3rdpartystorage.rollout.enabledByDefault\', false);\n" > ' . $prefix . '$(rpm --eval %_libdir)/firefox/openqa-overrides.cfg';
     # for debugging
-    upload_logs "/usr/lib64/firefox/browser/defaults/preferences/openqa-overrides.js", failok=>1;
-    upload_logs "/usr/lib64/firefox/openqa-overrides.cfg", failok=>1;
-    upload_logs "/usr/lib64/firefox/distribution/policies.json", failok=>1;
+    upload_logs "$prefix/usr/lib64/firefox/browser/defaults/preferences/openqa-overrides.js", failok=>1;
+    upload_logs "$prefix/usr/lib64/firefox/openqa-overrides.cfg", failok=>1;
+    upload_logs "$prefix/usr/lib64/firefox/distribution/policies.json", failok=>1;
 }
 
 sub repos_mirrorlist {
