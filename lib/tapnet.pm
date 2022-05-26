@@ -58,7 +58,6 @@ sub setup_tap_static {
 sub get_host_dns {
     # get DNS server addresses from the host. Assumes host uses
     # systemd-resolved and doesn't use IPv6, for now
-    my @forwards;
     my $result = `/usr/bin/resolvectl status | grep Servers | tail -1 | cut -d: -f2-`;
     # FIXME this is gonna break when we have IPv6 DNS servers on the
     # worker hosts
