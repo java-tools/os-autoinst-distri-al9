@@ -252,7 +252,7 @@ sub _load_early_postinstall_tests {
         _load_instance("tests/_graphical_input", $instance);
     }
 
-    if (get_var("LANGUAGE") eq "japanese" || get_var("LANGUAGE") eq "arabic") {
+    if (get_var("LANGUAGE", "") eq "japanese" || get_var("LANGUAGE", "") eq "arabic") {
         _load_instance("tests/check_default_fonts", $instance);
     }
 
