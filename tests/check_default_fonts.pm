@@ -23,6 +23,7 @@ sub run {
         menu_launch_type("terminal");
     }
     assert_screen("apps_run_terminal");
+    wait_still_screen(stilltime=>5, similarity_level=>42);
 
     # Run the test commands and record their output in the test file.
     enter_cmd("fc-match sans > test.txt");
