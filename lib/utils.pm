@@ -213,7 +213,7 @@ sub console_login {
         }
         # otherwise, we saw the login prompt, type the username
         type_string("$args{user}\n");
-        assert_screen [$good, 'console_password_required'], 30;
+        assert_screen [$good, 'console_password_required'], 45;
         # on a live image, just the user name will be enough
         if (match_has_tag $good) {
             # clear the screen (so the remaining login prompt text
