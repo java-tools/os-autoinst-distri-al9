@@ -15,7 +15,7 @@ sub run {
         # the bootloader config, and reinstall the bootloader on BIOS. This
         # is kinda arch-dependent, but works for the three arches currently
         # in openQA: x86_64, ppc64le, and aarch64.
-        assert_script_run "dracut -f";
+        assert_script_run "dracut -f", 180;
         assert_script_run 'grub2-mkconfig -o $(readlink -m /etc/grub2.cfg)';
         my $instdev = get_var("OFW") ? '/dev/vda1' : '/dev/vda';
         assert_script_run "grub2-install $instdev" unless (get_var("UEFI"));
