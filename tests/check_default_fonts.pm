@@ -49,9 +49,11 @@ sub run {
         my $username = get_var("USER_LOGIN") // "test";
         script_run("cd /home/$username/");
         # Download the language reference file.
-        script_run("wget https://lruzicka.fedorapeople.org/$language-reference.txt");
+        script_run("wget https://fedorapeople.org/groups/qa/openqa-fonts/$language-reference.txt");
+        # upload the log for debugging.
+        upload_logs "test.txt", failok=>1;
         # Compare the test file and the reference file.
-        assert_script_run("diff test.txt $language-reference.txt");
+        assert_script_run("diff -u test.txt $language-reference.txt");
     }
 
     # For the rest of languages that are not currently defined, do nothing. 
