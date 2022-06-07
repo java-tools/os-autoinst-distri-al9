@@ -17,6 +17,7 @@ sub root_console {
     my $self = shift;
     my %args = (
         tty => 1, # what TTY to login to
+        timeout => 0, # passed through to console_login
         @_);
     if (get_var("SERIAL_CONSOLE")) {
         # select the first virtio terminal, for now we assume we can
@@ -27,7 +28,7 @@ sub root_console {
         # For normal terminal emulation, use key combo to reach a tty
         send_key "ctrl-alt-f$args{tty}";
     }
-    console_login; # Do the login.
+    console_login(timeout=>$args{timeout}); # Do the login.
 }
 
 sub post_fail_hook {
