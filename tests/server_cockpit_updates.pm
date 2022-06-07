@@ -48,7 +48,6 @@ sub run {
         last if (check_screen("cockpit_updates_updated"));
         if (check_screen("cockpit_updates_reconnect", 1)) {
             quit_firefox;
-            sleep 5;
             start_cockpit(1);
             select_cockpit_update();
             last;
@@ -69,10 +68,6 @@ sub run {
 
     # Switch off Cockpit
     quit_firefox;
-
-    # Wait a couple of seconds for the terminal to settle down, the command was
-    # entered incorrectly which resulted in a failure.
-    sleep 5;
 
     # Verify that the test package was updated correctly.
     verify_updated_packages;

@@ -45,11 +45,6 @@ sub run {
     assert_and_click "freeipa_webui_policy_save";
     # quit browser to return to console
     quit_firefox;
-    # we don't get back to a prompt instantly and keystrokes while X
-    # is still shutting down are swallowed, so be careful before
-    # finishing (and handing off to next test)
-    assert_screen "root_console";
-    wait_still_screen 5;
     # set permanent passwords for both accounts
     assert_script_run 'printf "correcthorse\nbatterystaple\nbatterystaple" | kinit test3@TEST.OPENQA.FEDORAPROJECT.ORG';
     assert_script_run 'printf "correcthorse\nbatterystaple\nbatterystaple" | kinit test4@TEST.OPENQA.FEDORAPROJECT.ORG';
