@@ -197,6 +197,7 @@
             "settings": {
                 "DEPLOY_UPLOAD_TEST": "install_default_upload",
                 "DESKTOP": "kde",
+                "HDDSIZEGB": "15",
                 "LIVE": "1",
                 "PACKAGE_SET": "default",
                 "TEST_TARGET": "ISO"

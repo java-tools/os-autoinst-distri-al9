@@ -85,6 +85,7 @@
             "flavor": "updates-workstation-live-iso",
             "settings": {
                 "DESKTOP": "gnome",
+                "HDDSIZEGB": "15",
                 "LIVE": "1",
                 "PACKAGE_SET": "default"
             },
@@ -96,6 +97,7 @@
 	    "flavor": "updates-kde-live-iso",
             "settings": {
                 "DESKTOP": "kde",
+                "HDDSIZEGB": "15",
                 "LIVE": "1",
                 "PACKAGE_SET": "default"
             },
