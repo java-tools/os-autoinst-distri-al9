@@ -100,6 +100,11 @@ testliterals.append("anaconda_part_device_type_raid")
 for fsys in ("xfs", "ext4"):
     testliterals.append(f"anaconda_part_fs_{fsys}")
     testliterals.append(f"anaconda_part_fs_{fsys}_selected")
+# Needles for Help viewer
+for section in ("desktop", "networking", "sound", "files", "user", "hardware",
+                "accessibility", "tipstricks", "morehelp"):
+    testliterals.append(f"help_section_{section}")
+    testliterals.append(f"help_section_content_{section}")
 # variable-y in custom_change_device but we only have one value
 testliterals.append("anaconda_part_device_sda")
 # for Anaconda help related needles.
