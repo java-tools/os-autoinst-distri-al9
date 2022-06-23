@@ -26,7 +26,10 @@ sub run {
     # there are often cases where we need to see the logs (e.g. client
     # test failed due to server issue)
     $self->post_fail_hook();
-    assert_script_run 'systemctl stop ipa.service';
+    # FIXME as of 2022-06-22, this is taking longer than expected on
+    # Rawhide due to RHBZ #2100282 . It's hard to do 'soft fail if
+    # this takes too long', so let's just give it more time
+    assert_script_run 'systemctl stop ipa.service', 120;
     # check server is stopped
     assert_script_run '! systemctl is-active ipa.service';
     # decommission the server
