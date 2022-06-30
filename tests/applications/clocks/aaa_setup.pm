@@ -22,7 +22,13 @@ sub run {
 
     # Start the Application
     menu_launch_type("clocks");
-    wait_still_screen(2);
+    assert_screen ["apps_run_clocks", "apps_run_access"];
+    # give access rights if asked
+    if (match_has_tag 'apps_run_access') {
+        click_lastmatch;
+        assert_screen 'apps_run_clocks';
+    }
+
     # Make it fill the entire window.
     send_key("super-up");
     wait_still_screen(2);
