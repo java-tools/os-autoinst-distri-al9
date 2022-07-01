@@ -1509,17 +1509,31 @@ sub check_and_install_git {
 }
 
 # This routine is used in Desktop test suites. It downloads the test data from
-# the repository and puts the file into correct locations.
+# the repository and populates the directory structure.
+# The data repository is located at https://pagure.io/fedora-qa/openqa_testdata.
+
 sub download_testdata {
-    my ($repodir, $location) = @_;
-    # Navigate to the test's home directory
-    assert_script_run("cd /home/test/");
-    # Clone the test repository;
-    assert_script_run("git clone https://pagure.io/fedora-qa/openqa_testdata.git");
-    # Copy the test data into $repodir to $location.
-    assert_script_run("cp openqa_testdata/$repodir/* $location");
+    # Navigate to the user's home directory
+    my $user = get_var("USER_LOGIN") // "test";
+    assert_script_run("cd /home/$user/");
+    # Create a temporary directory to unpack the zipped file.
+    assert_script_run("mkdir temp");
+    assert_script_run("cd temp");
+    # Download the compressed file with the repository content.
+    assert_script_run("wget https://pagure.io/fedora-qa/openqa_testdata/blob/thetree/f/repository.tar.gz", timeout => 120);
+    # Untar it.
+    assert_script_run("tar -zxvf repository.tar.gz");
+    # Copy out the files into the VMs directory structure.
+    assert_script_run("cp music/* /home/$user/Music");
+    assert_script_run("cp documents/* /home/$user/Documents");
+    assert_script_run("cp pictures/* /home/$user/Pictures");
+    assert_script_run("cp video/* /home/$user/Videos");
+    assert_script_run("cp reference/* /home/$user/");
+    # Delete the temporary directory and the downloaded file.
+    assert_script_run("cd");
+    assert_script_run("rm -rf /home/$user/temp");
     # Change ownership
-    assert_script_run("chown -R test:test $location");
+    assert_script_run("chown -R test:test /home/$user/");
 }
 
 # On Fedora, the serial console is not writable for regular users which lames

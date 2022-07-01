@@ -27,7 +27,7 @@ sub run {
     assert_script_run("ls /home/test/Pictures/");
 
     # Compare the files
-    assert_script_run("diff /home/test/Pictures/image.jpg /home/test/Pictures/new_image.jpg");
+    assert_script_run("diff /home/test/Pictures/leaves.jpg /home/test/Pictures/new_image.jpg");
 }
 
 sub test_flags {

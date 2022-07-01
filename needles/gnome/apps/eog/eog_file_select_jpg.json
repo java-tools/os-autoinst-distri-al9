@@ -1,15 +1,15 @@
 {
-    "area": [
-        {
-            "height": 15,
-            "type": "match",
-            "width": 71,
-            "xpos": 330,
-            "ypos": 157
-        }
-    ],
-    "properties": [],
-    "tags": [
-        "eog_file_select_jpg"
-    ]
+  "area": [
+    {
+      "type": "match",
+      "height": 15,
+      "width": 71,
+      "xpos": 188,
+      "ypos": 182
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "eog_file_select_jpg"
+  ]
 }

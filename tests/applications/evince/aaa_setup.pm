@@ -14,7 +14,7 @@ sub run {
     # Perform git test
     check_and_install_git();
     # Download the test data
-    download_testdata("evince", "Documents");
+    download_testdata();
     # Exit the terminal
     desktop_vt;
 
