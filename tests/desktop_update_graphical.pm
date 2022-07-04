@@ -18,6 +18,8 @@ sub run {
     # run the updater
     if ($desktop eq 'kde') {
         menu_launch_type('discover');
+        # maximize it to make sure we see the Updates entry
+        send_key "super-pgup";
     }
     else {
         # this launches GNOME Software on GNOME, dunno for any other
