@@ -18,7 +18,10 @@ sub run {
     # run the updater
     if ($desktop eq 'kde') {
         menu_launch_type('discover');
-        # maximize it to make sure we see the Updates entry
+        # Wait for it to run and maximize it to make sure we see the
+        # Updates entry
+        assert_screen('discover_runs');
+        wait_still_screen 2;
         send_key "super-pgup";
     }
     else {
