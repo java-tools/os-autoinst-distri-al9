@@ -4,28 +4,36 @@
             "arch": "aarch64",
             "distri": "fedora",
             "flavor": "updates-container",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-container-ppc64le-*": {
             "arch": "ppc64le",
             "distri": "fedora",
             "flavor": "updates-container",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-container-x86_64-*": {
             "arch": "x86_64",
             "distri": "fedora",
             "flavor": "updates-container",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-everything-boot-iso-x86_64-*": {
             "arch": "x86_64",
             "distri": "fedora",
             "flavor": "updates-everything-boot-iso",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-kde-x86_64-*": {
@@ -33,7 +41,8 @@
             "distri": "fedora",
             "flavor": "updates-kde",
             "settings": {
-                "DESKTOP": "kde"
+                "DESKTOP": "kde",
+                "RETRY": "1"
             },
             "version": "*"
         },
@@ -41,42 +50,54 @@
             "arch": "aarch64",
             "distri": "fedora",
             "flavor": "updates-server",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-server-ppc64le-*": {
             "arch": "ppc64le",
             "distri": "fedora",
             "flavor": "updates-server",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-server-upgrade-aarch64-*": {
             "arch": "aarch64",
             "distri": "fedora",
             "flavor": "updates-server-upgrade",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-server-upgrade-ppc64le-*": {
             "arch": "ppc64le",
             "distri": "fedora",
             "flavor": "updates-server-upgrade",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-server-upgrade-x86_64-*": {
             "arch": "x86_64",
             "distri": "fedora",
             "flavor": "updates-server-upgrade",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-server-x86_64-*": {
             "arch": "x86_64",
             "distri": "fedora",
             "flavor": "updates-server",
-            "settings": {},
+            "settings": {
+                "RETRY": "1"
+            },
             "version": "*"
         },
         "fedora-updates-workstation-live-iso-x86_64-*": {
@@ -87,7 +108,8 @@
                 "DESKTOP": "gnome",
                 "HDDSIZEGB": "15",
                 "LIVE": "1",
-                "PACKAGE_SET": "default"
+                "PACKAGE_SET": "default",
+                "RETRY": "1"
             },
             "version": "*"
         },
@@ -99,7 +121,8 @@
                 "DESKTOP": "kde",
                 "HDDSIZEGB": "15",
                 "LIVE": "1",
-                "PACKAGE_SET": "default"
+                "PACKAGE_SET": "default",
+                "RETRY": "1"
             },
             "version": "*"
         },
@@ -108,7 +131,8 @@
             "distri": "fedora",
             "flavor": "updates-workstation-upgrade",
             "settings": {
-                "DESKTOP": "gnome"
+                "DESKTOP": "gnome",
+                "RETRY": "1"
             },
             "version": "*"
         },
@@ -117,7 +141,8 @@
             "distri": "fedora",
             "flavor": "updates-workstation",
             "settings": {
-                "DESKTOP": "gnome"
+                "DESKTOP": "gnome",
+                "RETRY": "1"
             },
             "version": "*"
         }
