@@ -22,9 +22,9 @@ sub run {
 
     # Start the Application
     menu_launch_type("clocks");
-    assert_screen ["apps_run_clocks", "apps_run_access"];
+    assert_screen ["apps_run_clocks", "grant_access"];
     # give access rights if asked
-    if (match_has_tag 'apps_run_access') {
+    if (match_has_tag 'grant_access') {
         click_lastmatch;
         assert_screen 'apps_run_clocks';
     }
