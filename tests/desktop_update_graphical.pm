@@ -22,7 +22,8 @@ sub run {
         # Updates entry
         assert_screen('discover_runs');
         wait_still_screen 2;
-        send_key "super-pgup";
+        wait_screen_change { send_key "super-pgup"; };
+        wait_still_screen 2;
     }
     else {
         # this launches GNOME Software on GNOME, dunno for any other
