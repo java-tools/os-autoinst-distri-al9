@@ -466,7 +466,7 @@ sub setup_workaround_repo {
     # for any release, the hash can be empty and this will do nothing
     my $version = shift || get_var("VERSION");
     cleanup_workaround_repo;
-    script_run "dnf -y install bodhi-client createrepo", 300;
+    script_run "dnf -y install bodhi-client createrepo koji", 300;
     # write a repo config file, unless this is the support_server test
     # and it is running on a different release than the update is for
     # (in this case we need the repo to exist but do not want to use
