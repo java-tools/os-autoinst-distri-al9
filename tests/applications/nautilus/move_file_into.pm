@@ -17,8 +17,8 @@ sub run {
     wait_still_screen(2);
     
     # Click on Copy To
-    assert_and_click("nautilus_context_copy_to");
-    wait_still_screen(2);
+    wait_screen_change { assert_and_click("nautilus_context_copy_to"); };
+    wait_still_screen(5);
     
     # Select a different location to place the file.
     assert_and_click("nautilus_directory_downloads");
@@ -31,10 +31,12 @@ sub run {
     assert_and_click("nautilus_test_file", button => "right");
     
     # Click on Move to
-    assert_and_click("nautilus_context_move_to");
+    wait_screen_change { assert_and_click("nautilus_context_move_to"); };
+    wait_still_screen(5);
     
     # Select a new location for this file
     assert_and_click("nautilus_directory_videos");
+    wait_still_screen(2);
     
     # Click on Select to move the file into the new location.
     assert_and_click("gnome_select_button");
