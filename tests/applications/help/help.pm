@@ -21,7 +21,7 @@ sub run {
 
    	# Run the application
         menu_launch_type("Help");
-        assert_screen("help_main_screen");
+        assert_screen("help_main_screen", timeout => 60);
 
    	# Let us click on Section to open it and check that there is content inside.
         visit_section("desktop");
