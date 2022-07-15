@@ -11,7 +11,7 @@ sub run {
     my $self = shift;
     
     # First we will use key combo to open the new document window.
-    sleep 2;
+    sleep 5;
     send_key("ctrl-t");
     assert_screen "gte_new_document_opened";
 

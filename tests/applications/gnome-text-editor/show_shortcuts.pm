@@ -7,7 +7,9 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+    # wait for snapshot restore to settle
+    sleep 5;
+
     # Open Shortcuts.
     send_key("ctrl-?");
 
