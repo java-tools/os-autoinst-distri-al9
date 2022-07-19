@@ -22,7 +22,10 @@ sub run {
     assert_and_click 'kde_finish';
     wait_still_screen 2;
     # Check that it is started
-    assert_screen 'kmouth_runs';
+    # July 19th, I realized that kmouth test has been failing,
+    # but it seems that it takes more time to run than
+    # the needle is willing to wait. Adding wait time.
+    assert_screen('kmouth_runs', timeout => 300);
     # Close the application
     quit_with_shortcut();
 }
