@@ -31,6 +31,9 @@ sub run {
     # Save the newly created file.
     send_key("ctrl-s");
     wait_still_screen(3);
+    # select the entire prefilled name (including extension) to overwrite it
+    send_key("ctrl-a");
+    wait_still_screen(3);
     type_very_safely "list.md";
     send_key("ret");
     # Check that the file has been created
