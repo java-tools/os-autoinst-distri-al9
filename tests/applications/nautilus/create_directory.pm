@@ -13,7 +13,7 @@ my $self = shift;
     wait_still_screen(2);
     
     #  Click on the Burger menu to open it
-    assert_and_click("gnome_burger_menu");
+    assert_and_click("gnome_kebab_menu");
     wait_still_screen(2);
     
     # Click on the Create directory icon to create a new directory.

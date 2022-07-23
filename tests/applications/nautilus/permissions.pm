@@ -22,7 +22,11 @@ sub run {
     # Check that the Properties window has appeared and close it.
     assert_screen("nautilus_properties_check");
     send_key("esc");
-    
+
+    # Ensure the file is selected and pane is active (or else
+    # shortcut may not work).
+    assert_and_click("nautilus_test_file");
+
     # Send a key combination to open the Properties again.
     send_key("ctrl-i");
     
