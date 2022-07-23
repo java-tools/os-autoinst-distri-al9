@@ -8,8 +8,8 @@ use utils;
 sub run {
 	my $self = shift;
 	
-	#  Enter the Documents directory. 
-	assert_and_dclick("nautilus_documents_folder", timeout => '30', button => 'left', mousehide => '1');
+	#  Enter the Documents directory.
+	assert_and_click("nautilus_directory_documents", timeout => '30', button => 'left', mousehide => '1');
 	
 	# Check that we are in the Documents directory.
 	assert_screen("nautilus_documents_active", timeout => '30', no_wait => '0');

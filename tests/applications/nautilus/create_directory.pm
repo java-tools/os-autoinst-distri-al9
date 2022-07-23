@@ -9,7 +9,7 @@ sub run {
 my $self = shift;
 
     #  Enter the Documents directory to get to the test data. 
-    assert_and_dclick("nautilus_directory_documents");
+    assert_and_click("nautilus_directory_documents");
     wait_still_screen(2);
     
     #  Click on the Burger menu to open it

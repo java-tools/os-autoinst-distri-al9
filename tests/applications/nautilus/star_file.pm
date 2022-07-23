@@ -9,7 +9,7 @@ sub run {
     my $self = shift;
     
     #  Enter the Documents directory to get to the test data. 
-    assert_and_dclick("nautilus_directory_documents");
+    assert_and_click("nautilus_directory_documents");
     
     #  Right click onto a file to select it to see the
     #  context menu.
