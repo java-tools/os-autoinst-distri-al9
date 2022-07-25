@@ -113,6 +113,16 @@ for button in ("div", "divider", "zero", "one", "two", "three", "four", "five",
 for result in ("BokZw", "Czo4s", "O9qsL", "WIxiR", "b5y2B", "h7MfO", "qxuBK",
                 "tWshx", "uC8Ul", "3LAG3"):
     testliterals.append(f"calc_result_{result}")
+# Needles for Contacts
+for hashname in ("jlJmL", "7XGzO", "ps61y", "OvXj~", "GqYOp", "VEFrP"):
+    testliterals.append(f"contacts_name_{hashname}")
+    testliterals.append(f"contacts_contact_listed_{hashname}")
+    testliterals.append(f"contacts_contact_existing_{hashname}")
+    testliterals.append(f"contacts_contact_doubled_{hashname}")
+    testliterals.append(f"contacts_contact_altered_{hashname}")
+    testliterals.append(f"contacts_contact_added_{hashname}")
+for info in ("home", "personal", "work"):
+    testliterals.append(f"contacts_label_{info}")
 # variable-y in custom_change_device but we only have one value
 testliterals.append("anaconda_part_device_sda")
 # for Anaconda help related needles.
