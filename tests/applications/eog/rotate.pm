@@ -7,7 +7,7 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Rotate left
     send_key("shift-ctrl-r");
     wait_still_screen(2);

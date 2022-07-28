@@ -7,28 +7,28 @@ use utils;
 
 sub rotate_content {
 
-# Send the key combo to rotate the content
-send_key("ctrl-right");
+    # Send the key combo to rotate the content
+    send_key("ctrl-right");
 }
 
 sub run {
-my $self = shift;
+    my $self = shift;
 
-# Rotate the content once.
-rotate_content();
+    # Rotate the content once.
+    rotate_content();
 
-# Check that the window content has been rotated.
-assert_screen("evince_content_rotated_once", timeout => 30);
+    # Check that the window content has been rotated.
+    assert_screen("evince_content_rotated_once", timeout => 30);
 
-# Rotate the content again.
-rotate_content();
+    # Rotate the content again.
+    rotate_content();
 
-# Check that the window content has been rotated.
-assert_screen("evince_content_rotated_twice", timeout => 30);
+    # Check that the window content has been rotated.
+    assert_screen("evince_content_rotated_twice", timeout => 30);
 }
 
 sub test_flags {
-        return {always_rollback => 1};
+    return {always_rollback => 1};
 }
 
 1;

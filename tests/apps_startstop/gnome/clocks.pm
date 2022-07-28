@@ -19,7 +19,7 @@ sub run {
     register_application("gnome-clocks");
     # close the application
     quit_with_shortcut();
-    
+
 }
 
 sub test_flags {

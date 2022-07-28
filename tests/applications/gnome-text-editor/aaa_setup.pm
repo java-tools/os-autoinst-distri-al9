@@ -7,9 +7,9 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Go to the root console to set up the test data and necessary stuff.
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
 
     # Get the test data from the test data repository.
     check_and_install_git();
@@ -37,7 +37,7 @@ sub run {
     # Open it
     send_key("ret");
     wait_still_screen(3);
-    
+
     # Make the application fullscreen
     send_key("super-up");
     wait_still_screen(3);
@@ -47,7 +47,7 @@ sub run {
 }
 
 sub test_flags {
-    return { fatal => 1, milestone => 1 };
+    return {fatal => 1, milestone => 1};
 }
 
 1;

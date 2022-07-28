@@ -22,7 +22,7 @@ sub start_cockpit {
     # run firefox directly in X as root. never do this, kids!
     type_string "startx /usr/bin/firefox -width 1024 -height 768 http://localhost:9090\n";
     assert_screen "cockpit_login", 60;
-    wait_still_screen(stilltime=>5, similarity_level=>45);
+    wait_still_screen(stilltime => 5, similarity_level => 45);
     if ($login) {
         type_safely "root";
         wait_screen_change { send_key "tab"; };
@@ -56,6 +56,6 @@ sub check_updates {
     my $logfile = shift;
     sleep 2;
     my $checkresult = script_run "dnf check-update > $logfile";
-    upload_logs "$logfile", failok=>1;
-    return($checkresult);
+    upload_logs "$logfile", failok => 1;
+    return ($checkresult);
 }

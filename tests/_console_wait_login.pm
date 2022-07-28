@@ -11,7 +11,7 @@ sub run {
 
     # handle bootloader, if requested
     if (get_var("GRUB_POSTINSTALL")) {
-        do_bootloader(postinstall=>1, params=>get_var("GRUB_POSTINSTALL"), timeout=>$wait_time);
+        do_bootloader(postinstall => 1, params => get_var("GRUB_POSTINSTALL"), timeout => $wait_time);
         $wait_time = 240;
     }
 
@@ -28,16 +28,16 @@ sub run {
         # this avoids us waiting 90 seconds for a # to show up
         my $origprompt = $testapi::distri->{serial_term_prompt};
         $testapi::distri->{serial_term_prompt} = '$ ';
-        console_login(user=>get_var("USER_LOGIN", "test"), password=>get_var("USER_PASSWORD", "weakpassword"));
+        console_login(user => get_var("USER_LOGIN", "test"), password => get_var("USER_PASSWORD", "weakpassword"));
         $testapi::distri->{serial_term_prompt} = $origprompt;
     }
     if (get_var("ROOT_PASSWORD")) {
-        console_login(user=>"root", password=>get_var("ROOT_PASSWORD"));
+        console_login(user => "root", password => get_var("ROOT_PASSWORD"));
     }
 }
 
 sub test_flags {
-    return { fatal => 1, milestone => 1 };
+    return {fatal => 1, milestone => 1};
 }
 
 1;

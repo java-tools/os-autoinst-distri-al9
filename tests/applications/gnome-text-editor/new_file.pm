@@ -9,7 +9,7 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # First we will use key combo to open the new document window.
     sleep 5;
     send_key("ctrl-t");
@@ -19,7 +19,7 @@ sub run {
     type_safely "# My shopping list.\n\n";
     type_safely "* **Milk**\n* *Apples*\n* `Bananas`\n* Bread\n* Butter\n* Cheese\n\n";
     type_safely "Happy shopping.";
-    
+
     # Switch on Markdown Highlighting.
     assert_and_click("gte_settings_button");
     assert_and_click "gte_select_highlighting";
@@ -37,14 +37,14 @@ sub run {
     type_very_safely "list.md";
     send_key("ret");
     # Check that the file has been created
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
     assert_script_run "ls /home/test/list.md";
     desktop_vt();
 }
 
 
 sub test_flags {
-    return { milestone => 1 };
+    return {milestone => 1};
 }
 
 1;

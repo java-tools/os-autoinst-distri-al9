@@ -7,11 +7,11 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Start the application
     start_with_launcher('apps_menu_software');
-    
-    
+
+
     # check if a welcome screen appears, if so, click on it
     send_key 'ret' if (check_screen('gnome_software_welcome', 10));
     assert_screen 'desktop_package_tool_update';
@@ -19,7 +19,7 @@ sub run {
     register_application("gnome-software");
     # Close the application
     quit_with_shortcut();
-    
+
 }
 
 sub test_flags {

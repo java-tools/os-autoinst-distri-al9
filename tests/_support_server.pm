@@ -74,7 +74,7 @@ sub _pxe_setup {
     # download kernel and initramfs
     my $location = get_var("LOCATION");
     my $kernpath = "images/pxeboot";
-        # for some crazy reason these are in a different place for ppc64
+    # for some crazy reason these are in a different place for ppc64
     $kernpath = "ppc/ppc64" if ($arch eq 'ppc64le');
     assert_script_run "curl -o /var/lib/tftpboot/fedora/vmlinuz $location/Everything/${arch}/os/${kernpath}/vmlinuz";
     assert_script_run "curl -o /var/lib/tftpboot/fedora/initrd.img $location/Everything/${arch}/os/${kernpath}/initrd.img";
@@ -93,7 +93,7 @@ sub _pxe_setup {
 }
 
 sub run {
-    my $self=shift;
+    my $self = shift;
     # disable systemd-resolved, it conflicts with dnsmasq
     unless (script_run "systemctl is-active systemd-resolved.service") {
         script_run "systemctl stop systemd-resolved.service";
@@ -168,7 +168,7 @@ sub run {
 }
 
 sub test_flags {
-    return { fatal => 1 };
+    return {fatal => 1};
 }
 
 1;

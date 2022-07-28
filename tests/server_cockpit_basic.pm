@@ -5,7 +5,7 @@ use utils;
 use cockpit;
 
 sub run {
-    my $self=shift;
+    my $self = shift;
     # run firefox and login to cockpit
     start_cockpit(1);
     # go to the logs screen
@@ -32,7 +32,7 @@ sub run {
     assert_screen "cockpit_logs_detail";
     # go to the services screen
     assert_and_click "cockpit_services";
-    wait_still_screen(timeout=>90, stilltime=>5);
+    wait_still_screen(timeout => 90, stilltime => 5);
     # click on an entry
     assert_and_click "cockpit_services_entry";
     # check we get to the appropriate detail screen...but this click
@@ -42,7 +42,7 @@ sub run {
 }
 
 sub test_flags {
-    return { fatal => 1 };
+    return {fatal => 1};
 }
 
 1;

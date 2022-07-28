@@ -7,7 +7,7 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Go to next picture.
     send_key("right");
     wait_still_screen(2);

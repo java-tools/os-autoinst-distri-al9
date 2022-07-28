@@ -3,14 +3,14 @@ use strict;
 use testapi;
 use utils;
 
-# This script will download the test files, start Nautilus, 
+# This script will download the test files, start Nautilus,
 # stretch it all over the screen and upload the status to
 # set a milestone as a starting point for the other Nautilus tests.
 
 sub run {
     my $self = shift;
     # Switch to console
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
     # Perform git test
     check_and_install_git();
     # Download the test data
@@ -26,10 +26,10 @@ sub run {
     # Start the application
     menu_launch_type("nautilus");
     wait_still_screen("2");
-    
+
     # Fullsize the Nautilus window.
     wait_screen_change { send_key("super-up"); };
-    
+
     # Check that is started
     assert_screen 'apps_run_files';
 

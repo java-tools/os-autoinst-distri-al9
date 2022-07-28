@@ -19,7 +19,7 @@ sub main_repo {
     if (get_var("REPOSITORY_GRAPHICAL") =~ m/^http:/) {
         $num = 4;
     }
-    for (my $i=0; $i<$num; $i++) {
+    for (my $i = 0; $i < $num; $i++) {
         send_key "up";
         usleep 100;
     }
@@ -61,14 +61,14 @@ sub add_repo {
     # configure an additional repository
     assert_and_click "anaconda_add";
     # shift-tab seven times gets us to the scheme box
-    for (my $i=0; $i<7; $i++) {
+    for (my $i = 0; $i < 7; $i++) {
         send_key "shift-tab";
         usleep 100;
     }
     # select appropriate repo type for the URL by pressing 'down' a given
     # number of times. default - 1 - is https
     my $num = 1;
-    for (my $i=0; $i<$num; $i++) {
+    for (my $i = 0; $i < $num; $i++) {
         send_key "down";
         usleep 100;
     }
@@ -102,7 +102,7 @@ sub run {
 }
 
 sub test_flags {
-    return { fatal => 1 };
+    return {fatal => 1};
 }
 
 1;

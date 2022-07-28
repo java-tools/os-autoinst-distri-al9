@@ -8,7 +8,7 @@ use utils;
 sub run {
     my $self = shift;
     sleep 2;
-    
+
     # Make the image size 1:1
     send_key("1");
     wait_still_screen(2);

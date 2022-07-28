@@ -8,7 +8,7 @@ use utils;
 sub run {
     my $self = shift;
 
-    #  Enter the Documents directory to get to the test data. 
+    #  Enter the Documents directory to get to the test data.
     assert_and_click("nautilus_directory_documents");
 
     #  Right click onto a file to select it and open the context menu
@@ -42,7 +42,7 @@ sub run {
     assert_and_click("gnome_select_button");
 
     # Go into the root console and verify the operation in the background.
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
 
     # Verify that the new file does not exist in the original location.
     assert_script_run("! ls /home/test/Documents/markdown.md", fail_message => 'The test file has not been deleted from its original location.');

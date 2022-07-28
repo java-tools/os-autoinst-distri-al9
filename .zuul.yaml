@@ -6,7 +6,7 @@
 - job:
     name: os-autoinst-perl
     run: ci/perl.yaml
-    nodeset: fedora-latest-container
+    nodeset: fedora-36-vm
 
 - project:
     check:

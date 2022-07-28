@@ -9,11 +9,11 @@ sub run {
     # Prepare the environment for the test.
     #
     # Some actions need a root account, so become root.
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
 
     # Create a text file, put content to it to prepare it for later printing.
-    script_run  "cd /home/test/";
-    assert_script_run  "echo 'A quick brown fox jumps over a lazy dog.' > testfile.txt";
+    script_run "cd /home/test/";
+    assert_script_run "echo 'A quick brown fox jumps over a lazy dog.' > testfile.txt";
     # Make the file readable and for everybody.
     script_run "chmod 666 testfile.txt";
 
@@ -55,20 +55,20 @@ sub run {
         $term = "konsole";
     }
 
-    # Let's open the terminal. We will use it to start the applications 
+    # Let's open the terminal. We will use it to start the applications
     # as well as to check for the name of the printed file.
     menu_launch_type($term);
     wait_still_screen(5);
 
     # Open the text editor and maximize it.
     wait_screen_change { type_very_safely "$editor /home/test/testfile.txt &\n"; };
-    wait_still_screen(stilltime=>2, similarity_level=>45);
+    wait_still_screen(stilltime => 2, similarity_level => 45);
     wait_screen_change { send_key($maximize); };
-    wait_still_screen(stilltime=>2, similarity_level=>45);
+    wait_still_screen(stilltime => 2, similarity_level => 45);
 
     # Print the file using one of the available methods
     send_key "ctrl-p";
-    wait_still_screen(stilltime=>3, similarity_level=>45);
+    wait_still_screen(stilltime => 3, similarity_level => 45);
     # We will select the printing method
     # In case of KDE, we will need to select the printer first.
     if ($desktop eq "kde") {
@@ -94,7 +94,7 @@ sub run {
     # on the selected method. We do this on a VT because there's
     # no argument to script_output to make it type slowly, and
     # it often fails typing fast in a desktop terminal
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
     my $directory = $usecups ? "/home/test/Desktop" : "/home/test/Documents";
     my $filename = script_output("ls $directory");
     my $filepath = "$directory/$filename";
@@ -104,17 +104,17 @@ sub run {
 
     # back to the desktop
     desktop_vt();
-    wait_still_screen(stilltime=>3, similarity_level=>45);
+    wait_still_screen(stilltime => 3, similarity_level => 45);
     # The CLI might be blocked by some application output. Pressing the
     # Enter key will dismiss them and return the CLI to the ready status.
     send_key("ret");
     # Open the pdf file in a Document reader and check that it is correctly printed.
     type_safely("$viewer $filepath &\n");
-    wait_still_screen(stilltime=>3, similarity_level=>45);
+    wait_still_screen(stilltime => 3, similarity_level => 45);
     # Resize the window, so that the size of the document fits the bigger space
     # and gets more readable.
     send_key $maximize;
-    wait_still_screen(stilltime=>2, similarity_level=>45);
+    wait_still_screen(stilltime => 2, similarity_level => 45);
     # in KDE, make sure we're at the start of the document
     send_key "ctrl-home" if ($desktop eq "kde");
     # Check the printed pdf.
@@ -123,7 +123,7 @@ sub run {
 
 
 sub test_flags {
-    return { fatal => 1 };
+    return {fatal => 1};
 }
 
 1;

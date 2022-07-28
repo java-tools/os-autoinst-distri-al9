@@ -7,7 +7,7 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Check that dark style can be used.
     assert_and_click("gnome_burger_menu");
     assert_and_click("gte_change_to_dark");
@@ -66,7 +66,7 @@ sub run {
 
 
 sub test_flags {
-    return { always_rollback => 1 };
+    return {always_rollback => 1};
 }
 
 1;

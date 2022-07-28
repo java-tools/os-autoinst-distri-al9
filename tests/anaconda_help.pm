@@ -50,7 +50,7 @@ sub run {
     # on GNOME installs (Workstation Live and Silverblue) we don't
     # need to set a root password or create a user; on other flavors
     # we must
-    unless (get_var("DESKTOP") eq "gnome" ) {
+    unless (get_var("DESKTOP") eq "gnome") {
         assert_and_click "anaconda_install_root_password";
         # from anaconda-35.22.1 onwards, we have to click 'enable root
         # account' before typing the password. For older versions,

@@ -42,7 +42,7 @@ sub run {
     # didn't work, try again a few times
     my $count = 4;
     while ($count > 0) {
-        assert_and_click "cockpit_join_domain_button", timeout=>5;
+        assert_and_click "cockpit_join_domain_button", timeout => 5;
         last if (check_screen "cockpit_join_domain", 30);
     }
     assert_screen "cockpit_join_domain";
@@ -67,7 +67,7 @@ sub run {
 }
 
 sub test_flags {
-    return { fatal => 1, milestone => 1 };
+    return {fatal => 1, milestone => 1};
 }
 
 1;

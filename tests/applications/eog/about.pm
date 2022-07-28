@@ -7,7 +7,7 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Open the menu
     assert_and_click("gnome_burger_menu");
     wait_still_screen(3);

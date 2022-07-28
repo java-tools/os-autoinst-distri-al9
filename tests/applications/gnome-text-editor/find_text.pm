@@ -23,13 +23,13 @@ sub run {
     send_key "esc";
     # Check that correct word is highlighted.
     assert_screen "gte_found_text";
-    
+
     # This tests that a highlight can be removed from a search result.
     # Use combo for removing the highlighting.
     send_key "ctrl-end";
     # Check that the highlighting was removed.
     assert_screen "gte_text_added";
-    
+
     # We will continue to search and replace a piece of text.
     # Open Switch and replace
     send_key "ctrl-h";
@@ -43,7 +43,7 @@ sub run {
     sleep 1;
     send_key("delete");
     # Type replacement string. We purposefully produce a typo.
-    type_safely "Wiend"; 
+    type_safely "Wiend";
     # Click to find the string
     assert_and_click "gte_find_next_occurence";
     # and replace it.
@@ -59,7 +59,7 @@ sub run {
 }
 
 sub test_flags {
-    return { always_rollback => 1 };
+    return {always_rollback => 1};
 }
 
 1;

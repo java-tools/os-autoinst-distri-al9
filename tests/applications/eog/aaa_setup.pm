@@ -9,7 +9,7 @@ use utils;
 sub run {
     my $self = shift;
     # Switch to console
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
     # Perform git test
     check_and_install_git();
     # Download the test data
@@ -35,7 +35,7 @@ sub run {
 
     # Select the image.jpg file.
     assert_and_click("eog_file_select_jpg", button => "left", timeout => 30);
-    
+
     # Hit enter to open it.
     send_key("ret");
 

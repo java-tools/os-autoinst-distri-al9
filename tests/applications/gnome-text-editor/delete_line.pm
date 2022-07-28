@@ -3,13 +3,13 @@ use strict;
 use testapi;
 use utils;
 
-# This part tests that a line of text can be deleted 
+# This part tests that a line of text can be deleted
 # and the deletion reverted.
 
 sub run {
     my $self = shift;
     #  Click on a word on the line.
-    assert_and_click("gte_line_word", clicktime=>0.3);
+    assert_and_click("gte_line_word", clicktime => 0.3);
     wait_still_screen(2);
     # Delete the line
     send_key("home");
@@ -33,7 +33,7 @@ sub run {
 }
 
 sub test_flags {
-    return { always_rollback => 1 };
+    return {always_rollback => 1};
 }
 
 1;

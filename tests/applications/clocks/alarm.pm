@@ -9,7 +9,7 @@ sub run {
     my $self = shift;
 
     # Click on the Alarm button.
-        assert_and_click("clocks_button_alarm");
+    assert_and_click("clocks_button_alarm");
 
     # Add a new alarm using the Add Alarm button
     assert_and_click("clocks_button_add_alarm");

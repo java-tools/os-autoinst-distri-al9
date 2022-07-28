@@ -10,7 +10,7 @@ sub run {
     # Open the menu.
     assert_and_click("gnome_burger_menu");
     wait_still_screen(3);
-    
+
     # Choose the About item.
     assert_and_click "gte_about";
     wait_still_screen(2);
@@ -27,7 +27,7 @@ sub run {
 }
 
 sub test_flags {
-    return { always_rollback => 1 };
+    return {always_rollback => 1};
 }
 
 1;

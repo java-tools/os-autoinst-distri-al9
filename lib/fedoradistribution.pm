@@ -59,13 +59,13 @@ sub x11_start_program {
     send_key "alt-f2";
     assert_screen "desktop_runner";
     type_string $program, 20;
-    sleep 5; # because of KDE dialog - SUSE guys are doing the same!
+    sleep 5;    # because of KDE dialog - SUSE guys are doing the same!
     send_key "ret", 1;
 }
 
 # ensure_installed checks if a package is already installed and if not install it.
-# To make it happen, it will switch to a virtual terminal (if not already there) 
-# and try to install the package. DNF will skip the installation, 
+# To make it happen, it will switch to a virtual terminal (if not already there)
+# and try to install the package. DNF will skip the installation,
 # if it is already installed.
 sub ensure_installed {
     my ($self, @packages) = @_;
@@ -75,48 +75,48 @@ sub ensure_installed {
     # We will check if GUI elements are present, that would suggest that we are not in the
     # console but in GUI.
     if (check_screen("apps_menu_button")) {
-	# In that case, we want to return to GUI after the routine finishes.
+        # In that case, we want to return to GUI after the routine finishes.
         $stay_on_console = 0;
-	    # From GUI we need to switch to the console.
-	    send_key("ctrl-alt-f3");
-	# Let's wait to allow for screen changes.
-    sleep 5;
-    # And do the login.
-	console_login();
+        # From GUI we need to switch to the console.
+        send_key("ctrl-alt-f3");
+        # Let's wait to allow for screen changes.
+        sleep 5;
+        # And do the login.
+        console_login();
     }
     # Try to install the packages via dnf. If it is already installed, DNF will not do anything
     # so there is no need to do any complicated magic.
     assert_script_run("dnf install -y @packages", timeout => 240);
     # If we need to leave the console.
     if ($stay_on_console == 0) {
-        desktop_vt();	
+        desktop_vt();
     }
 }
 
-# This subroutine switches to the root account. 
+# This subroutine switches to the root account.
 # On Fedora, the system can be installed with a valid root account (root password assigned)
 # or without it (with root password empty). If no root password is provided through environment
-# variables, we assume that the system is a "rootless" system. In that case we will use 
-# `sudo -i` to acquire the administrator access. 
+# variables, we assume that the system is a "rootless" system. In that case we will use
+# `sudo -i` to acquire the administrator access.
 sub become_root {
-    # If ROOT_PASSWORD exists, it means that the root account exists, too. 
+    # If ROOT_PASSWORD exists, it means that the root account exists, too.
     # To become root, we will use the real root account and we'll switch to it.
     if (check_var("ROOT_PASSWORD")) {
-	my $password = get_var("ROOT_PASSWORD");
-	enter_cmd("su -", max_interval => 15, wait_screen_changes => 3);
-	type_password($password, max_interval => 15);
-	send_key("ret");
+        my $password = get_var("ROOT_PASSWORD");
+        enter_cmd("su -", max_interval => 15, wait_screen_changes => 3);
+        type_password($password, max_interval => 15);
+        send_key("ret");
     }
     # If no root password is set, it means, that we are only using an administrator
     # who is in the wheel group and therefore we will use the sudo command to obtain
     # the admin rights.
     else {
         my $password = get_var("USER_PASSWORD") || "weakpassword";
-	    enter_cmd("sudo -i", max_interval => 15, wait_screen_changes => 3);
-	    # The SUDO warning might be displayed so let's wait it out a bit.
-	    sleep 2;
-	    type_password($password, max_interval => 15);
-	    send_key("ret");
+        enter_cmd("sudo -i", max_interval => 15, wait_screen_changes => 3);
+        # The SUDO warning might be displayed so let's wait it out a bit.
+        sleep 2;
+        type_password($password, max_interval => 15);
+        send_key("ret");
     }
     sleep 2;
     # Now we should be root. Let's check for root prompt.
@@ -132,7 +132,7 @@ sub become_root {
 # passed to it after the command has finished to save some time.
 # The serial console is only accessible for the root user, so that
 # mechanism does not work when not root (why would anyone use sudo
-# if they were root already anyway). 
+# if they were root already anyway).
 # To override this, call `make_serial_writable` from `utils.pm` in the
 # beginning of the test script to enable serial console for normal users.
 sub script_sudo {
@@ -144,9 +144,9 @@ sub script_sudo {
 
     my $str;
     if ($wait > 0) {
-	# Create a uniqe hash from the command and the wait time.
-        $str  = testapi::hashed_string("SS$prog$wait");
-	# Chain the commands to pass the message to the serial console.
+        # Create a uniqe hash from the command and the wait time.
+        $str = testapi::hashed_string("SS$prog$wait");
+        # Chain the commands to pass the message to the serial console.
         $prog = "$prog; echo $str > /dev/$testapi::serialdev";
     }
     # Run the command with `sudo -k`
@@ -156,7 +156,7 @@ sub script_sudo {
     type_password($password);
     send_key "ret";
     # Wait for the message hash to appear on the serial console which indicates
-    # that the command has finished. No matter what time has passed, finish 
+    # that the command has finished. No matter what time has passed, finish
     # or die if no message appears on time.
     if ($str) {
         return testapi::wait_serial($str, $wait);
@@ -171,7 +171,7 @@ sub assert_script_sudo {
     my ($self, $prog, $wait) = @_;
     script_sudo($prog, $wait);
     # Validate that the command exited with a correct exit code.
-    validate_script_output('echo $?', sub { $_ == 0 } );
+    validate_script_output('echo $?', sub { $_ == 0 });
     return;
 }
 

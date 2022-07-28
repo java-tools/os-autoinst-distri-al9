@@ -28,7 +28,7 @@ sub select_disks {
     );
     my %iscsi = %{$args{iscsi}};
     # Anaconda hub
-    assert_screen "anaconda_main_hub", 300; #
+    assert_screen "anaconda_main_hub", 300;
     # Damn animation delay can cause bad clicks here too - wait for it
     sleep 1;
     assert_and_click "anaconda_main_hub_install_destination";
@@ -150,7 +150,7 @@ sub custom_blivet_add_partition {
         assert_and_click "anaconda_blivet_size_unit";
         assert_and_click "anaconda_blivet_size_unit_mib";
 
-        send_key "shift-tab";  # input is one tab back from unit selection listbox
+        send_key "shift-tab";    # input is one tab back from unit selection listbox
 
         # size input can contain whole set of different values, so we can't match it with needle
         type_safely $args{size} . "\n";
@@ -176,7 +176,7 @@ sub custom_blivet_add_partition {
 }
 
 sub custom_blivet_format_partition {
-    # This subroutine formats a selected partition. To use it, you must select the 
+    # This subroutine formats a selected partition. To use it, you must select the
     # partition by other means before you format it using this routine.
     # You have to create a needle for any non-existing filesystem that is
     # passed via the $type, such as anaconda_blivet_part_fs_ext4.
@@ -202,14 +202,14 @@ sub custom_blivet_format_partition {
 sub custom_blivet_resize_partition {
     # This subroutine resizes the selected (active) partition to a given value. Note, that
     # if the selected value is bigger than the available space, it will only be
-    # resized to fill up the available space no matter the number. 
+    # resized to fill up the available space no matter the number.
     # This routine cannot will not be able to select a particular partition!!!
     my %args = @_;
     # Start editing the partition and select the Resize option
     assert_and_click "anaconda_blivet_part_edit";
     assert_and_click "anaconda_blivet_part_resize";
     # Select the appropriate units. Note, that there must a be needle existing
-    # for each possible unit that you might want to use, such as 
+    # for each possible unit that you might want to use, such as
     # "anaconda_blivet_size_unit_gib".
     assert_and_click "anaconda_blivet_part_drop_select";
     assert_and_click "anaconda_blivet_size_unit_$args{units}";
@@ -300,7 +300,7 @@ sub get_full_repo {
         # only Server
         my $variant = 'Everything';
         $variant = 'Server' if (get_var("MODULAR"));
-        $repourl .= "/${variant}/".get_var("ARCH")."/os";
+        $repourl .= "/${variant}/" . get_var("ARCH") . "/os";
     }
     return $repourl;
 }
@@ -365,7 +365,7 @@ sub crash_anaconda_text {
     # This routine uses the Anaconda crash trigger to break the ongoing Anaconda installation to simulate
     # an Anaconda crash and runs a series of steps that results in creating a bug in Bugzilla.
     # It is used in the `install_text.pm` test and can be switched on by using the CRASH_REPORT
-    # variable set to 1. 
+    # variable set to 1.
     #
     # First let us navigate to reach the shell window in Anaconda using the alt-f3 combo,
     # this should take us to another terminal, where we can simulate the crash.
@@ -395,14 +395,14 @@ sub report_bug_text {
     # a textual console.
     # We will not create a needle for every menu item, and we will fail,
     # if there will be no positive Bugzilla confirmation shown at the end
-    # of the process and then we will fail. 
+    # of the process and then we will fail.
     #
     # Let us record the time of this test run. Later, we will use it to
     # limit the Bugzilla search.
     my $timestamp = time();
     #
     # First, collect the credentials.
-    my $login  = get_var("BUGZILLA_LOGIN");
+    my $login = get_var("BUGZILLA_LOGIN");
     my $password = get_var("_SECRET_BUGZILLA_PASSWORD");
     my $apikey = get_var("_SECRET_BUGZILLA_APIKEY");
     # Choose item 1 - Report the bug.
@@ -419,12 +419,12 @@ sub report_bug_text {
     type_password $password;
     type_string "\n";
     sleep 10;
-    # Save the report without changing it. 
+    # Save the report without changing it.
     # It would need some more tweaking to actually type into the report, but since
     # it is reported even if unchanged, we leave it as such.
     type_string ":wq\n";
     # Wait until the Crash menu appears again.
-    # The same screen shows the result of the Bugzilla operation, 
+    # The same screen shows the result of the Bugzilla operation,
     # so if the needle matches, the bug has been created in Bugzilla.
     # Bugzilla connection is slow so we need to wait out some time,
     # therefore let's use a cycle that will check each 10 seconds and
@@ -435,7 +435,7 @@ sub report_bug_text {
         ++$counter;
     }
     # Sometimes, Bugzilla throws out a communication error although the bug has been
-    # created successfully. If this happens, we will softfail and leave the creation 
+    # created successfully. If this happens, we will softfail and leave the creation
     # check to a later step.
     if ($counter > 12) {
         record_soft_failure "Warning: Bugzilla has reported an error which could mean that the bug has not been created correctly, but it probably is not a real problem, if the test has not failed completely. ";
@@ -443,7 +443,7 @@ sub report_bug_text {
 
     # Now, let us check with Bugzilla directly, if the bug has been created.
     # First, we shall get a Bugzilla format timestamp to use it in the query.
-    # The timestamp will limit the list of bugs to those that have been created since 
+    # The timestamp will limit the list of bugs to those that have been created since
     # the then -> resulting with high probability in the one that this test run
     # has just created.
     $timestamp = convert_to_bz_timestamp($timestamp);
@@ -455,7 +455,7 @@ sub report_bug_text {
     else {
         print("BUGZILLA: The last bug was found: $lastbug\n");
     }
-    # We have found that the bug indeed is in the bugzilla (otherwise 
+    # We have found that the bug indeed is in the bugzilla (otherwise
     # we would have died already) so now we close it to clean up after this test run.
     my $result = close_notabug($lastbug, $apikey);
     unless ($result) {
@@ -467,5 +467,5 @@ sub report_bug_text {
 
     # Quit anaconda
     type_string "4\n";
-    
+
 }

@@ -8,7 +8,7 @@ use utils;
 sub run {
     my $self = shift;
     sleep 2;
-    
+
     # Open the shortcuts
     send_key("ctrl-?");
     wait_still_screen(3);

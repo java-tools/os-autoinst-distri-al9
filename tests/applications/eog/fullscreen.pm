@@ -7,7 +7,7 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Toggle full screen
     send_key("f11");
     wait_still_screen 2;

@@ -7,7 +7,7 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     # Check that the picture name is shown
     assert_screen "eog_picture_name";
 

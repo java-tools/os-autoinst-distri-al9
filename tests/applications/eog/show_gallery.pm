@@ -22,7 +22,7 @@ sub run {
         # Toggle gallery
         assert_and_click("eog_gallery_show");
         wait_still_screen(2);
-        
+
     }
     assert_screen("eog_gallery_shown");
 }

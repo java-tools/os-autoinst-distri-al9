@@ -6,7 +6,7 @@ use packagetest;
 use cockpit;
 
 sub run {
-    my $self=shift;
+    my $self = shift;
 
     my $cockdate = "0";
     # Remove a package, disable repositories and enable test repositories, install the package
@@ -27,11 +27,11 @@ sub run {
     # restarting the machine to continue. Also, we would have
     # to deal with much more complicated workflow.
     #
-    if (check_screen('cockpit_updates_security_install',1)) {
-       assert_and_click 'cockpit_updates_security_install';
-       sleep 60; # wait until things are installed
-       assert_and_click 'cockpit_updates_restart_ignore';
-       wait_still_screen 2;
+    if (check_screen('cockpit_updates_security_install', 1)) {
+        assert_and_click 'cockpit_updates_security_install';
+        sleep 60;    # wait until things are installed
+        assert_and_click 'cockpit_updates_restart_ignore';
+        wait_still_screen 2;
     }
 
 
@@ -74,7 +74,7 @@ sub run {
 }
 
 sub test_flags {
-    return { always_rollback => 1 };
+    return {always_rollback => 1};
 }
 
 1;

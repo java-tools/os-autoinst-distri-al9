@@ -9,7 +9,7 @@ sub run {
     my $self = shift;
     sleep 2;
     assert_screen("eog_image_default");
-    
+
     # Shift-ctrl-S to save a file as a new file.
     send_key("shift-ctrl-s");
     wait_still_screen(3);
@@ -21,7 +21,7 @@ sub run {
     wait_still_screen("2");
 
     # Go to console
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
 
     # List the location
     assert_script_run("ls /home/test/Pictures/");

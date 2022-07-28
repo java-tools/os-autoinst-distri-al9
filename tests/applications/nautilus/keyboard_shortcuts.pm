@@ -7,25 +7,25 @@ use utils;
 
 sub run {
     my $self = shift;
-    
+
     assert_and_click("gnome_burger_menu");
     wait_still_screen(2);
-    
+
     assert_and_click("nautilus_menu_shortcuts");
     wait_still_screen(2);
-    
+
     assert_screen("nautilus_shortcuts_first");
-    
+
     send_key("right");
     send_key("ret");
     wait_still_screen(2);
-    
+
     assert_screen("nautilus_shortcuts_second");
-    
+
     send_key("right");
     send_key("ret");
     wait_still_screen(2);
-    
+
     assert_screen("nautilus_shortcuts_third");
 }
 

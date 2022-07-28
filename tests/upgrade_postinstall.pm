@@ -6,7 +6,7 @@ use utils;
 sub run {
     my $self = shift;
     # try to login, check whether target release is installed
-    $self->root_console(tty=>3);
+    $self->root_console(tty => 3);
     my $version = lc(get_var('VERSION'));
     my $rawrel = get_var('RAWREL');
     # if VERSION is the Rawhide release number (happens for Rawhide
@@ -17,7 +17,7 @@ sub run {
 
 
 sub test_flags {
-    return { fatal => 1 };
+    return {fatal => 1};
 }
 
 1;

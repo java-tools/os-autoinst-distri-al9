@@ -9,8 +9,8 @@ use utils;
 sub run {
     my $self = shift;
 
-    # At first, we need to set time and time zones manually. 
-    $self->root_console(tty=>3);
+    # At first, we need to set time and time zones manually.
+    $self->root_console(tty => 3);
     # Switch off automatic time.
     assert_script_run("timedatectl set-ntp 0");
     # Set the time zone
