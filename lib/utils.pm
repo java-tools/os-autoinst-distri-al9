@@ -589,7 +589,10 @@ sub _repo_setup_updates {
     if (get_var("ADVISORY_NVRS")) {
         # regular update case
         foreach my $nvr (split(/ /, get_var("ADVISORY_NVRS"))) {
-            if (script_run "koji download-build --arch=" . get_var("ARCH") . " --arch=noarch $nvr 2> download.log", 600) {
+            my $kojitime = 600;
+            # texlive has a ridiculous number of subpackages
+            $kojitime = 1500 if ((rindex $nvr, "texlive", 0) == 0);
+            if (script_run "koji download-build --arch=" . get_var("ARCH") . " --arch=noarch $nvr 2> download.log", $kojitime) {
                 # if the error was because the build has no packages
                 # for our arch, that's okay, skip it. otherwise, die
                 if (script_run "grep 'No .*available for $nvr' download.log") {
@@ -617,7 +620,7 @@ sub _repo_setup_updates {
     upload_logs "/var/log/updatepkgnames.txt";
 
     # create the repo metadata
-    assert_script_run "createrepo .";
+    assert_script_run "createrepo .", timeout => 180;
     # write a repo config file, unless this is the support_server test
     # and it is running on a different release than the update is for
     # (in this case we need the repo to exist but do not want to use
@@ -1062,7 +1065,7 @@ sub advisory_get_installed_packages {
     # are currently installed. This is here so we can do it both in
     # _advisory_post and post_fail_hook.
     return unless (get_var("_ADVISORY_REPO_DONE"));
-    assert_script_run 'rpm -qa --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" | sort -u > /tmp/allpkgs.txt';
+    assert_script_run 'rpm -qa --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" | sort -u > /tmp/allpkgs.txt', timeout => 90;
     # this finds lines which appear in both files
     # http://www.unix.com/unix-for-dummies-questions-and-answers/34549-find-matching-lines-between-2-files.html
     if (script_run 'comm -12 /tmp/allpkgs.txt /var/log/updatepkgs.txt > /var/log/testedpkgs.txt') {
@@ -1105,7 +1108,7 @@ sub advisory_check_nonmatching_packages {
     # (we need four to reach bash, and half of them get eaten by perl or
     # something along the way). Yes, it only works with *single* quotes. Yes,
     # I hate escaping
-    script_run 'for pkg in $(cat /var/log/updatepkgnames.txt); do rpm -q $pkg && rpm -q $pkg --last | head -1 | cut -d" " -f1 | sed -e \'s,\^,\\\\\\\\^,g\' | xargs rpm -q --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" >> /tmp/installedupdatepkgs.txt; done';
+    script_run 'for pkg in $(cat /var/log/updatepkgnames.txt); do rpm -q $pkg && rpm -q $pkg --last | head -1 | cut -d" " -f1 | sed -e \'s,\^,\\\\\\\\^,g\' | xargs rpm -q --qf "%{SOURCERPM} %{EPOCH} %{NAME}-%{VERSION}-%{RELEASE}\n" >> /tmp/installedupdatepkgs.txt; done', timeout => 180;
     script_run 'sort -u -o /tmp/installedupdatepkgs.txt /tmp/installedupdatepkgs.txt';
     # for debugging, may as well always upload these, can't hurt anything
     upload_logs "/tmp/installedupdatepkgs.txt", failok => 1;
