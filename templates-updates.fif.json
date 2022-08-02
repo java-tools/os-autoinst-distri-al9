@@ -56,7 +56,6 @@
             "distri": "fedora",
             "flavor": "updates-server",
             "settings": {
-                "NUMDISKS": "2",
                 "RETRY": "1"
             },
             "version": "*"
@@ -66,7 +65,6 @@
             "distri": "fedora",
             "flavor": "updates-server",
             "settings": {
-                "NUMDISKS": "2",
                 "RETRY": "1"
             },
             "version": "*"
@@ -106,7 +104,6 @@
             "distri": "fedora",
             "flavor": "updates-server",
             "settings": {
-                "NUMDISKS": "2",
                 "RETRY": "1"
             },
             "version": "*"
