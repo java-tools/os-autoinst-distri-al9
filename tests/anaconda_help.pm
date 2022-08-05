@@ -56,9 +56,9 @@ sub run {
         # account' before typing the password. For older versions,
         # clicking this needle does nothing but is harmless
         assert_and_click "anaconda_install_root_password_screen";
-        type_safely "weakrootpassword";
+        type_safely "weakadminpassword";
         send_key "tab";
-        type_safely "weakrootpassword";
+        type_safely "weakadminpassword";
         assert_and_click "anaconda_spoke_done";
     }
     # Begin installation after waiting out animation
