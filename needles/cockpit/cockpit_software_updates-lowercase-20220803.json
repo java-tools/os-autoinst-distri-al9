@@ -1,15 +1,15 @@
 {
-  "area": [
-    {
-      "xpos": 17,
-      "width": 127,
-      "type": "match",
-      "height": 18,
-      "ypos": 693
-    }
-  ],
-  "properties": [],
-  "tags": [
-    "cockpit_software_updates"
-  ]
+    "area": [
+        {
+            "height": 13,
+            "type": "match",
+            "width": 127,
+            "xpos": 17,
+            "ypos": 693
+        }
+    ],
+    "properties": [],
+    "tags": [
+        "cockpit_software_updates"
+    ]
 }
