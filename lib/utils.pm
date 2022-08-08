@@ -482,7 +482,7 @@ sub setup_workaround_repo {
         "34" => [],
         "35" => [],
         "36" => [],
-        "37" => []
+        "37" => ["90614839"]
     );
     # then we'll download each update for our release:
     my $advortasks = $workarounds{$version};
