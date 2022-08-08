@@ -495,7 +495,7 @@ sub setup_workaround_repo {
         my $count = 3;
         my $success = 0;
         while ($count) {
-            if (script_run $cmd, 180) {
+            if (script_run $cmd, 600) {
                 $count -= 1;
             }
             else {
