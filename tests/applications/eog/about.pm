@@ -16,7 +16,7 @@ sub run {
     wait_still_screen(3);
     assert_screen("eog_about_shown");
     # Click on Credits
-    assert_and_click("eog_about_credits");
+    assert_and_click("gnome_button_credits");
     wait_still_screen(2);
     assert_screen("eog_credits_shown");
 }
