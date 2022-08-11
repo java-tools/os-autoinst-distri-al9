@@ -11,13 +11,11 @@ sub run {
     #  Enter the Documents directory to get to the test data.
     assert_and_click("nautilus_directory_documents");
 
-    #  Right click onto a file to select it to see the
-    #  context menu.
-    assert_and_click("nautilus_test_file", button => "right");
-    wait_still_screen(2);
-
-    # Click to Star it.
-    assert_and_click("nautilus_context_star");
+    # Select the test file then star it.
+    assert_and_click("nautilus_test_file");
+    assert_and_click("nautilus_star_selected_file");
+    # Hide the mouse so the pointer isn't over the star
+    mouse_hide;
 
     # Check that a star gets solid on the right part of the selected file
     assert_screen("nautilus_star_confirm");
