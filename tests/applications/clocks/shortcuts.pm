@@ -8,15 +8,10 @@ use utils;
 sub run {
     my $self = shift;
 
-    # Click on the burger menu.
+    # Use the menu to see the shortcuts
     assert_and_click("gnome_burger_menu");
-
-    # Click on About Clocks to see the About info.
-    assert_and_click("clocks_menu_about");
-    assert_screen("clocks_about_displayed");
-    assert_and_click("gnome_button_credits");
-    assert_screen("clocks_credits_shown");
-
+    assert_and_click("clocks_menu_shortcuts");
+    assert_screen("clocks_shortcuts_shown");
 }
 
 sub test_flags {
