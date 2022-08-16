@@ -38,8 +38,9 @@ sub run {
 
     # Click onto the Delete button to remove the listed cities.
     # While there are cities to be removed, remove them.
-    while (check_screen("gnome_button_cross_remove")) {
+    while (check_screen("gnome_button_cross_remove", 3)) {
         click_lastmatch();
+        mouse_hide;
     }
     # If the cities are still visible, then die.
     if (check_screen("clocks_city_added_bratislava")) {
