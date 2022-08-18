@@ -47,8 +47,8 @@ sub run {
     # Verify that the new file does not exist in the original location.
     assert_script_run("! ls /home/test/Documents/markdown.md", fail_message => 'The test file has not been deleted from its original location.');
     # And that it now exists in the new locations.
-    assert_script_run("ls /home/test/Downloads/markdown.md", fail_message => 'The test file has not been found in the expected location.', quiet => '0');
-    assert_script_run("ls /home/test/Downloads/markdown.md", fail_message => 'The test file has not been found in the excpected location.', quiet => '0');
+    assert_script_run("ls /home/test/Downloads/markdown.md", fail_message => 'The test file has not been found in the expected location (copy to).', quiet => '0');
+    assert_script_run("ls /home/test/Videos/markdown.md", fail_message => 'The test file has not been found in the expected location (move to).', quiet => '0');
 }
 
 sub test_flags {
