@@ -7,7 +7,7 @@
                 "PART_TABLE_TYPE": "mbr",
                 "QEMUCPU": "Nehalem",
                 "QEMUCPUS": "2",
-                "QEMURAM": "2048",
+                "QEMURAM": "3072",
                 "QEMUVGA": "virtio",
                 "QEMU_VIRTIO_RNG": "1",
                 "WORKER_CLASS": "qemu_x86_64"
@@ -68,7 +68,7 @@
                 "PART_TABLE_TYPE": "gpt",
                 "QEMUCPU": "Nehalem",
                 "QEMUCPUS": "2",
-                "QEMURAM": "2048",
+                "QEMURAM": "3072",
                 "QEMUVGA": "virtio",
                 "QEMU_VIRTIO_RNG": "1",
                 "UEFI": "1",
