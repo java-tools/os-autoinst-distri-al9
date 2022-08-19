@@ -382,6 +382,7 @@
                 "GRUB_POSTINSTALL": "selinux=0",
                 "HDD_1": "disk_f%VERSION%_minimal_3_%ARCH%.qcow2",
                 "HDDSIZEGB_3": "25",
+                "MAX_JOB_TIME": "10800",
                 "+NUMDISKS": "3",
                 "POSTINSTALL": "_live_build",
                 "ROOT_PASSWORD": "weakpassword",
