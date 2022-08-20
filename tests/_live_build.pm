@@ -57,6 +57,12 @@ sub run {
     assert_script_run 'echo "repo --name=advisory --baseurl=file:///opt/update_repo" >> ' . $repoks;
     # and the workarounds repo
     assert_script_run 'echo "repo --name=workarounds --baseurl=file:///opt/workarounds_repo" >> ' . $repoks;
+    # FIXME: this is a workaround for #2119518, disabling oomd so it
+    # doesn't go crazy killing things
+    my $relnum = get_release_number;
+    if ($relnum > 37) {
+        assert_script_run 'sed -i -e "s,%end,-systemd-oomd-defaults\n%end,g" fedora-workstation-common.ks';
+    }
     # now flatten the kickstart
     assert_script_run "ksflatten -c fedora-live-${lcsubv}.ks -o openqa.ks";
     # upload the kickstart so we can check it
