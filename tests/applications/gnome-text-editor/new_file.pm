@@ -16,9 +16,9 @@ sub run {
     assert_screen "gte_new_document_opened";
 
     # Now let us produce some text
-    type_safely "# My shopping list.\n\n";
-    type_safely "* **Milk**\n* *Apples*\n* `Bananas`\n* Bread\n* Butter\n* Cheese\n\n";
-    type_safely "Happy shopping.";
+    type_very_safely "# My shopping list.\n\n";
+    type_very_safely "* **Milk**\n* *Apples*\n* `Bananas`\n* Bread\n* Butter\n* Cheese\n\n";
+    type_very_safely "Happy shopping.";
 
     # Switch on Markdown Highlighting.
     assert_and_click("gte_settings_button");

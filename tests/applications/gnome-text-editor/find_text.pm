@@ -16,7 +16,7 @@ sub run {
     # Invoke the Find dialogue
     send_key "ctrl-f";
     # Type string
-    type_safely "sweetest";
+    type_very_safely "sweetest";
     # Confirm
     send_key "ret";
     sleep 2;
@@ -35,7 +35,7 @@ sub run {
     send_key "ctrl-h";
     sleep 1;
     # Type string.
-    type_safely "Gale";
+    type_very_safely "Gale";
     # Click to get onto the replace line.
     assert_and_click("gte_replace_line");
     # Delete, what is typed there
@@ -43,7 +43,7 @@ sub run {
     sleep 1;
     send_key("delete");
     # Type replacement string. We purposefully produce a typo.
-    type_safely "Wiend";
+    type_very_safely "Wiend";
     # Click to find the string
     assert_and_click "gte_find_next_occurence";
     # and replace it.
