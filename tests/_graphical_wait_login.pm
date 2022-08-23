@@ -3,10 +3,28 @@ use strict;
 use testapi;
 use utils;
 
+sub _enter_password {
+    my $password = shift;
+    if (get_var("SWITCHED_LAYOUT")) {
+        # see _do_install_and_reboot; when layout is switched
+        # user password is doubled to contain both US and native
+        # chars
+        desktop_switch_layout 'ascii';
+        type_very_safely $password;
+        desktop_switch_layout 'native';
+        type_very_safely $password;
+    }
+    else {
+        type_very_safely $password;
+    }
+    send_key "ret";
+}
+
 sub run {
     my $self = shift;
     my $password = get_var("USER_PASSWORD", "weakpassword");
     my $version = get_var("VERSION");
+    my $desktop = get_var("DESKTOP");
     # If KICKSTART is set, then the wait_time needs to consider the
     # install time. if UPGRADE, we have to wait for the entire upgrade
     # unless ENCRYPT_PASSWORD is set (in which case the postinstall
@@ -23,7 +41,7 @@ sub run {
 
     # Handle pre-login initial setup if we're doing INSTALL_NO_USER
     if (get_var("INSTALL_NO_USER") && !get_var("_setup_done")) {
-        if (get_var("DESKTOP") eq 'gnome') {
+        if ($desktop eq 'gnome') {
             gnome_initial_setup(prelogin => 1, timeout => $wait_time);
         }
         else {
@@ -38,14 +56,14 @@ sub run {
     # Wait for the login screen, unless we're doing a GNOME no user
     # install, which transitions straight from g-i-s to logged-in
     # desktop
-    unless (get_var("DESKTOP") eq 'gnome' && get_var("INSTALL_NO_USER")) {
+    unless ($desktop eq 'gnome' && get_var("INSTALL_NO_USER")) {
         boot_to_login_screen(timeout => $wait_time);
         # if USER_LOGIN is set to string 'false', we're done here
         return if (get_var("USER_LOGIN") eq "false");
 
         # GDM 3.24.1 dumps a cursor in the middle of the screen here...
         mouse_hide;
-        if (get_var("DESKTOP") eq 'gnome') {
+        if ($desktop eq 'gnome') {
             # we have to hit enter to get the password dialog, and it
             # doesn't always work for some reason so just try it three
             # times
@@ -55,32 +73,31 @@ sub run {
         # seems like we often double-type on aarch64 if we start right
         # away
         wait_still_screen 5;
-        if (get_var("SWITCHED_LAYOUT")) {
-            # see _do_install_and_reboot; when layout is switched
-            # user password is doubled to contain both US and native
-            # chars
-            desktop_switch_layout 'ascii';
-            type_very_safely $password;
-            desktop_switch_layout 'native';
-            type_very_safely $password;
+        _enter_password($password);
+        # FIXME: workaround RHBZ#2120433 - catch if the login failed
+        # and retry if so
+        my $relnum = get_release_number;
+        if ($relnum > 37 && $desktop eq 'gnome') {
+            unless (check_screen ["getting_started", "apps_menu_button"], 45) {
+                if (check_screen "graphical_login_input") {
+                    record_soft_failure "Login failed, probably #2120433 - retrying";
+                    _enter_password($password);
+                }
+            }
         }
-        else {
-            type_very_safely $password;
-        }
-        send_key "ret";
     }
 
     # For GNOME, handle initial-setup or welcome tour, unless START_AFTER_TEST
     # is set in which case it will have been done already. Always
     # do it if ADVISORY_OR_TASK is set, as for the update testing flow,
     # START_AFTER_TEST is set but a no-op and this hasn't happened
-    if (get_var("DESKTOP") eq 'gnome' && (get_var("ADVISORY_OR_TASK") || !get_var("START_AFTER_TEST"))) {
+    if ($desktop eq 'gnome' && (get_var("ADVISORY_OR_TASK") || !get_var("START_AFTER_TEST"))) {
         # as this test gets loaded twice on the ADVISORY_OR_TASK flow, and
         # we might be on the INSTALL_NO_USER flow, check whether
         # this happened already
         handle_welcome_screen unless (get_var("_welcome_done"));
     }
-    if (get_var("DESKTOP") eq 'gnome' && get_var("INSTALL_NO_USER")) {
+    if ($desktop eq 'gnome' && get_var("INSTALL_NO_USER")) {
         # handle welcome screen if we didn't do it above (holy flow
         # control, Batman!)
         handle_welcome_screen unless (get_var("_welcome_done"));
