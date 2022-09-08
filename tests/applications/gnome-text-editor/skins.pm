@@ -22,7 +22,8 @@ sub run {
     assert_and_click("gte_preferences_submenu");
     wait_still_screen(2);
 
-    if (get_var("CANNED")) {
+    my $relnum = get_release_number;
+    if (get_var("CANNED") && $relnum < 37) {
         # This is for the older version of g-t-e in Silverblue
         # Click on Adwaita;
         assert_and_click("gte_select_adwaita");
