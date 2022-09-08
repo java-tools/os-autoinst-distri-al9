@@ -47,7 +47,7 @@ sub run {
     assert_screen("nautilus_test_file_another");
 
     # Select the first file and restore it from the Bin.
-    assert_and_click("nautilus_test_file");
+    assert_and_click("nautilus_test_file", button => "right");
     wait_still_screen(2);
     assert_and_click("nautilus_restore_content");
 
