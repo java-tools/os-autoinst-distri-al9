@@ -1,15 +1,15 @@
 {
+  "area": [
+    {
+      "width": 133,
+      "ypos": 491,
+      "type": "match",
+      "height": 21,
+      "xpos": 374
+    }
+  ],
   "properties": [],
   "tags": [
     "nautilus_restore_content"
-  ],
-  "area": [
-    {
-      "xpos": 837,
-      "ypos": 129,
-      "width": 55,
-      "height": 21,
-      "type": "match"
-    }
   ]
 }
