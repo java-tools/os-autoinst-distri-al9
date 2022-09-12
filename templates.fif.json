@@ -9,6 +9,8 @@
                 "QEMUCPUS": "2",
                 "QEMURAM": "3072",
                 "QEMUVGA": "virtio",
+                "XRES": "1024",
+                "YRES": "768",
                 "QEMU_VIRTIO_RNG": "1",
                 "WORKER_CLASS": "qemu_x86_64"
             }
@@ -70,6 +72,8 @@
                 "QEMUCPUS": "2",
                 "QEMURAM": "3072",
                 "QEMUVGA": "virtio",
+                "XRES": "1024",
+                "YRES": "768",
                 "QEMU_VIRTIO_RNG": "1",
                 "UEFI": "1",
                 "UEFI_PFLASH_CODE": "/usr/share/edk2/ovmf/OVMF_CODE.fd",
@@ -1082,6 +1086,22 @@
                 "BOOTFROM": "c",
                 "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
                 "POSTINSTALL_PATH": "tests/applications/clocks",
+                "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
+            }
+        },
+        "archiver": {
+            "profiles": {
+                "fedora-Silverblue-dvd_ostree-iso-ppc64le-*-ppc64le": 50,
+                "fedora-Silverblue-dvd_ostree-iso-x86_64-*-64bit": 50,
+                "fedora-Workstation-live-iso-ppc64le-*-ppc64le": 20,
+                "fedora-Workstation-live-iso-x86_64-*-64bit": 20,
+                "fedora-Workstation-upgrade-aarch64-*-aarch64": 40,
+                "fedora-Workstation-raw_xz-raw.xz-aarch64-*-aarch64": 22
+            },
+            "settings": {
+                "BOOTFROM": "c",
+                "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
+                "POSTINSTALL_PATH": "tests/applications/archiver",
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
