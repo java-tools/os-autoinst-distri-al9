@@ -14,6 +14,10 @@ sub run {
         $version = get_var("UP2REL");
     }
     setup_workaround_repo $version;
+    # disable updates-testing, this is needed for the case of upgrade
+    # from branched to rawhide to ensure we don't get packages from
+    # updates-testing for anything we do between here and upgrade_run
+    disable_updates_repos(both => 0);
     assert_script_run 'dnf -y update --refresh', 1800;
     script_run "reboot", 0;
 

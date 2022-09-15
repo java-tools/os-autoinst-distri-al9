@@ -7,7 +7,7 @@ use Exporter;
 
 use lockapi;
 use testapi;
-our @EXPORT = qw/run_with_error_check type_safely type_very_safely desktop_vt boot_to_login_screen console_login console_switch_layout desktop_switch_layout console_loadkeys_us do_bootloader boot_decrypt check_release menu_launch_type repo_setup setup_workaround_repo cleanup_workaround_repo console_initial_setup handle_welcome_screen gnome_initial_setup anaconda_create_user check_desktop download_modularity_tests quit_firefox advisory_get_installed_packages advisory_check_nonmatching_packages start_with_launcher quit_with_shortcut disable_firefox_studies select_rescue_mode copy_devcdrom_as_isofile get_release_number check_left_bar check_top_bar check_prerelease check_version spell_version_number _assert_and_click is_branched rec_log click_unwanted_notifications repos_mirrorlist register_application get_registered_applications solidify_wallpaper check_and_install_git download_testdata make_serial_writable/;
+our @EXPORT = qw/run_with_error_check type_safely type_very_safely desktop_vt boot_to_login_screen console_login console_switch_layout desktop_switch_layout console_loadkeys_us do_bootloader boot_decrypt check_release menu_launch_type repo_setup setup_workaround_repo disable_updates_repos cleanup_workaround_repo console_initial_setup handle_welcome_screen gnome_initial_setup anaconda_create_user check_desktop download_modularity_tests quit_firefox advisory_get_installed_packages advisory_check_nonmatching_packages start_with_launcher quit_with_shortcut disable_firefox_studies select_rescue_mode copy_devcdrom_as_isofile get_release_number check_left_bar check_top_bar check_prerelease check_version spell_version_number _assert_and_click is_branched rec_log click_unwanted_notifications repos_mirrorlist register_application get_registered_applications solidify_wallpaper check_and_install_git download_testdata make_serial_writable/;
 
 # We introduce this global variable to hold the list of applications that have
 # registered during the apps_startstop_test when they have sucessfully run.
@@ -481,7 +481,7 @@ sub setup_workaround_repo {
         "35" => [],
         "36" => [],
         "37" => [],
-        "38" => ["FEDORA-2022-4e9444ba4c"],
+        "38" => ["FEDORA-2022-4e9444ba4c", "FEDORA-2022-401265dc3e"],
     );
     # then we'll download each update for our release:
     my $advortasks = $workarounds{$version};
@@ -509,6 +509,23 @@ sub setup_workaround_repo {
     assert_script_run "popd";
 }
 
+sub disable_updates_repos {
+    # disable updates-testing, or both updates-testing and updates.
+    # factors out similar code in a few different places.
+    my %args = (
+        both => 0,
+        @_
+    );
+    my $nonmod = "updates-testing";
+    $nonmod .= " updates" if ($args{both});
+    assert_script_run "dnf config-manager --set-disabled $nonmod";
+    unless (script_run 'test -f /etc/yum.repos.d/fedora-updates-testing-modular.repo') {
+        my $mod = "updates-testing-modular";
+        $mod .= " updates-modular" if ($args{both});
+        assert_script_run "dnf config-manager --set-disabled $mod";
+    }
+}
+
 sub _repo_setup_compose {
     # doesn't work for IoT or CoreOS, anything that hits this on those
     # paths must work with default mirror config...
@@ -520,11 +537,7 @@ sub _repo_setup_compose {
     # tools see only packages from the compose under test
     my $location = get_var("LOCATION");
     return unless $location;
-    assert_script_run 'dnf config-manager --set-disabled updates-testing updates';
-    # script_run returns the exit code, so 'unless' here means 'if the file exists'
-    unless (script_run 'test -f /etc/yum.repos.d/fedora-updates-modular.repo') {
-        assert_script_run 'dnf config-manager --set-disabled updates-testing-modular updates-modular';
-    }
+    disable_updates_repos(both => 1);
     # we use script_run here as the rawhide and modular repo files
     # won't always exist and we don't want to bother testing or
     # predicting their existence; assert_script_run doesn't buy you
@@ -551,14 +564,7 @@ sub _repo_setup_updates {
     # }
     if ($version > $currrel) {
         # Disable updates-testing so other bad updates don't break us
-        # this will do nothing on upgrade tests as we're on a stable
-        # release at this point, but it won't *hurt* anything, so no
-        # need to except that case really
-        assert_script_run "dnf config-manager --set-disabled updates-testing";
-        # same for Modular, if appropriate
-        unless (script_run 'test -f /etc/yum.repos.d/fedora-updates-modular.repo') {
-            assert_script_run "dnf config-manager --set-disabled updates-testing-modular";
-        }
+        disable_updates_repos(both => 0);
     }
     # set up the workaround repo
     setup_workaround_repo;
