@@ -23,6 +23,7 @@ sub run {
     # Switch on Markdown Highlighting.
     assert_and_click("gte_settings_button");
     assert_and_click "gte_select_highlighting";
+    wait_still_screen(2);
     type_very_safely "markdown";
     send_key "ret";
     assert_and_click("gte_window_dismiss");
@@ -36,9 +37,17 @@ sub run {
     wait_still_screen(3);
     type_very_safely "list.md";
     send_key("ret");
+    assert_screen("gte_file_saved");
     # Check that the file has been created
     $self->root_console(tty => 3);
-    assert_script_run "ls /home/test/list.md";
+    # The test started to fail on Silverblue
+    # because the target directory changed.
+    if (get_var("SUBVARIANT") eq "Silverblue") {
+        assert_script_run("ls /home/test/Documents/list.md");
+    }
+    else {
+        assert_script_run("ls /home/test/list.md");
+    }
     desktop_vt();
 }
 
