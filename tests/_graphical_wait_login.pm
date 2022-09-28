@@ -40,7 +40,7 @@ sub run {
     }
 
     # Handle pre-login initial setup if we're doing INSTALL_NO_USER
-    if (get_var("INSTALL_NO_USER") && !get_var("_setup_done")) {
+    if (get_var("INSTALL_NO_USER") && !get_var("_SETUP_DONE")) {
         if ($desktop eq 'gnome') {
             gnome_initial_setup(prelogin => 1, timeout => $wait_time);
         }
@@ -49,7 +49,7 @@ sub run {
             # wait out animation
             wait_still_screen 3;
             assert_and_click "initialsetup_finish_configuration";
-            set_var("_setup_done", 1);
+            set_var("_SETUP_DONE", 1);
         }
         $wait_time = 300;
     }
@@ -95,12 +95,12 @@ sub run {
         # as this test gets loaded twice on the ADVISORY_OR_TASK flow, and
         # we might be on the INSTALL_NO_USER flow, check whether
         # this happened already
-        handle_welcome_screen unless (get_var("_welcome_done"));
+        handle_welcome_screen unless (get_var("_WELCOME_DONE"));
     }
     if ($desktop eq 'gnome' && get_var("INSTALL_NO_USER")) {
         # handle welcome screen if we didn't do it above (holy flow
         # control, Batman!)
-        handle_welcome_screen unless (get_var("_welcome_done"));
+        handle_welcome_screen unless (get_var("_WELCOME_DONE"));
         # if this was an image deployment, we also need to create
         # root user now, for subsequent tests to work
         if (get_var("IMAGE_DEPLOY")) {
