@@ -12,7 +12,7 @@ sub run {
     menu_launch_type 'kmouth';
     sleep 2;
     # Deal with the welcome screens
-    assert_screen ["kde_next", "kde_finish"];
+    assert_screen ["kde_next", "kde_finish"], 90;
     while (match_has_tag "kde_next") {
         assert_and_click "kde_next";
         sleep 2;
