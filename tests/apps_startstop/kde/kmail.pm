@@ -12,13 +12,19 @@ sub run {
     menu_launch_type 'kmail';
     # Cancel Kmail data wizard
     assert_and_click 'kde_cancel_button';
-    if (check_screen("kde_cancel_button", 1)) {
-        click_lastmatch;
+    # Sometimes, the Kmail window is shown over the settings window.
+    # If that is the case, assert that Kmail is running and exit.
+    unless (check_screen("kmail_runs")) {
+        if (check_screen("kde_cancel_button", 1)) {
+            click_lastmatch;
+        }
+        assert_screen("kmail_runs");
     }
-    # Check that it is started
-    assert_screen 'kmail_runs';
-    # Close the application
-    quit_with_shortcut();
+    else {
+        assert_screen("kmail_runs");
+    }
+        # Close the application
+        quit_with_shortcut();
 }
 
 sub test_flags {
