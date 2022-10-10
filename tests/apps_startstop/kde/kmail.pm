@@ -23,8 +23,8 @@ sub run {
     else {
         assert_screen("kmail_runs");
     }
-        # Close the application
-        quit_with_shortcut();
+    # Close the application
+    quit_with_shortcut();
 }
 
 sub test_flags {
