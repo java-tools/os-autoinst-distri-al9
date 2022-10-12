@@ -29,12 +29,21 @@ sub run {
         record_soft_failure "Log refresh took a long time";
     }
     # check we get to the appropriate detail screen
-    assert_screen "cockpit_logs_detail";
+    unless (check_screen "cockpit_logs_detail", 30) {
+        assert_screen "cockpit_logs_detail", 60;
+        record_soft_failure "Accessing log entry took a long time";
+    }
     # go to the services screen
     assert_and_click "cockpit_services";
     wait_still_screen(timeout => 90, stilltime => 5);
     # click on an entry
-    assert_and_click "cockpit_services_entry";
+    if (check_screen "cockpit_services_entry") {
+        click_lastmatch;
+    }
+    else {
+        assert_and_click "cockpit_services_entry";
+        record_soft_failure "Loading services screen took a long time";
+    }
     # check we get to the appropriate detail screen...but this click
     # often gets lost for some reason, so retry it once
     assert_and_click "cockpit_services_entry" unless (check_screen "cockpit_services_detail", 10);
