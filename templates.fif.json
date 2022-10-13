@@ -921,6 +921,7 @@
                 "BOOTFROM": "c",
                 "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
                 "POSTINSTALL": "desktop_background",
+                "QEMURAM": "4096",
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
@@ -1008,6 +1009,7 @@
                 "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
                 "USE_CUPS": "1",
                 "POSTINSTALL": "desktop_printing",
+                "QEMURAM": "4096",
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
@@ -1042,6 +1044,7 @@
                 "BOOTFROM": "c",
                 "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
                 "POSTINSTALL": "desktop_terminal",
+                "QEMURAM": "4096",
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
@@ -1223,6 +1226,7 @@
                 "BOOTFROM": "c",
                 "HDD_1": "disk_%FLAVOR%_%MACHINE%.qcow2",
                 "POSTINSTALL": "desktop_update_graphical",
+                "QEMURAM": "4096",
                 "START_AFTER_TEST": "%DEPLOY_UPLOAD_TEST%"
             }
         },
