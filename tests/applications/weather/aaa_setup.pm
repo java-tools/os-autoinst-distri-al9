@@ -29,6 +29,10 @@ sub run {
     }
     type_very_safely("Brno");
     assert_and_click("weather_select_city");
+    # check we wind up on the hourly view, then let things settle
+    # before snapshotting
+    assert_screen("weather_report_hourly");
+    wait_still_screen 3;
 }
 
 sub test_flags {
