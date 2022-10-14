@@ -34,10 +34,10 @@ sub run {
         record_soft_failure "Accessing log entry took a long time";
     }
     # go to the services screen
-    assert_and_click "cockpit_services";
+    wait_screen_change { assert_and_click "cockpit_services"; };
     wait_still_screen(timeout => 90, stilltime => 5);
     # click on an entry
-    if (check_screen "cockpit_services_entry") {
+    if (check_screen "cockpit_services_entry", 30) {
         click_lastmatch;
     }
     else {
