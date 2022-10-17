@@ -337,7 +337,8 @@
             "settings": {
                 "+START_AFTER_TEST": "live_build@%ARCH_BASE_MACHINE%",
                 "INSTALL": "1",
-                "ISO": "Fedora-%SUBVARIANT%-Live-%ARCH%-%ADVISORY_OR_TASK%.iso"
+                "ISO": "Fedora-%SUBVARIANT%-Live-%ARCH%-%ADVISORY_OR_TASK%.iso",
+                "QEMURAM": "4096"
             }
         },
         "install_default_update_netinst": {
