@@ -13,6 +13,8 @@ sub run {
     # are frequently getting OOM killed here:
     # https://bugzilla.redhat.com/show_bug.cgi?id=2133829
     script_run "systemctl isolate multi-user.target";
+    # switch back to our tty if that kicked us to tty1
+    $self->root_console(tty => 3);
     repo_setup;
     if (get_var("ADVISORY_BOOT_TEST")) {
         # to test boot stuff - in case the update touched grub2, or dracut,
