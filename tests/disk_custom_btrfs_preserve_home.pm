@@ -59,7 +59,7 @@ sub run {
     assert_and_click "anaconda_part_confirm_delete";
 
     # Add the new root partition to the scheme
-    assert_and_click("anaconda_add", timeout => 60);
+    assert_and_click "anaconda_part_add";
     type_very_safely "/\n";
 
     # Confirm changes
@@ -67,12 +67,12 @@ sub run {
     assert_and_click "anaconda_part_accept_changes";
 
     # Anaconda hub
-    assert_screen "anaconda_main_hub", 300;
+    assert_screen "anaconda_main_hub", 300; #
 
 }
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

@@ -7,7 +7,7 @@ use tapnet;
 use utils;
 
 sub run {
-    my $self = shift;
+    my $self=shift;
     # use compose repo, disable u-t, etc.
     repo_setup();
     # deploy postgres directly ourselves. first, install packages...
@@ -16,7 +16,13 @@ sub run {
     assert_script_run "firewall-cmd --permanent --add-service postgresql";
     assert_script_run "systemctl restart firewalld.service";
     # init the db
-    assert_script_run "/usr/bin/postgresql-setup --initdb";
+    if (script_run "/usr/bin/postgresql-setup --initdb") {
+        # see if this is RHBZ #1872511...
+        script_run "rm -rf /var/lib/pgsql/data/*";
+        script_run "dnf -y install glibc-langpack-en", 180;
+        assert_script_run "/usr/bin/postgresql-setup --initdb";
+        record_soft_failure "postgresql-setup initially failed due to missing langpack - RHBZ #1872511";
+    }
     # enable and start the systemd service
     assert_script_run "systemctl enable postgresql.service";
     assert_script_run "systemctl start postgresql.service";
@@ -48,10 +54,10 @@ sub run {
     # check we can add a row to the table
     assert_script_run 'su postgres -c "psql openqa -c \'INSERT INTO test VALUES (5);\'"';
     # check we can query the table
-    validate_script_output 'su postgres -c "psql openqa -c \'SELECT * FROM test;\'"', sub { $_ =~ m/^ *testcol.*5.*1 row/s };
+    validate_script_output 'su postgres -c "psql openqa -c \'SELECT * FROM test;\'"', sub {$_ =~ m/^ *testcol.*5.*1 row/s };
     # check we can modify the row
     assert_script_run 'su postgres -c "psql openqa -c \'UPDATE test SET testcol = 50 WHERE testcol = 5;\'"';
-    validate_script_output 'su postgres -c "psql openqa -c \'SELECT * FROM test;\'"', sub { $_ =~ m/^ *testcol.*50.*1 row/s };
+    validate_script_output 'su postgres -c "psql openqa -c \'SELECT * FROM test;\'"', sub {$_ =~ m/^ *testcol.*50.*1 row/s };
     # we're all ready for other jobs to run!
     mutex_create('db_ready');
     wait_for_children;
@@ -67,7 +73,7 @@ sub run {
 
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

@@ -7,7 +7,7 @@ use utils;
 
 sub run {
     my $self = shift;
-
+    
     # Start the application
     menu_launch_type 'firefox';
     # Check that it is started; this needle is from
@@ -17,12 +17,7 @@ sub run {
     # Close the application
     send_key 'alt-f4';
     wait_still_screen 2;
-    # deal with warning screen
-    if (check_screen("firefox_close_tabs", 1)) {
-        click_lastmatch;
-    }
-    wait_still_screen 2;
-    assert_screen 'workspace';
+    assert_and_click 'firefox_close_tabs';
 }
 
 sub test_flags {

@@ -9,17 +9,16 @@ sub run {
     my $self = shift;
     # Start the application
     start_with_launcher('apps_menu_clocks');
-    assert_screen ["apps_run_clocks", "apps_run_access"];
     # give access rights if asked
-    if (match_has_tag 'apps_run_access') {
-        click_lastmatch;
-        assert_screen 'apps_run_clocks';
+    if (check_screen('apps_run_access', 1)) {
+        assert_and_click 'apps_run_access';
     }
+    assert_screen 'apps_run_clocks';
     # Register application
     register_application("gnome-clocks");
     # close the application
     quit_with_shortcut();
-
+    
 }
 
 sub test_flags {

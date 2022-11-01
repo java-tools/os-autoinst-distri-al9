@@ -15,14 +15,13 @@ sub run {
 
     # updates.img tests work by changing the appearance of the INSTALLATION
     # DESTINATION screen, so check that if needed.
-    if (get_var('TEST_UPDATES')) {
+    if (get_var('TEST_UPDATES')){
         assert_screen "anaconda_install_destination_updates", 30;
     }
     # Here the self identification test code is placed.
     my $branched = get_var('VERSION');
     if ($identification eq 'true' or $branched ne "Rawhide") {
-        # See utils.pm
-        check_top_bar();
+        check_top_bar(); # See utils.pm
         # we don't check version or pre-release because here those
         # texts appear on the banner which makes the needling
         # complex and fragile (banner is different between variants,
@@ -32,13 +31,27 @@ sub run {
 
     assert_and_click "anaconda_spoke_done";
 
+    # if we get the "Reclaim Space" dialog, hit enter to reclaim space
+    if (check_screen("anaconda_install_destination_reclaim_space_btn", 5)) {
+        # hit enter to reclaim space
+        send_key "ret";
+
+        # select 'delete all' button and hit enter to delete existing data
+        send_key_until_needlematch("anaconda_install_destination_delete_all_btn_selected", "tab", 5);
+        send_key "ret";
+
+        # send tab 5 times to select "Reclaim Space" button
+        send_key_until_needlematch("anaconda_install_destination_reclaim_space_btn_selected", "tab", 5);
+        send_key "ret";
+    }
+
     # Anaconda hub
-    assert_screen "anaconda_main_hub", 300;
+    assert_screen "anaconda_main_hub", 300; #
 
 }
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

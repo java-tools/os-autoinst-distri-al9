@@ -1,0 +1,16 @@
+{
+  "area": [
+    {
+      "width": 39,
+      "xpos": 969,
+      "type": "match",
+      "ypos": 34,
+      "height": 17
+    }
+  ],
+  "properties": [],
+  "tags": [
+    "ENV-DISTRI-almalinux",
+    "anaconda_help_button"
+  ]
+}

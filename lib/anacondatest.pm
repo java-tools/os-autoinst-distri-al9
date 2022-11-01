@@ -21,8 +21,7 @@ sub post_fail_hook {
     if (check_screen "anaconda_error_report", 10) {
         assert_and_click "anaconda_error_report";
         $has_traceback = 1;
-    } elsif (check_screen "anaconda_text_error", 10) {
-        # also for text install
+    } elsif (check_screen "anaconda_text_error", 10) {  # also for text install
         type_string "1\n";
         $has_traceback = 1;
     }
@@ -50,10 +49,6 @@ sub post_fail_hook {
         script_run "ip route > /dev/${serialdev} 2>&1";
         script_run 'printf "\n** NETWORKMANAGER.SERVICE STATUS **\n" > /dev/' . $serialdev;
         script_run "systemctl --no-pager -l status NetworkManager.service > /dev/${serialdev} 2>&1";
-        script_run 'printf "\n** FREE **\n" > /dev/' . $serialdev;
-        script_run "free -h > /dev/${serialdev} 2>&1";
-        script_run 'printf "\n** DF **\n" > /dev/' . $serialdev;
-        script_run "df -h > /dev/${serialdev} 2>&1";
         script_run 'printf "\n** X.LOG **\n" > /dev/' . $serialdev;
         script_run "cat /tmp/X.log > /dev/${serialdev}";
         script_run 'printf "\n** ANACONDA.LOG **\n" > /dev/' . $serialdev;
@@ -78,27 +73,21 @@ sub post_fail_hook {
     }
 
     if ($dracut) {
-        upload_logs "/run/initramfs/rdsosreport.txt", failok => 1;
+        upload_logs "/run/initramfs/rdsosreport.txt", failok=>1;
         # that's all that's really useful, so...
         return;
     }
 
-    unless (script_run "df -h > /tmp/df.log") {
-        upload_logs "/tmp/df.log", failok => 1;
-    }
-    unless (script_run "free -h > /tmp/free.log") {
-        upload_logs "/tmp/free.log", failok => 1;
-    }
-    upload_logs "/tmp/X.log", failok => 1;
-    upload_logs "/tmp/anaconda.log", failok => 1;
-    upload_logs "/tmp/packaging.log", failok => 1;
-    upload_logs "/tmp/storage.log", failok => 1;
-    upload_logs "/tmp/syslog", failok => 1;
-    upload_logs "/tmp/program.log", failok => 1;
-    upload_logs "/tmp/dnf.log", failok => 1;
-    upload_logs "/tmp/dnf.librepo.log", failok => 1;
-    upload_logs "/tmp/dnf.rpm.log", failok => 1;
-    upload_logs "/tmp/dbus.log", failok => 1;
+    upload_logs "/tmp/X.log", failok=>1;
+    upload_logs "/tmp/anaconda.log", failok=>1;
+    upload_logs "/tmp/packaging.log", failok=>1;
+    upload_logs "/tmp/storage.log", failok=>1;
+    upload_logs "/tmp/syslog", failok=>1;
+    upload_logs "/tmp/program.log", failok=>1;
+    upload_logs "/tmp/dnf.log", failok=>1;
+    upload_logs "/tmp/dnf.librepo.log", failok=>1;
+    upload_logs "/tmp/dnf.rpm.log", failok=>1;
+    upload_logs "/tmp/dbus.log", failok=>1;
 
     if ($has_traceback) {
         # Upload Anaconda traceback logs
@@ -129,8 +118,7 @@ sub root_console {
         # 0 means use console_login's default, non-zero values
         # passed to console_login
         timeout => 0,
-        @_
-    );
+        @_);
     if (get_var("SERIAL_CONSOLE")) {
         # select first virtio terminal, we rely on anaconda having run
         # a root shell on it for us
@@ -143,7 +131,7 @@ sub root_console {
         # tty3 has a shell on all f31+ installer and live images
         send_key "ctrl-alt-f3";
     }
-    console_login(user => "root", timeout => $args{timeout});
+    console_login(user=>"root", timeout=>$args{timeout});
 }
 
 1;

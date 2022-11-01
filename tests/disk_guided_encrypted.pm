@@ -22,16 +22,20 @@ sub run {
     type_safely get_var("ENCRYPT_PASSWORD");
     wait_screen_change { send_key "tab"; };
     type_safely get_var("ENCRYPT_PASSWORD");
+    if (get_var("SWITCHED_LAYOUT")) {
+        # work around RHBZ #1333984
+        desktop_switch_layout "native", "anaconda";
+    }
 
     assert_and_click "anaconda_install_destination_save_passphrase";
 
     # Anaconda hub
-    assert_screen "anaconda_main_hub", 300;
+    assert_screen "anaconda_main_hub", 300; #
 
 }
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

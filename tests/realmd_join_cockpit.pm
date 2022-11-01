@@ -32,28 +32,28 @@ sub run {
     # check_type_string in cockpit because of that fucking constantly
     # scrolling graph
     start_cockpit(1);
-    # to activate the right pane
-    assert_and_click "cockpit_main";
-    send_key "pgdn";
-    # wait out scroll...
-    wait_still_screen 2;
-    # sometimes this click fails because CPU usage goes from one line
-    # to two at just the wrong moment and the link moves, so if it
-    # didn't work, try again a few times
-    my $count = 4;
-    while ($count > 0) {
-        assert_and_click "cockpit_join_domain_button", timeout => 5;
-        last if (check_screen "cockpit_join_domain", 30);
+    # we may have to scroll down before the button is visible
+    if (check_screen "cockpit_join_domain_button", 5) {
+        click_lastmatch;
+    }
+    else {
+        # to activate the right pane
+        assert_and_click "cockpit_main";
+        send_key "pgdn";
+        # wait out scroll...
+        wait_still_screen 2;
+        assert_and_click "cockpit_join_domain_button", 5;
     }
     assert_screen "cockpit_join_domain";
-    # we need one tab to reach "Domain address" and then one tab to
-    # reach "Domain administrator name" on cockpit 255+...
     my $tabs = "\t";
-    # ...but two tabs in both places on earlier versions
-    $tabs = "\t\t" if ($cockpitver < 255);
+    # we need to hit tab three times to reach 'Domain address' in
+    # cockpit 232-244: https://github.com/cockpit-project/cockpit/issues/14895
+    $tabs = "\t\t\t" if ($cockpitver > 231);
+    # ...in 245+ it's down to two times, for some reason
+    $tabs = "\t\t" if ($cockpitver >= 245);
     type_string($tabs, 4);
     type_string("ipa001.test.openqa.fedoraproject.org", 4);
-    type_string($tabs, 4);
+    type_string("\t\t", 4);
     type_string("admin", 4);
     send_key "tab";
     sleep 3;
@@ -64,10 +64,15 @@ sub run {
     assert_screen "cockpit_join_complete", 300;
     # quit browser to return to console
     quit_firefox;
+    # we don't get back to a prompt instantly and keystrokes while X
+    # is still shutting down are swallowed, so be careful before
+    # finishing (and handing off to next test)
+    assert_screen "root_console";
+    wait_still_screen 5;
 }
 
 sub test_flags {
-    return {fatal => 1, milestone => 1};
+    return { fatal => 1, milestone => 1 };
 }
 
 1;

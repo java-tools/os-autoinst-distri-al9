@@ -5,19 +5,13 @@ use utils;
 
 sub run {
     my $relnum = get_release_number;
-    if (get_var("LANGUAGE") eq 'japanese') {
-        # give GNOME a minute to settle
-        wait_still_screen 5;
+    my $version_major = get_version_major;
+    if (get_var("LANGUAGE") eq 'japanese' && (($relnum > 33) || ($version_major > 8))) {
         # since g-i-s new user mode was dropped and the replacement
         # doesn't do input method selection, and anaconda never has,
         # we have to set up the input method manually:
         # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/3749
-        menu_launch_type "input";
-        unless (check_screen "desktop_add_input_source", 30) {
-            # first attempt to run this often fails for some reason
-            check_desktop;
-            menu_launch_type "input";
-        }
+        menu_launch_type "keyboard";
         assert_and_click "desktop_add_input_source";
         assert_and_click "desktop_input_source_japanese";
         assert_and_click "desktop_input_source_japanese_anthy";
@@ -27,7 +21,7 @@ sub run {
     }
     # do this from the overview because the desktop uses the stupid
     # transparent top bar which messes with our needles
-    send_key "super";
+    send_key "alt-f1";
     assert_screen "overview_app_grid";
     # check both layouts are available at the desktop; here,
     # we can expect input method switching to work too
@@ -40,7 +34,7 @@ sub run {
         # wait a bit for input switch to complete
         sleep 3;
 
-        # assume we can test input from whatever 'super' opened
+        # assume we can test input from whatever 'alt-f1' opened
         type_safely "yama";
         assert_screen "desktop_yama_hiragana";
         send_key "spc";
@@ -56,7 +50,7 @@ sub run {
 }
 
 sub test_flags {
-    return {fatal => 1, always_rollback => 1};
+    return { fatal => 1 };
 }
 
 1;

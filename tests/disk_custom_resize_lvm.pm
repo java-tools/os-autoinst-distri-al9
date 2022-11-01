@@ -10,7 +10,7 @@ sub goto_mountpoint {
 
 sub run {
     my $self = shift;
-    # Navigate to "Installation destionation" and select blivet-gui
+    # Navigate to "Installation destionation" and select blivet-gui 
     # to manipulate the partitions. This will be automatically
     # done using the following method, because PARTITIONING starts
     # with "custom_blivet".
@@ -21,7 +21,7 @@ sub run {
     # a previous Linux installation and prepare the disk for new installation
     # which will be then followed through.
 
-    # Custom partitioning shows that an existing installations is there on the disk,
+    # Custom partitioning shows that an existing installations is there on the disk, 
     # we need to select it to proceed.
     assert_and_click "anaconda_part_use_current";
 
@@ -56,17 +56,19 @@ sub run {
     type_very_safely "/";
     # Skip to the Size window
     send_key "tab";
-    type_very_safely "13 GiB";
+    type_very_safely "12 GiB";
     # Reformat and update the partition
     assert_and_click "anaconda_part_device_reformat";
     assert_and_click "anaconda_part_update_settings";
     # give it a second or two to update
     wait_still_screen 2;
-    # Check that the partition has been resized for 13GiB
-    assert_screen "device_root_resized_thirteen";
+    # Fedora original here as to resize to 13GiB but AlmaLinux default / partition
+    # size is 12.5GiB and we can only resize down.
+    # Check that the partition has been resized for 12GiB
+    assert_screen "device_root_resized_twelve";
 
     # Add new /home partition into the emptied space.
-    assert_and_click "anaconda_add";
+    assert_and_click "anaconda_part_add";
 
     # The previous step brings us into a mountpoint field
     # of the pop-up window, so we only need to fill the value in.
@@ -84,7 +86,7 @@ sub run {
 }
 
 sub test_flags {
-    return {fatal => 1};
+        return { fatal => 1 };
 }
 
 1;

@@ -7,22 +7,20 @@ use utils;
 
 sub run {
     my $self = shift;
-
+    
     # Start the application
     menu_launch_type 'kmail';
+    # Enable unified mailboxes, if they appear
+    if (check_screen("enable_unified_mailboxes", 1)) {
+        assert_and_click "enable_unified_mailboxes";
+    }
     # Cancel Kmail data wizard
-    assert_and_click 'kde_cancel_button';
-    # Sometimes, the Kmail window is shown over the settings window.
-    # If that is the case, assert that Kmail is running and exit.
-    unless (check_screen("kmail_runs")) {
-        if (check_screen("kde_cancel_button", 1)) {
-            click_lastmatch;
-        }
-        assert_screen("kmail_runs");
+    assert_and_click 'kmail_cancel_data';
+    if (check_screen("kmail_cancel_data", 1)) {
+        assert_and_click "kmail_cancel_data";
     }
-    else {
-        assert_screen("kmail_runs");
-    }
+    # Check that it is started
+    assert_screen 'kmail_runs';
     # Close the application
     quit_with_shortcut();
 }

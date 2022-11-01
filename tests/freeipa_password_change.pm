@@ -6,7 +6,7 @@ use freeipa;
 
 sub run {
     my $self = shift;
-    console_login(user => 'root');
+    console_login(user=>'root');
     # check whether test3 exists, i.e. whether freeipa_webui at
     # least managed to create it. if not, we may as well just
     # die now, this test cannot work.
@@ -24,7 +24,11 @@ sub run {
     assert_and_click "freeipa_webui_reset_password_link";
     wait_still_screen 3;
     type_safely "batterystaple";
-    send_key "tab";
+    # The next box we need to type into was moved in FreeIPA 4.8.9,
+    # which is in F32+ but not F31
+    my $relnum = get_release_number;
+    my $version_major = get_version_major;
+    (($relnum < 32) || ($version_major < 9)) ? type_safely "\t\t" : type_safely "\t";
     type_safely "loremipsum";
     wait_screen_change { send_key "tab"; };
     type_safely "loremipsum";
@@ -37,6 +41,11 @@ sub run {
     wait_still_screen 3;
     # close browser, back to console
     quit_firefox;
+    # we don't get back to a prompt instantly and keystrokes while X
+    # is still shutting down are swallowed, so be careful before
+    # finishing (and handing off to freeipa_client_postinstall)
+    assert_screen "root_console";
+    wait_still_screen 5;
     # check we can kinit with changed password
     assert_script_run 'printf "loremipsum" | kinit test3';
     # change password via CLI (back to batterystaple, as that's what
@@ -51,7 +60,7 @@ sub run {
 }
 
 sub test_flags {
-    return {'ignore_failure' => 1};
+    return { 'ignore_failure' => 1 };
 }
 
 1;

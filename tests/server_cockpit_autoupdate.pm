@@ -6,7 +6,7 @@ use packagetest;
 use cockpit;
 
 sub run {
-    my $self = shift;
+    my $self=shift;
 
     # Start Cockpit
     start_cockpit(1);
@@ -14,8 +14,7 @@ sub run {
     # Navigate to the Update screen
     select_cockpit_update();
 
-    # FIXME Workaround for RHBZ #1765685 - remove after F34 EOL (seems
-    # to be fixed in F35 and F36)
+    # FIXME Workaround for RHBZ #1765685 - remove when it's fixed
     sleep 30;
 
     # Switch on automatic updates
@@ -23,8 +22,11 @@ sub run {
     assert_and_click 'cockpit_updates_dnf_install', '', 120;
     # from 234 onwards, we get a config screen here: "no updates",
     # "security updates only", "all updates"
-    assert_and_click 'cockpit_updates_auto_all';
-    assert_and_click 'cockpit_save_changes';
+    assert_screen ['cockpit_updates_auto_on', 'cockpit_updates_auto_all'];
+    if (match_has_tag 'cockpit_updates_auto_all') {
+        click_lastmatch;
+        assert_and_click 'cockpit_save_changes';
+    }
 
     # Check the default automatic settings Everyday at 6 o'clock.
     assert_screen 'autoupdate_planned_day';
@@ -32,16 +34,17 @@ sub run {
 
     # Quit Cockpit
     quit_firefox;
+    sleep 3;
 
     # Check that the dnf-automatic service has started
     assert_script_run "systemctl is-active dnf-automatic-install.timer";
 
     # Check that it is scheduled correctly
-    validate_script_output "systemctl show dnf-automatic-install.timer | grep TimersCalendar", sub { $_ =~ "06:00:00" };
+    validate_script_output "systemctl show dnf-automatic-install.timer | grep TimersCalendar", sub {$_ =~ "06:00:00" };
 }
 
 sub test_flags {
-    return {always_rolllback => 1};
+    return { always_rolllback => 1 };
 }
 
 1;

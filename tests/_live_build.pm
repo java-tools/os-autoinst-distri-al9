@@ -6,20 +6,6 @@ use utils;
 sub run {
     my $self = shift;
     my $version = get_var("VERSION");
-    my $rawrel = get_var("RAWREL");
-    my $branch;
-    my $repoks;
-    my $releasever;
-    if ($version eq $rawrel) {
-        $branch = "main";
-        $repoks = "fedora-repo-rawhide.ks";
-        $releasever = "Rawhide";
-    }
-    else {
-        $branch = "f${version}";
-        $repoks = "fedora-repo-not-rawhide.ks";
-        $releasever = $version;
-    }
     my $advortask = get_var("ADVISORY_OR_TASK");
     my $arch = get_var("ARCH");
     my $subv = get_var("SUBVARIANT");
@@ -52,41 +38,35 @@ sub run {
     # now check out the kickstarts
     assert_script_run 'git clone https://pagure.io/fedora-kickstarts.git';
     assert_script_run 'cd fedora-kickstarts';
-    assert_script_run "git checkout ${branch}";
-    # now add the side repo to the appropriate repo ks
-    assert_script_run 'echo "repo --name=advisory --baseurl=file:///opt/update_repo" >> ' . $repoks;
+    assert_script_run "git checkout f${version}";
+    # now add the side repo to fedora-repo-not-rawhide.ks
+    assert_script_run 'echo "repo --name=advisory --baseurl=file:///opt/update_repo" >> fedora-repo-not-rawhide.ks';
     # and the workarounds repo
-    assert_script_run 'echo "repo --name=workarounds --baseurl=file:///opt/workarounds_repo" >> ' . $repoks;
-    # FIXME: this is a workaround for #2119518, disabling oomd so it
-    # doesn't go crazy killing things
-    my $relnum = get_release_number;
-    if ($relnum > 37) {
-        assert_script_run 'sed -i -e "s,%end,-systemd-oomd-defaults\n%end,g" fedora-workstation-common.ks';
-    }
+    assert_script_run 'echo "repo --name=workarounds --baseurl=file:///opt/workarounds_repo" >> fedora-repo-not-rawhide.ks';
     # now flatten the kickstart
     assert_script_run "ksflatten -c fedora-live-${lcsubv}.ks -o openqa.ks";
     # upload the kickstart so we can check it
     upload_logs "openqa.ks";
     # now install the tools into the mock
-    assert_script_run "mock -r openqa --isolation=simple --install bash coreutils glibc-all-langpacks lorax-lmc-novirt selinux-policy-targeted shadow-utils util-linux", 600;
+    assert_script_run "mock -r openqa --isolation=simple --install bash coreutils glibc-all-langpacks lorax-lmc-novirt selinux-policy-targeted shadow-utils util-linux", 300;
     # now make the image build directory inside the mock root and put the kickstart there
     assert_script_run 'mock -r openqa --isolation=simple --chroot "mkdir -p /chroot_tmpdir"';
     assert_script_run "mock -r openqa --isolation=simple --copyin openqa.ks /chroot_tmpdir";
     # PULL SOME LEVERS! PULL SOME LEVERS!
-    assert_script_run "mock -r openqa --enable-network --isolation=simple --chroot \"/sbin/livemedia-creator --ks /chroot_tmpdir/openqa.ks --logfile /chroot_tmpdir/lmc-logs/livemedia-out.log --no-virt --resultdir /chroot_tmpdir/lmc --project Fedora-${subv}-Live --make-iso --volid FWL-${advortask} --iso-only --iso-name Fedora-${subv}-Live-${arch}-${advortask}.iso --releasever ${releasever} --macboot\"", 7200;
-    unless (script_run "mock -r openqa --isolation=simple --copyout /chroot_tmpdir/lmc-logs/livemedia-out.log .", 90) {
+    assert_script_run "mock -r openqa --enable-network --isolation=simple --chroot \"/sbin/livemedia-creator --ks /chroot_tmpdir/openqa.ks --logfile /chroot_tmpdir/lmc-logs/livemedia-out.log --no-virt --resultdir /chroot_tmpdir/lmc --project Fedora-${subv}-Live --make-iso --volid FWL-${advortask} --iso-only --iso-name Fedora-${subv}-Live-${arch}-${advortask}.iso --releasever ${version} --macboot\"", 3600;
+    unless (script_run "mock -r openqa --isolation=simple --copyout /chroot_tmpdir/lmc-logs/livemedia-out.log .") {
         upload_logs "livemedia-out.log";
     }
-    unless (script_run "mock -r openqa --isolation=simple --copyout /chroot_tmpdir/lmc-logs/anaconda/ anaconda", 90) {
+    unless (script_run "mock -r openqa --isolation=simple --copyout /chroot_tmpdir/lmc-logs/anaconda/ anaconda") {
         assert_script_run "tar cvzf anaconda.tar.gz anaconda/";
         upload_logs "anaconda.tar.gz";
     }
-    assert_script_run "mock -r openqa --isolation=simple --copyout /chroot_tmpdir/lmc/Fedora-${subv}-Live-${arch}-${advortask}.iso .", 180;
+    assert_script_run "mock -r openqa --isolation=simple --copyout /chroot_tmpdir/lmc/Fedora-${subv}-Live-${arch}-${advortask}.iso .";
     upload_asset "./Fedora-${subv}-Live-${arch}-${advortask}.iso";
 }
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

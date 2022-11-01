@@ -24,9 +24,15 @@ sub run {
 
     # Create test plans
     my @testplan;
+    # For AlmaLinux ISO
+    if ((get_var('DISTRI') eq "AlmaLinux")) {
+        @testplan = qw/keyboard_layout language_support time_date installation_source select_packages install_destination network_host_name root_password create_user/;
+    }
+    # While technically we don't need any of these Fedora test plans it's worth
+    # leaving them here for now as examples.
     # For LIVE KDE:
-    if ((get_var('LIVE')) && (get_var('DESKTOP') eq "kde")) {
-        @testplan = qw/keyboard_layout time_date install_destination network_host_name root_password user_creation/;
+    elsif ((get_var('LIVE')) && (get_var('DESKTOP') eq "kde")) {
+        @testplan = qw/keyboard_layout time_date install_destination network_host_name root_password create_user/;
     }
     # For LIVE Workstation
     elsif ((get_var('LIVE')) && (get_var('DESKTOP') eq "gnome")) {
@@ -38,7 +44,7 @@ sub run {
     }
     # For ServerDVD
     else {
-        @testplan = qw/keyboard_layout language_support time_date installation_source select_packages install_destination network_host_name root_password user_creation/;
+        @testplan = qw/keyboard_layout language_support time_date installation_source select_packages install_destination network_host_name root_password create_user/;
     }
 
     # Iterate over test plan and do the tests.
@@ -50,25 +56,26 @@ sub run {
     # on GNOME installs (Workstation Live and Silverblue) we don't
     # need to set a root password or create a user; on other flavors
     # we must
-    unless (get_var("DESKTOP") eq "gnome") {
-        assert_and_click "anaconda_install_root_password";
-        # from anaconda-35.22.1 onwards, we have to click 'enable root
-        # account' before typing the password. For older versions,
-        # clicking this needle does nothing but is harmless
-        assert_and_click "anaconda_install_root_password_screen";
-        type_safely "weakadminpassword";
+    unless (get_var("DESKTOP") eq "gnome" ) {
+        # In AlmaLinux ISO you will finish testplan on Create User and need to shift-tab to select
+	# Root password
+        if ((get_var("DISTRI") eq "almalinux" )) {
+	    send_key_until_needlematch("anaconda_main_hub_root_password", "shift-tab");
+        }
+        assert_and_click "anaconda_main_hub_root_password";
+        type_safely "weakrootpassword";
         send_key "tab";
-        type_safely "weakadminpassword";
-        assert_and_click "anaconda_spoke_done";
+        type_safely "weakrootpassword";
+        wait_screen_change { assert_and_click "anaconda_spoke_done"; };
     }
     # Begin installation after waiting out animation
-    assert_screen "anaconda_main_hub_begin_installation", 90;
     wait_still_screen 5;
-    assert_and_click "anaconda_main_hub_begin_installation";
+    wait_screen_change { assert_and_click "anaconda_main_hub_begin_installation"; };
 
-    # Check the last Help screen but wait for some time for the test to settle down.
-    sleep 10;
-    check_help_on_pane("installation_progress");
+    # Check the last Help screen
+    unless (get_var("DISTRI") eq "almalinux") {
+        check_help_on_pane("installation_progress");
+    }
 
     # As there is no need to proceed with the installation,
     # the test ends here and the VM will be destroyed

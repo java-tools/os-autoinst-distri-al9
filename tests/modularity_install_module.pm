@@ -5,14 +5,14 @@ use testapi;
 use utils;
 
 sub run {
-    my $self = shift;
+    my $self=shift;
     # switch to tty and login as root
-    $self->root_console(tty => 3);
+    $self->root_console(tty=>3);
 
     # Install a Ruby module.
-    my $name = "mysql";
-    my $stream = "8.0";
-    my $profile = "server";
+    my $name = "nodejs";
+    my $stream = "14";
+    my $profile = "common";
     assert_script_run("dnf module install -y $name:$stream/$profile");
 
     # Check that it is listed in the installed list.
@@ -30,7 +30,7 @@ sub run {
     unless ($found) {
         die "The installed module is not listed in the list of enabled modules but it should be.";
     }
-
+    
     # Remove the module again.
     assert_script_run("dnf module remove -y $name:$stream");
 

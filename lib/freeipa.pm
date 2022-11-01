@@ -42,10 +42,9 @@ sub start_webui {
     # https://bugzilla.redhat.com/show_bug.cgi?id=1439429
     assert_script_run "sed -i -e 's,enable_xauth=1,enable_xauth=0,g' /usr/bin/startx";
     disable_firefox_studies;
-    assert_script_run "export MOZ_LOG_FILE=/tmp/firefox.log";
     type_string "startx /usr/bin/firefox -width 1024 -height 768 https://ipa001.test.openqa.fedoraproject.org\n";
     assert_screen ["freeipa_webui_login", $user_screen], 60;
-    wait_still_screen(stilltime => 5, similarity_level => 45);
+    wait_still_screen(stilltime=>5, similarity_level=>45);
     # softfail on kerberos ticket bugs meaning we get auto-logged in
     # as the requested user when we don't expect to be
     if (match_has_tag $user_screen) {

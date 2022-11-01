@@ -6,6 +6,8 @@ use cockpit;
 
 sub run {
     my $self = shift;
+    assert_script_run 'dnf -y groupinstall "Headless Management"', 300;
+    assert_script_run 'systemctl enable --now cockpit.socket';
     # check cockpit appears to be enabled and running and firewall is setup
     assert_script_run 'systemctl is-enabled cockpit.socket';
     assert_script_run 'systemctl is-active cockpit.socket';
@@ -14,10 +16,15 @@ sub run {
     start_cockpit(0);
     # quit firefox (return to console)
     quit_firefox;
+    # we don't get back to a prompt instantly and keystrokes while X
+    # is still shutting down are swallowed, so be careful before
+    # finishing (and handing off to next test)
+    assert_screen "root_console";
+    wait_still_screen 5;
 }
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

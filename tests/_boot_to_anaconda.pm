@@ -31,9 +31,9 @@ sub run {
         $params .= "inst.repo=" . get_full_repo($repourl) . " ";
     }
     # Construct inst.addrepo arg for ADD_REPOSITORY_VARIATION
-    my $repourl = get_var("ADD_REPOSITORY_VARIATION");
+    $repourl = get_var("ADD_REPOSITORY_VARIATION");
     if ($repourl) {
-        $params .= "inst.addrepo=addrepo,$repourl ";
+        $params .= "inst.addrepo=addrepo," . get_full_repo($repourl) . " ";
     }
     if (get_var("ANACONDA_TEXT")) {
         $params .= "inst.text ";
@@ -77,7 +77,7 @@ sub run {
     # call do_bootloader with postinstall=0, the params, and the mutex,
     # unless we're a VNC install client (no bootloader there)
     unless (get_var("VNC_CLIENT")) {
-        do_bootloader(postinstall => 0, params => $params, mutex => $mutex, timeout => $timeout);
+        do_bootloader(postinstall=>0, params=>$params, mutex=>$mutex, timeout=>$timeout);
     }
 
     # Read variables for identification tests (see further).
@@ -99,51 +99,49 @@ sub run {
                 # we direct the installer to virtio-console1, and use
                 # virtio-console as a root console
                 select_console('virtio-console1');
-                unless (wait_serial "Use text mode", timeout => 120) { die "Anaconda has not started."; }
+                unless (wait_serial "Use text mode", timeout=>120) { die "Anaconda has not started."; }
                 type_string "2\n";
                 unless (wait_serial "Installation") { die "Text version of Anaconda has not started."; }
             }
             else {
-                assert_screen "anaconda_use_text_mode", 300;
-                type_string "2\n";
-                # wait for text version of Anaconda main hub
-                assert_screen "anaconda_main_hub_text", 300;
+                if (get_var("DISTRI") eq "almalinux") {
+                    # AlmaLinux doesn't have network enabled at boot so we are not prompted
+                    # for VNC...
+                    # wait for text version of Anaconda main hub
+                    assert_screen "anaconda_main_hub_text", 300;
+                }
+                else {
+                    # Fedora has a use text mode menu here
+                    assert_screen "anaconda_use_text_mode", 300;
+                    type_string "2\n";
+                    # wait for text version of Anaconda main hub
+                    assert_screen "anaconda_main_hub_text", 300;
+                }
             }
         }
         else {
             # on lives, we have to explicitly launch anaconda
             if (get_var('LIVE')) {
-                my $count = 5;
-                while ($count > 0) {
-                    $count -= 1;
-                    assert_screen ["live_start_anaconda_icon", "apps_menu_button_active"], 300;
-                    if (match_has_tag "apps_menu_button_active") {
-                        # give GNOME some time to be sure it's done starting up
-                        # and ready for input
-                        wait_still_screen 5;
-                        send_key "super";
-                        wait_still_screen 5;
-                    }
-                    else {
-                        # this means we saw the launcher, which is what we want
-                        last;
-                    }
-                }
-                # for KDE we need to double-click
+                assert_screen ["live_start_anaconda_icon", "apps_menu_button_active"], 300;
+                send_key "alt-f1" if match_has_tag "apps_menu_button_active";
+                # for KDE we need to double-click after kde-settings-34.6-1,
+                # which is stable now.
+                # FIXME: when F33 goes EOL, make the condition just "if kde"
                 my $relnum = get_release_number;
                 my $dclick = 0;
-                $dclick = 1 if (get_var("DESKTOP") eq "kde");
-                assert_and_click("live_start_anaconda_icon", dclick => $dclick);
+                #  TODO: revisit
+                $dclick = 1 if (get_var("DESKTOP") eq "kde" && $relnum > 33);
+                assert_and_click("live_start_anaconda_icon", dclick=>$dclick);
                 unless (check_screen "anaconda_select_install_lang", 180) {
                     # click it again - on KDE since 2019-10 or so it seems
                     # like the first attempt sometimes just doesn't work
-                    assert_and_click("live_start_anaconda_icon", dclick => $dclick, timeout => 300);
+                    assert_and_click("live_start_anaconda_icon", dclick=>$dclick, timeout=>300);
                 }
             }
             my $language = get_var('LANGUAGE') || 'english';
             # wait for anaconda to appear; we click to work around
             # RHBZ #1566066 if it happens
-            assert_and_click("anaconda_select_install_lang", timeout => 300);
+            assert_and_click("anaconda_select_install_lang", timeout=>300);
 
             # Select install language
             wait_screen_change { assert_and_click "anaconda_select_install_lang_input"; };
@@ -180,7 +178,7 @@ sub run {
             # Here, we will watch for the graphical elements in Anaconda main hub.
             my $branched = get_var('VERSION');
             if ($identification eq 'true' or $branched ne "Rawhide") {
-                check_left_bar();    # See utils.pm
+                check_left_bar(); # See utils.pm
                 check_prerelease();
                 check_version();
             }
@@ -188,13 +186,13 @@ sub run {
             # didn't match anything: if the Rawhide warning didn't
             # show by now it never will, so we'll just wait for the
             # hub to show up.
-            assert_screen "anaconda_main_hub", 900;
+            assert_screen "anaconda_main_hub", 900; #
         }
     }
 }
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

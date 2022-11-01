@@ -21,7 +21,7 @@ sub run {
     assert_and_click "anaconda_part_update_settings";
     wait_still_screen 5;
     # Add swap
-    assert_and_click "anaconda_add";
+    assert_and_click "anaconda_part_add";
     type_very_safely "swap";
     send_key "tab";
     assert_and_click "anaconda_part_add_mountpoint";
@@ -29,12 +29,12 @@ sub run {
     assert_and_click "anaconda_part_accept_changes";
 
     # Anaconda hub
-    assert_screen "anaconda_main_hub", 300;
+    assert_screen "anaconda_main_hub", 300; #
 
 }
 
 sub test_flags {
-    return {fatal => 1};
+    return { fatal => 1 };
 }
 
 1;

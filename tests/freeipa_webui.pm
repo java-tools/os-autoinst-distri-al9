@@ -22,9 +22,6 @@ sub run {
     type_safely "allow-test3";
     type_safely "\t\t\t";
     send_key "ret";
-    # if firefox shows a stupid infobar or something this is juuust
-    # offscreen
-    send_key_until_needlematch("freeipa_webui_policy_add_user", "down", 3, 3);
     assert_and_click "freeipa_webui_policy_add_user";
     wait_still_screen 2;
     # filter users
@@ -45,13 +42,18 @@ sub run {
     assert_and_click "freeipa_webui_policy_save";
     # quit browser to return to console
     quit_firefox;
+    # we don't get back to a prompt instantly and keystrokes while X
+    # is still shutting down are swallowed, so be careful before
+    # finishing (and handing off to next test)
+    assert_screen "root_console";
+    wait_still_screen 5;
     # set permanent passwords for both accounts
     assert_script_run 'printf "correcthorse\nbatterystaple\nbatterystaple" | kinit test3@TEST.OPENQA.FEDORAPROJECT.ORG';
     assert_script_run 'printf "correcthorse\nbatterystaple\nbatterystaple" | kinit test4@TEST.OPENQA.FEDORAPROJECT.ORG';
     # switch to tty4 (boy, the tty jugglin')
     send_key "ctrl-alt-f4";
     # try and login as test3, should work
-    console_login(user => 'test3@TEST.OPENQA.FEDORAPROJECT.ORG', password => 'batterystaple');
+    console_login(user=>'test3@TEST.OPENQA.FEDORAPROJECT.ORG', password=>'batterystaple');
     type_string "exit\n";
     # try and login as test4, should fail. we cannot use console_login
     # as it takes 10 seconds to complete when login fails, and
@@ -67,7 +69,7 @@ sub run {
 }
 
 sub test_flags {
-    return {'ignore_failure' => 1};
+    return { 'ignore_failure' => 1 };
 }
 
 1;

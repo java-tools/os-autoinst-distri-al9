@@ -9,7 +9,7 @@ use testapi;
 use utils;
 use bugzilla;
 
-our @EXPORT = qw/select_disks custom_scheme_select custom_blivet_add_partition custom_blivet_format_partition custom_blivet_resize_partition custom_change_type custom_change_fs custom_change_device custom_delete_part get_full_repo check_help_on_pane get_mirrorlist_url crash_anaconda_text report_bug_text/;
+our @EXPORT = qw/select_disks custom_scheme_select custom_add_partition custom_blivet_add_partition custom_blivet_format_partition custom_blivet_resize_partition custom_change_type custom_change_fs custom_change_device custom_delete_part get_full_repo check_help_on_pane get_mirrorlist_url crash_anaconda_text report_bug_text/;
 
 sub select_disks {
     # Handles disk selection. Has one optional argument - number of
@@ -28,7 +28,7 @@ sub select_disks {
     );
     my %iscsi = %{$args{iscsi}};
     # Anaconda hub
-    assert_screen "anaconda_main_hub", 300;
+    assert_screen "anaconda_main_hub", 300; #
     # Damn animation delay can cause bad clicks here too - wait for it
     sleep 1;
     assert_and_click "anaconda_main_hub_install_destination";
@@ -126,7 +126,7 @@ sub custom_blivet_add_partition {
     );
     $args{devicetype} = "raid" if $args{raid1};
 
-    assert_and_click "anaconda_add";
+    assert_and_click "anaconda_blivet_part_add";
     mouse_set(10, 10);
     if ($args{devicetype}) {
         assert_and_click "anaconda_blivet_part_devicetype";
@@ -150,7 +150,7 @@ sub custom_blivet_add_partition {
         assert_and_click "anaconda_blivet_size_unit";
         assert_and_click "anaconda_blivet_size_unit_mib";
 
-        send_key "shift-tab";    # input is one tab back from unit selection listbox
+        send_key "shift-tab";  # input is one tab back from unit selection listbox
 
         # size input can contain whole set of different values, so we can't match it with needle
         type_safely $args{size} . "\n";
@@ -172,6 +172,76 @@ sub custom_blivet_add_partition {
     # select "free space" in blivet-gui if it exists, so we could run this function again to add another partition
     if (check_screen("anaconda_blivet_free_space", 15)) {
         assert_and_click "anaconda_blivet_free_space";
+    }
+}
+
+sub custom_add_partition {
+    # Used to add partition on AlmaLinux custom-gui partitioning screen
+    # in Anaconda. Should be called when custom-gui is displayed and free space is selected.
+    # You can pass device type for partition (needle tagged anaconda_custom_devicetype_$devicetype should exist), size of that partition in MiBs, desired filesystem of that partition
+    # (anaconda_custom_part_fs_$filesystem should exist) and mountpoint of that partition (e. g. string "/boot").
+    my %args = (
+        devicetype => "",
+        raidlevel => 0,
+        size => 0,
+        filesystem => "",
+        mountpoint => "",
+        @_
+    );
+    $args{devicetype} = "raid" if $args{raidlevel};
+
+    # send tab until 'add' button is selected, then press
+    # the number of tabs needed seems to depend on whether a partition has already been added
+    send_key_until_needlematch("anaconda_custom_part_add", "tab");
+    send_key "spc";
+
+    # supply the mountpoint
+    assert_screen "anaconda_custom_mountpoint";
+    type_safely $args{mountpoint};
+    send_key "tab";
+    send_key "tab";
+    send_key "tab";
+    assert_screen "anaconda_custom_size";
+    # supply the desired size
+    # if size is not provided, leave empty to use the remaining disk space
+    if ($args{size}) {
+        type_safely $args{size};
+    }
+    send_key "tab";
+    send_key "tab";
+    assert_screen "anaconda_custom_btn_add_mountpoint";
+    send_key "spc";
+
+    # if no devicetype was specified or devicetype is already selected, do nothing
+    if (($args{devicetype} && !check_screen("anaconda_custom_part_fs_$args{devicetype}_selected", 5))) {
+        # send 'tab' until the Device Type dropdown is selected
+        send_key_until_needlematch("anaconda_custom_part_devicetype_selected", "tab");
+        send_key "spc";
+        # send 'down' until the correct devicetype is selected
+        send_key_until_needlematch("anaconda_custom_part_devicetype_$args{devicetype}", "down");
+        send_key "spc";
+    }
+    # if no filesystem was specified or filesystem is already selected, do nothing
+    if ($args{filesystem} && !check_screen("anaconda_custom_part_fs_$args{filesystem}_selected", 5)) {
+        # send 'tab' until the File System dropdown is selected
+        send_key_until_needlematch("anaconda_custom_part_fs_selected", "tab");
+        send_key "spc";
+        # send 'down' until the correct filesystem is selected
+        send_key_until_needlematch("anaconda_custom_part_fs_$args{filesystem}_selected", "down");
+        send_key "spc";
+    }
+    if ($args{raidlevel}) {
+        # send 'tab' until Raid Level dropdown is selected
+        send_key_until_needlematch("anaconda_custom_part_raidlevel_selected", "tab");
+        send_key "spc";
+        #choose RAID level from dropdown
+        send_key_until_needlematch("anaconda_custom_part_raid_1_selected", "down");
+        send_key "spc";
+    }
+
+    # select "free space" in custom-gui if it exists, so we could run this function again to add another partition
+    if (check_screen("anaconda_custom_free_space", 15)) {
+        assert_and_click "anaconda_custom_free_space";
     }
 }
 
@@ -247,9 +317,9 @@ sub custom_change_fs {
     # Pass filesystem name and name of partition. Needles
     # `anaconda_part_select_$part` and `anaconda_part_fs_$fs` should
     # exist. Example usage:
-    # `custom_change_fs("ext4", "root");` uses
-    # `anaconda_part_select_root` and `anaconda_part_fs_ext4` needles
-    # to set ext4 file system for root partition.
+    # `custom_change_fs("ext3", "root");` uses
+    # `anaconda_part_select_root` and `anaconda_part_fs_ext3` needles
+    # to set ext3 file system for root partition.
     my ($fs, $part) = @_;
     $part ||= "root";
     assert_and_click "anaconda_part_select_$part";
@@ -298,15 +368,13 @@ sub get_full_repo {
     if ($repourl !~ m/^(nfs|hd:)/) {
         # Everything variant doesn't exist for modular composes atm,
         # only Server
-        my $variant = 'Everything';
-        $variant = 'Server' if (get_var("MODULAR"));
-        $repourl .= "/${variant}/" . get_var("ARCH") . "/os";
+        $repourl .= "/".get_var("ARCH")."/os";
     }
     return $repourl;
 }
 
 sub get_mirrorlist_url {
-    return "mirrors.fedoraproject.org/mirrorlist?repo=fedora-" . lc(get_var("VERSION")) . "&arch=" . get_var('ARCH');
+    return "mirrors.almalinux.org/mirrorlist?repo=almalinux-BaseOS-" . lc(get_var("VERSION")) . "&arch=" . get_var('ARCH');
 }
 
 sub check_help_on_pane {
@@ -337,10 +405,23 @@ sub check_help_on_pane {
         # Click on Installation Progress link
         assert_and_click "anaconda_help_progress_link";
         # Check the Installation Progress screen
-        assert_screen "anaconda_help_installation_progress";
+        assert_screen "anaconda_help_progress";
     }
     # Otherwise, only check the relevant screen.
     else {
+        # AlmaLinux help has a level of indirection here. Need to click a link first...
+        if ((get_var('DISTRI') eq "almalinux"))
+        {
+            if ($screen eq "keyboard_layout" || $screen eq "language_support" || $screen eq "time_date")
+            {
+                assert_and_click "anaconda_help_localization_link";
+                # Specifically for language_support and time_date press page-down
+                if ($screen eq "language_support" || $screen eq "time_date")
+                {
+                    send_key "spc";
+                }
+            }
+        }
         assert_screen "anaconda_help_$screen";
     }
     # Close Help window
@@ -402,7 +483,7 @@ sub report_bug_text {
     my $timestamp = time();
     #
     # First, collect the credentials.
-    my $login = get_var("BUGZILLA_LOGIN");
+    my $login  = get_var("BUGZILLA_LOGIN");
     my $password = get_var("_SECRET_BUGZILLA_PASSWORD");
     my $apikey = get_var("_SECRET_BUGZILLA_APIKEY");
     # Choose item 1 - Report the bug.
